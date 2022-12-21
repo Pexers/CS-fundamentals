@@ -1,4 +1,4 @@
-<h1 align='center'>Data structures</h1>
+<h1 align='center'>Data Structures</h1>
 
 Copyright &copy; 2023, Pexers (https://github.com/Pexers)
 
