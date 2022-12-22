@@ -1,12 +1,11 @@
 # CS Fundamentals 💻
-A sum up of fundamental concepts in the fields of **Computer Science**.
-
-> **Note**  
-> - Code snippets are written in **Java** programming language.
-
-## Status
 ![](https://progress-bar.dev/10?title=Coding)
 ![](https://progress-bar.dev/0?title=Databases)
 ![](https://progress-bar.dev/0?title=DistributedSystems)
 ![](https://progress-bar.dev/0?title=Network&Security)
 ![](https://progress-bar.dev/0?title=OperatingSystems)
+
+A sum up of fundamental concepts in the fields of **Computer Science**.
+
+> **Note**  
+> - Code snippets are written in **Java** programming language.
