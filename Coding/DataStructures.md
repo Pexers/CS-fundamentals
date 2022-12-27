@@ -2,6 +2,8 @@
 
 Copyright &copy; 2023, Pexers (https://github.com/Pexers)
 
+Data structures are used to store and organize data. We can use algorithms to manipulate and use our data structures. Different types of data are organized more efficiently by using different data structures.
+
 ## Array
 <sup>Also called: static array</sup>  
 An array organizes items sequentially, one after another in memory. Each position in the array has an index, starting at 0.
@@ -150,9 +152,9 @@ Queue<Integer> queue = new LinkedList<>();
 - **Slow lookups**. To access or edit an item in a queue, we have to take _O(k)_ time to walk from the head of the queue to the _k<sup>th</sup>_ item.
 #### _Operations_ (`java.util.Queue`)
 The operations `add`, `remove` and `element` can throw unchecked exceptions, while the others do not.
-- `T peek() / element()`
-- `boolean offer(T e) / add(T e)`
-- `T pool() / remove()`
+- `T peek()` / `element()`
+- `boolean offer(T e)` / `add(T e)`
+- `T pool()` / `remove()`
 
 ## Stack
 A stack stores items in a last-in, first-out (LIFO) order. Popular use-cases for stacks are: (i) the _call stack_ is a stack that tracks function calls in a program – when a function returns, which function do we "pop" back to? To the last one that "pushed" a function call; (ii) _depth-first search_ uses a stack (sometimes the _call stack_) to keep track of which nodes to visit next.
@@ -181,26 +183,62 @@ Stack<String> stack = new Stack<>();
 - `T push(T item)`
 - `T pop()`
 - `int search(Object o)`
----
-## TODO
-<sup> Also called: </sup>  
-TODO
 
-||Worst-case|
-|---|---|
-|space|_O(n)_|
-|lookup|_O(n)_|
-|append|_O(1)_|
-|insert|_O(n)_|
-|delete|_O(n)_|
+## Hashing 
+- `HashMap<k,v>`. Stores elements in form of key-value pair i.e each element has its corresponding key which is required for its retrieval during iteration. Single null key and any number of null value can be inserted in hash map without any restriction. Methods are not synchronized. Multiple threads can operate simultaneously and hence hash map’s object is not thread-safe.
+- `HashTable<k,v>`. Every method is synchronized. Only one thread is allowed to operate the hash table’s object at a time. Hence it is thread-safe. Null is not allowed for both key and value, otherwise, a null pointer exception will be thrown.
+- `HashSet<E>`. Stores only objects, no such key-value pairs are maintained. Allows only one null value in its collection, after which no null value is allowed to be added.
+
+||Average|Worst-case|
+|---|---|---|
+|space|_O(n)_|_O(n)_|
+|lookup|_O(1)_|_O(n)_|
+|insert|_O(1)_|_O(n)_|
+|delete|_O(1)_|_O(n)_|
 
 #### _Usage_
 ```java
-// TODO
+HashMap<String, Integer> map = new HashMap<>();
 ```
 #### _Strengths_
-- TODO
+- **Fast lookups**. Lookups take _O(1)_ time on average.
 #### _Weaknesses_
-- TODO
-#### _Operations_ (``)
-- `void todo()`
+ - **Unordered**. Keys aren't stored in a special order. When looking for the smallest key, the largest key, or all the keys in a range, we would have to look through every key to find it.
+- **Slow worst-case lookups**. Suppose we keep adding more items to our hash map. As the number of keys and values in our hash map exceeds the number of indices in the underlying array, _hash collisions_ become inevitable, resulting in _O(n)_ lookups when all indices are used. To mitigate this, we could expand the underlying array whenever things start to get crowded. That requires allocating a larger array and _rehashing_ all of the existing keys to figure out their new position, which also takes _O(n)_ time.
+- **Not cache-friendly**. Many hash map implementations use linked lists, which don't put data next to each other in memory.
+- **Single-directional lookups**. While we can look up the value for a given key in _O(1)_ time, looking up the keys for a given value requires looping through the whole dataset, which takes _O(n)_ time.
+
+#### _Operations_ (`java.util.HashMap`)
+- `T get(Object key)`
+- `T put(T key, T value)`
+- `void clear()`
+- `boolean containsKey(Object key)`
+- `boolean containsValue(Object value)`
+- `Set<Entry<k,v>> entrySet()`
+
+## Trees
+A tree organizes values hierarchically. Each entry in the tree is called a node, and every node links to zero or more child nodes.
+
+_Leaf_ nodes are nodes that're on the bottom of the tree (more formally: nodes that have no children). Each node in a tree has a _depth_: the number of links from the root to the node. A tree's _height_ is the number of links from its root to the furthest leaf (the same as the maximum node depth). The _degree_ of a node refers to its number of subtrees.
+
+More definitions:
+- **Binary Tree**. A tree where every node has at most two children.
+- **Perfect Binary Tree**. A tree that doesn't have room for any more nodes, unless we increase the tree's height.
+- **Balanced Binary Tree**. A tree whose height is small relative to the number of nodes it has. This usually means that the height is _O(lg(n))_, where _n_ is the number of nodes. Balancing the tree makes for better search times _O(lg(n))_ as opposed to _O(n)_.
+- **Red-Black Tree**. A kind of self-balancing binary search tree where each node has an extra bit, often interpreted as the color (red or black). These colors are used to ensure that the tree remains balanced during insertions and deletions. 
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/47757441/209688234-4accb8dd-95fc-44cc-9f78-2687b7e436ed.png" width="400">
+</p>
+
+#### _Usage_
+```java
+TreeSet<String> treeSet = new TreeSet<>();
+TreeMap<String,Integer> treeMap = new TreeMap<>();
+```
+
+- `TreeSet` is mainly an implementation of `SortedSet` in Java, where duplication is not allowed and objects are stored in sorted and ascending order.
+
+- `TreeMap` is an implementation of the `Map` interface. Duplication of values is allowed, and each node stores two objects, the key and respective value. The sorting order follows the natural ordering of keys.
+
+Both `TreeSet` and `TreeMap` internally use a Red-Black Tree.
