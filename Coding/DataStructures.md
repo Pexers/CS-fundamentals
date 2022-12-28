@@ -224,7 +224,7 @@ _Leaf_ nodes are nodes that're on the bottom of the tree (more formally: nodes t
 More definitions:
 - **Binary Tree**. A tree where every node has at most two children.
 - **Perfect Binary Tree**. A tree that doesn't have room for any more nodes, unless we increase the tree's height.
-- **Balanced Binary Tree**. A tree whose height is small relative to the number of nodes it has. This usually means that the height is _O(lg(n))_, where _n_ is the number of nodes. Balancing the tree makes for better search times _O(lg(n))_ as opposed to _O(n)_.
+- **Balanced Binary Tree**. A tree whose height is small relative to the number of nodes it has. This usually means that the height is _O(log n)_, where _n_ is the number of nodes. Balancing the tree makes for better search times _O(log n)_ as opposed to _O(n)_.
 - **Red-Black Tree**. A kind of self-balancing binary search tree where each node has an extra bit, often interpreted as the color (red or black). These colors are used to ensure that the tree remains balanced during insertions and deletions. 
 
 <p align="center">
