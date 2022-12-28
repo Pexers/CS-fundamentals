@@ -9,7 +9,7 @@ Data structures are used to store and organize data. We can use algorithms to ma
 An array organizes items sequentially, one after another in memory. Each position in the array has an index, starting at 0.
 
 ||Worst-case|
-|---|---|
+|---|:---:|
 |space|_O(n)_|
 |lookup|_O(1)_|
 |append|_O(1)_|
@@ -61,7 +61,7 @@ A dynamic array expands as we add more items, so we don't need to determine the 
 Although this array looks like a dynamically growing collection, internally it does an array copy when it needs to expand.
 
 ||Average|Worst-case|
-|---|---|---|
+|---|:---:|:---:|
 |space|_O(n)_|_O(n)_|
 |lookup|_O(1)_|_O(1)_|
 |append|_O(1)_|_O(n)_|
@@ -97,7 +97,7 @@ A linked list organizes items sequentially, with each item storing a pointer to 
 </p>
 
 ||Worst-case|
-|---|---|
+|---|:---:|
 |space|_O(n)_|
 |lookup|_O(n)_|
 |append|_O(1)_|
@@ -135,7 +135,7 @@ A queue stores items in a first-in, first-out (FIFO) order. Popular use-cases fo
 </p>
 
 ||Worst-case|
-|---|---|
+|---|:---:|
 |space|_O(n)_|
 |peek|_O(1)_|
 |enqueue|_O(1)_|
@@ -164,7 +164,7 @@ A stack stores items in a last-in, first-out (LIFO) order. Popular use-cases for
 </p>
 
 ||Worst-case|
-|---|---|
+|---|:---:|
 |space|_O(n)_|
 |peek|_O(1)_|
 |push|_O(1)_|
@@ -190,7 +190,7 @@ Stack<String> stack = new Stack<>();
 - `HashSet<E>`. Stores only objects, no such key-value pairs are maintained. Allows only one null value in its collection, after which no null value is allowed to be added.
 
 ||Average|Worst-case|
-|---|---|---|
+|---|:---:|:---:|
 |space|_O(n)_|_O(n)_|
 |lookup|_O(1)_|_O(n)_|
 |insert|_O(1)_|_O(n)_|
