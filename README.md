@@ -1,5 +1,5 @@
 # CS Fundamentals 💻
-![](https://progress-bar.dev/10?title=Coding)
+![](https://progress-bar.dev/50?title=Coding)
 ![](https://progress-bar.dev/0?title=Databases)
 ![](https://progress-bar.dev/0?title=DistributedSystems)
 ![](https://progress-bar.dev/0?title=Network&Security)
