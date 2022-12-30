@@ -59,12 +59,65 @@ public static void printAllNumbersThenAllPairSums(int[] numbers) {
 ```
 
 ### Space complexity
+Sometimes we want to optimize code for using less memory, in addition to using less runtime. Talking about space complexity, or memory cost, is very similar to talking about time cost. We simply look at the total size of any new variables we're allocating with respect to the size of the input.
 
 #### _Calculation_
+
+|Data type|Size|Description|
+|:---:|:---:|---|
+|`boolean`|1 bit|Stores true or false values.|
+|`byte`|1 byte|Stores whole numbers from -128 to 127.|
+|`char`|2 bytes|Stores a single character/letter or ASCII values.|
+|`short`|2 bytes|Stores whole numbers from `-32,768` to `32,767`.|
+|`int`|4 bytes|Stores whole numbers from `-2,147,483,648` to `2,147,483,647`.|
+|`float`|4 bytes|Stores fractional numbers. Sufficient for storing 6 to 7 decimal digits.|
+|`long`|8 bytes|Stores whole numbers from `-9,223,372,036,854,775,808` to `9,223,372,036,854,775,807`.|
+|`double`|8 bytes|Stores fractional numbers. Sufficient for storing 15 decimal digits.|
+- **Dropping constants**. The below code snippet has a total memory usage of _O(4*n + 4 + 4 + 4)_, but we simplify it to _O(n)_.
+```java
+public int sumArray(int[] array) {  // 4B*n
+    int size = array.length;  // 4B
+    int sum = 0;  // 4B
+
+    for (int iterator = 0; iterator < size; iterator++) {  // 4B iterator
+        sum += array[iterator];
+    }
+
+    return sum;
+}
+```
+
+#### Java memory allocation: _Heap Vs Stack_
+If we have a variable which is intended to outlive the execution of the method that created it, it needs to be on the _heap_. This applies both to primitive and non-primitive data types.
+
+If a variable is intended to go out of scope shortly after its creation – say, at the end of the method in which it's created, or even earlier – then it's appropriate for that variable to be created on the _stack_. Local variables and method arguments fit this criterion; if they are primitives, the actual value will be on the _stack_, and if they are references to the object (but not the object itself) it will be on the _stack_ as well.
+
+_Stack_ memory is always referenced in LIFO (Last-In-First-Out) order. Whenever a method is invoked, a new block is created in the _stack_ memory for the method to hold local primitive values and reference to other objects. As soon as the method ends, the block becomes unused and becomes available for the next method. _Stack_ memory size is very less compared to _heap_ memory.
+
+_Practical example_
+```java
+public class Memory {
+
+	public static int counter = 0;  // Heap, global variable
+
+	public static void main(String[] args) {  // Stack, main method block
+		int i = 1;  // Stack
+		Memory mem = new Memory();  // 'mem' reference in Stack, object in Heap
+		Object obj = new Object();  // 'obj' reference in Stack, object in Heap
+		mem.foo(obj);  // New Stack block created for foo method
+	}  // Method block becomes free in Stack
+
+	private void foo(Object param) {  // Stack, foo method block
+		String str = param.toString();  // 'str' reference in Stack, String object in Heap (within the String pool)
+		System.out.println(str);
+	}  // Method block becomes free in Stack
+
+}
+```
 
 ## Search Algorithms
 
 ## Sorting Algorithms
 
 
-[^1]: In computer science, exponential growth usually occurs as a consequence of discrete processes like the _divide-and-conquer_ algorithms or in manipulation of binary values. Consequently, we typically use _log<sub>2</sub> n_ as a logarithmic function, since it just arises so frequently. In terms of computational complexity, all the bases are the same as they differ by a constant, so it's actually irrelevant which base we choose.
+[^1]: In computer science, exponential growth usually occurs as a consequence of discrete processes like the _divide-and-conquer_ algorithms or in manipulation of binary values. Consequently, we typically use base _2_ in logarithmic functions, since it just arises so frequently, meaning that _log<sub>2</sub> n_ is simplified to _log n_.
