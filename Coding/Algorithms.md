@@ -117,7 +117,7 @@ public class Memory {
 		mem.foo(obj);  // New Stack block created for foo method
 	}  // Method block becomes free in Stack
 
-	private void foo(Object param) {  // Stack, foo method block
+	private static void foo(Object param) {  // Stack, foo method block
 		String str = param.toString();  // 'str' reference in Stack, String object in Heap (within the String pool)
 		System.out.println(str);
 	}  // Method block becomes free in Stack
@@ -132,16 +132,16 @@ The main reasons to use Recursion are:
 - Some data structures, such as trees, are easier to explore using recursion.
 - Recursion is closely related to the term of _reduction_, which plays a central role in many algorithms and in computer science in general.
 
-## Search Algorithms
+## Searching Algorithms
 TODO:
 
-### Linear Search Algorithm
-<sup>**Time complexity**: _O(n)_</sup>
+### Linear Search
+<sup>**Time complexity**: _O(n)_</sup>  
 Linear Search is the simplest algorithm employed to search for an element in a data collection. It examines each element until it finds a match, starting from the beginning of the collection until the end.
 
-### Binary Search Algorithm
-<sup>**Time complexity**: _O(log n)_</sup>
-Binary Search is a searching algorithm used in **sorted** arrays by repeatedly dividing the search interval in half. The idea of the algorithm is to take advantage of the sorted property and reduce the time complexity of the linear search. 
+### Binary Search
+<sup>**Time complexity**: _O(log n)_</sup>  
+Binary Search is a searching algorithm used in **sorted arrays** by repeatedly dividing the search interval in half. The idea of the algorithm is to take advantage of the sorted property and reduce the time complexity of the linear search. 
 
 In order for Binary Search to be considered a D&C (_divide-and-conquer_) algorithm, it would need to use two disjoint recursive calls, just like QuickSort does. Binary Search does not have this, even though it can be implemented recursively.
 
@@ -162,32 +162,125 @@ public static int binarySearchIter(int arr[], int x) {
 ```
 _Recursive approach_
 ```java
-public static int binarySearchRecur(int arr[], int left, int right, int x) {
+public static int binarySearch(int arr[], int left, int right, int x) {
     if (left <= right && left <= arr.length - 1) {
 		mid = left + ((right - left) / 2);  // Find the ~middle index
 		if (arr[mid] == x) {  // Check if 'x' is present at mid
 			return mid;
 		}
 		if (arr[mid] < x)	// If 'x' greater, ignore left half
-			return binarySearchRecur(arr, mid + 1, right, x);
+			return binarySearch(arr, mid + 1, right, x);
 		else				// If 'x' smaller, ignore right half
-			return binarySearchRecur(arr, left, mid - 1, x);
+			return binarySearch(arr, left, mid - 1, x);
 	}
 	return -1;  // 'x' was not found
 }
 ```
 The space complexity of Binary Search, without considering inputs, is _O(1)_ in the iterative approach, while for the recursive implementation is _O(log n)_, due to the need for extra function calls.
 
-### Breadth-First search (BFS)
-TODO:
+### Breadth-First Search (BFS)
+<sup>**Time complexity**: _O(n)_ || **Space complexity**: _O(n)_</sup>  
+A method for exploring a **tree or graph**. In a BFS, we first explore all the nodes one step away, then all the nodes two steps away, etc. In a tree, this is, we first walk through all nodes on the same level before moving on to the next level.
+
+BFS uses _Queue_ data structure for finding the shortest path, so it works on the concept of FIFO. When the target is **close to the source**, BFS performs better than DFS.
+
+The worst-case time complexity can happen when we have an unbalanced tree, where we start from the root node and may end up searching the tree until the farthest leaf node.
+
+|(1)|(2)|(3)|(4)|
+|:---:|:---:|:---:|:---:|
+|<img src="https://user-images.githubusercontent.com/47757441/210258444-7ad2bb4f-2c1b-4ba1-ba67-36df5682b72c.png" width="200">|<img src="https://user-images.githubusercontent.com/47757441/210258446-14278afb-1b46-44b5-847c-ec13f38f8ae4.png" width="200">|<img src="https://user-images.githubusercontent.com/47757441/210258449-f3339634-bdd3-48bb-9c35-708a8eb5bf41.png" width="200">|<img src="https://user-images.githubusercontent.com/47757441/210258440-00be8878-4789-40b4-b758-d2ebcc7d8953.png" width="200">|
+
+_Node class_
+```java
+public class Node {
+	private int value;
+	List<Node> children;
+
+	public int getValue() {
+		return value;
+	}
+}
+```
+_Iterative approach_
+```java
+public static Node breadthFirstSearchIter(Node root, int target) {
+	Queue<Node> queue = new LinkedList<>();
+	Node current;
+	queue.add(root);
+
+	while(!queue.isEmpty()) {
+		current = queue.remove();
+		if (current.getValue() == target) return current;
+		else queue.addAll(current.children);
+	}
+
+	return null;  // Target node not found
+}
+```
+Because the Queue uses the FIFO method, the loop only starts verifying the children of a certain node once all the other neighbor nodes on the same level have been verified, that is, removed from the queue.
+
+#### _Strengths_
+- BFS will find the shortest path between the starting point and any other reachable node
+
+#### _Weaknesses_
+- BFS on a binary tree generally requires more memory than DFS.
 
 ### Depth-First Search (DFS)
-A method for exploring a tree or graph. In a DFS, we go as deep as possible down one path before backing up and trying a different one.
+<sup>**Time complexity**: _O(n)_ || **Space complexity**: _O(n)_ – iterative or _O(h)_ – recursive, where _h_ is the maximum tree depth</sup>  
+A method for exploring a **tree or graph**. In a DFS, we go as deep as possible down one path before backing up and trying a different one.
+
+DFS uses _Stack_ data structure, so it works on the concept of LIFO. When the target is **far from the source**, DFS is preferable to BFS.
+
+The worst-case time complexity can happen when we have an unbalanced tree, where we start from the root node and may end up searching the tree until the farthest leaf node.
 
 |(1)|(2)|(3)|(4)|(5)|
 |:---:|:---:|:---:|:---:|:---:|
 |<img src="https://user-images.githubusercontent.com/47757441/210252635-650140ea-1aef-4229-b62e-2597f43fe86c.png" width="200">|<img src="https://user-images.githubusercontent.com/47757441/210252637-f59b3ea1-a753-4a7b-9550-dc2609dd64e2.png" width="200">|<img src="https://user-images.githubusercontent.com/47757441/210252638-0265bbf8-98e4-4f15-a7a4-5efdd07ed8eb.png" width="200">|<img src="https://user-images.githubusercontent.com/47757441/210252641-f885806b-0b14-4c18-9bac-ac74cd2a1d52.png" width="200">|<img src="https://user-images.githubusercontent.com/47757441/210252629-e6d976b6-0b6f-4ed6-9e92-b6483ba126f3.png" width="200">|
 
+_Node class_
+```java
+public class Node {
+	private int value;
+	Node left;
+	Node right;
+
+	public int getValue() {
+		return value;
+	}
+}
+```
+_Recursive approach_
+```java
+public void depthFirstSearch(Node node) {
+    if (node != null) {
+        System.out.println(node.getValue()); 	// Pre-order transversal
+        depthFirstSearch(node.left);
+        // System.out.println(node.value);	// In-order transversal
+        depthFirstSearch(node.right);
+        // System.out.println(node.value);	// Post-order transversal
+    }
+}
+```
+_Iterative approach_ (pre-order)
+```java
+public void depthFirstSearch(Node root) {
+	Stack<Node> stack = new Stack<>();
+	Node current = root;
+	stack.push(root);
+
+	while (!stack.isEmpty()) {
+		current = stack.pop();
+        System.out.println(current.getValue());	 // Pre-order transversal
+        if (current.right != null) {
+            stack.push(current.right);
+        }    
+        if (current.left != null) {
+            stack.push(current.left);
+        }
+	}
+}
+```
+In-order, Pre-order, and Post-order transversal algorithms for the iterative approach differ between them.
 #### _Strengths_
 - DFS on a binary tree generally requires less memory than BFS.
 - DFS can be easily implemented with recursion.

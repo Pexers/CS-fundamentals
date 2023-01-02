@@ -27,21 +27,21 @@ int[] arr = new int[5];
 
 #### _Weaknesses_
 - **Fixed size**. We need to specify how many items we're going to store in the array ahead of time when defined (unless a fancy _dynamic_ array is being used).
-- **Costly inserts and deletes**. We have to _shift_ the remaining items to fill in (insert) or close (delete) gaps, which takes _O(n)_ time in a worst-case scenario. If the array has enough space (no `copyOf` required) and the insertion index is above 0, then, the time complexity to shift the remaining items of the array would be _O(n - k)_, where _k_ represents the index where the new item will be inserted.
+- **Costly inserts/deletes**. We have to _shift_ the remaining items to fill in (insert) or close (delete) gaps, which takes _O(n)_ time in a worst-case scenario. If the array has enough space (no `copyOf` required) and the insertion index is above 0, then, the time complexity to shift the remaining items of the array would be _O(n - k)_, where _k_ represents the index where the new item will be inserted.
 
-_Insert v1_
+_Insert using_ `copyOf`
 ```java 
 int[] newArray = Arrays.copyOf(arr, arr.length + 1);
 newArray[newArray.length - 1] = newItem;
 ```
-_Insert v2_
+_Insert manual copy_
 ```java
 public static int[] insert(int[] arr, int pos, int num) {
     int[] result = new int[arr.length];
     for(int i = 0; i < pos; i++)  // Copy left items
         result[i] = arr[i];
     result[pos] = num;  // Insert number
-    for(int i = pos + 1; i < arr.length; i++)  // Copy right items
+    for(int i = pos + 1; i < arr.length; i++)  // Copy rest of the items (right)
         result[i] = arr[i - 1];
     return result;
 }
@@ -80,7 +80,7 @@ ArrayList<String> arr = new ArrayList<String>();
 
 #### _Weaknesses_
 - **Slow worst-case appends**. Usually, adding a new item at the end of the dynamic array takes _O(1)_ time. But if the dynamic array doesn't have enough room for the new item, it'll need to expand, which takes _O(n)_ time.
-- **Costly inserts and deletes**. We have to _shift_ the remaining items to fill in (insert) or close (delete) gaps, which takes _O(n)_ time in a worst-case scenario.
+- **Costly inserts/deletes**. We have to _shift_ the remaining items to fill in (insert) or close (delete) gaps, which takes _O(n)_ time in a worst-case scenario.
 
 #### _Operations_ (`java.util.ArrayList`)
 - `T get(int index)`
@@ -118,7 +118,7 @@ LinkedList<String> list = new LinkedList<>();
 
 #### _Weaknesses_
 - **Slow lookups**. To access or edit an item in a linked list, we have to take _O(k)_ time to walk from the head of the list to the _k<sup>th</sup>_ item.
-- **Slow worst-case inserts and deletes**. To insert or delete a new item in a linked list, we have to take _O(k)_ time to walk from the head of the list to the _k<sup>th</sup>_ item.
+- **Slow worst-case inserts/deletes**. To insert or delete a new item in a linked list, we have to take _O(k)_ time to walk from the head of the list to the _k<sup>th</sup>_ item.
 
 #### _Operations_ (`java.util.LinkedList`)
 - `boolean add(T e)`
@@ -233,10 +233,10 @@ _Leaf_ nodes are nodes that're on the bottom of the tree (more formally: nodes t
 
 More definitions:
 - **Binary Tree**. A tree where every node has at most two children.
-- **Binary Search Tree**. A binary tree that for every given node, all its left descendants have a lower value, and all its right descendants have a greater value.
+- **Binary Search Tree (BST)**. A binary tree that for every given node, all its left descendants have a lower value, and all its right descendants have a greater value. The worst-case time complexity for searching in a BST is _O(n)_. This can happen when we have an unbalanced BST, where we start from the root node and may end up searching the tree until the farthest leaf node. On average, the time complexity is _O(log n)_.
 - **Perfect Binary Tree**. A binary tree that doesn't have room for any more nodes, unless we increase the tree's height.
 - **Balanced Binary Tree**. A binary tree whose height is small relative to the number of nodes it has. This usually means that the height is _O(log n)_, where _n_ is the number of nodes. Balancing the tree makes for better search times _O(log n)_ as opposed to _O(n)_.
-- **Red-Black Tree**. A kind of self-balancing binary search tree where each node has an extra bit, often interpreted as the color (red or black). These colors are used to ensure that the tree remains balanced during insertions and deletions. 
+- **Red-Black Tree**. A kind of self-balancing binary search tree where each node has an extra bit, often interpreted as the color (red or black). These colors are used to ensure that the tree remains balanced during insertions/deletions, which gets a reasonable trade-off between the speed of node insertion/deletion and searching.
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/47757441/209688234-4accb8dd-95fc-44cc-9f78-2687b7e436ed.png" width="400">
