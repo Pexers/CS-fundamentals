@@ -24,6 +24,7 @@ int[] arr = new int[5];
 - **Fast lookups**. Retrieving an item at a given index takes _O(1)_ time, regardless of the length of the array. This is due to being cache-friendly.
 - **Cache-friendly**. Arrays place items right next to each other in memory, making efficient use of caches.
 - **Fast appends**. Adding a new item at the end of the array takes _O(1)_ time, if the array has space.
+
 #### _Weaknesses_
 - **Fixed size**. We need to specify how many items we're going to store in the array ahead of time when defined (unless a fancy _dynamic_ array is being used).
 - **Costly inserts and deletes**. We have to _shift_ the remaining items to fill in (insert) or close (delete) gaps, which takes _O(n)_ time in a worst-case scenario. If the array has enough space (no `copyOf` required) and the insertion index is above 0, then, the time complexity to shift the remaining items of the array would be _O(n - k)_, where _k_ represents the index where the new item will be inserted.
@@ -76,9 +77,11 @@ ArrayList<String> arr = new ArrayList<String>();
 - **Fast lookups**. Just like arrays, retrieving an item at a given index takes _O(1)_ time, regardless of the length of the array. This is due to being cache-friendly.
 - **Cache-friendly**. Just like arrays, dynamic arrays place items right next to each other in memory, making efficient use of caches.
 - **Mutable size**. We can add as many items as we want, and the dynamic array will expand to hold them.
+
 #### _Weaknesses_
 - **Slow worst-case appends**. Usually, adding a new item at the end of the dynamic array takes _O(1)_ time. But if the dynamic array doesn't have enough room for the new item, it'll need to expand, which takes _O(n)_ time.
 - **Costly inserts and deletes**. We have to _shift_ the remaining items to fill in (insert) or close (delete) gaps, which takes _O(n)_ time in a worst-case scenario.
+
 #### _Operations_ (`java.util.ArrayList`)
 - `T get(int index)`
 - `boolean add(T e)`
@@ -112,9 +115,11 @@ LinkedList<String> list = new LinkedList<>();
 #### _Strengths_
 - **Fast operations at the ends**. Adding new items at either end of a linked list takes _O(1)_ time. Removing the head item also takes _O(1)_ time.
 - **Flexible size**. There's no need to specify how many items are going to be stored ahead of time. We can keep adding new items to the list as long as there's enough space on the machine.
+
 #### _Weaknesses_
 - **Slow lookups**. To access or edit an item in a linked list, we have to take _O(k)_ time to walk from the head of the list to the _k<sup>th</sup>_ item.
 - **Slow worst-case inserts and deletes**. To insert or delete a new item in a linked list, we have to take _O(k)_ time to walk from the head of the list to the _k<sup>th</sup>_ item.
+
 #### _Operations_ (`java.util.LinkedList`)
 - `boolean add(T e)`
 - `void add(int index, T element)`
@@ -148,8 +153,10 @@ Queue<Integer> queue = new LinkedList<>();
 ```
 #### _Strengths_
 - **Fast operations**. All queue operations take _O(1)_ time.
+
 #### _Weaknesses_
 - **Slow lookups**. To access or edit an item in a queue, we have to take _O(k)_ time to walk from the head of the queue to the _k<sup>th</sup>_ item.
+
 #### _Operations_ (`java.util.Queue`)
 The operations `add`, `remove` and `element` can throw unchecked exceptions, while the others do not.
 - `T peek()` / `element()`
@@ -176,8 +183,10 @@ Stack<String> stack = new Stack<>();
 ```
 #### _Strengths_
 - **Fast operations**. All stack operations take _O(1)_ time.
+
 #### _Weaknesses_
 - **Slow lookups**. To access or edit an item in a stack, we have to take _O(k)_ time to walk from the top of the stack to the _k<sup>th</sup>_ item.
+
 #### _Operations_ (`java.util.Stack`)
 - `T peek()`
 - `T push(T item)`
@@ -202,6 +211,7 @@ HashMap<String, Integer> map = new HashMap<>();
 ```
 #### _Strengths_
 - **Fast lookups**. Lookups take _O(1)_ time on average.
+
 #### _Weaknesses_
  - **Unordered**. Keys aren't stored in a special order. When looking for the smallest key, the largest key, or all the keys in a range, we would have to look through every key to find it.
 - **Slow worst-case lookups**. Suppose we keep adding more items to our hash map. As the number of keys and values in our hash map exceeds the number of indices in the underlying array, _hash collisions_ become inevitable, resulting in _O(n)_ lookups when all indices are used. To mitigate this, we could expand the underlying array whenever things start to get crowded. That requires allocating a larger array and _rehashing_ all of the existing keys to figure out their new position, which also takes _O(n)_ time.
@@ -223,8 +233,9 @@ _Leaf_ nodes are nodes that're on the bottom of the tree (more formally: nodes t
 
 More definitions:
 - **Binary Tree**. A tree where every node has at most two children.
-- **Perfect Binary Tree**. A tree that doesn't have room for any more nodes, unless we increase the tree's height.
-- **Balanced Binary Tree**. A tree whose height is small relative to the number of nodes it has. This usually means that the height is _O(log n)_, where _n_ is the number of nodes. Balancing the tree makes for better search times _O(log n)_ as opposed to _O(n)_.
+- **Binary Search Tree**. A binary tree that for every given node, all its left descendants have a lower value, and all its right descendants have a greater value.
+- **Perfect Binary Tree**. A binary tree that doesn't have room for any more nodes, unless we increase the tree's height.
+- **Balanced Binary Tree**. A binary tree whose height is small relative to the number of nodes it has. This usually means that the height is _O(log n)_, where _n_ is the number of nodes. Balancing the tree makes for better search times _O(log n)_ as opposed to _O(n)_.
 - **Red-Black Tree**. A kind of self-balancing binary search tree where each node has an extra bit, often interpreted as the color (red or black). These colors are used to ensure that the tree remains balanced during insertions and deletions. 
 
 <p align="center">
@@ -242,3 +253,6 @@ TreeMap<String,Integer> treeMap = new TreeMap<>();
 - `TreeMap` is an implementation of the `Map` interface. Duplication of values is allowed, and each node stores two objects, the key and respective value. The sorting order follows the natural ordering of keys.
 
 Both `TreeSet` and `TreeMap` internally use a Red-Black Tree.
+
+## Graphs
+TODO:
