@@ -1,4 +1,4 @@
-# Computer Science Fundamentals 🤓💻
+# _Computer Science_ Fundamentals 📖💻
 ![](https://progress-bar.dev/50?title=Coding)
 ![](https://progress-bar.dev/0?title=Databases)
 ![](https://progress-bar.dev/0?title=DistributedSystems)
