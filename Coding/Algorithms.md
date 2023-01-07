@@ -295,7 +295,8 @@ A sorting algorithm is used to arrange elements of an array/list in a specific o
 |Insertion Sort|_O(n)_|_O(n<sup>2</sup>)_|_O(n<sup>2</sup>)_|
 |Heap Sort|_O(n)_|_O(n&nbsp;log&nbsp;n)_|_O(n&nbsp;log&nbsp;n)_|
 |Merge Sort|_O(n&nbsp;log&nbsp;n)_|_O(n&nbsp;log&nbsp;n)_|_O(n&nbsp;log&nbsp;n)_|
-|Quick Sort|_O(n&nbsp;log&nbsp;n)_|_O(n&nbsp;log&nbsp;n)_|_O(n<sup>2</sup>)_|
+|Quick Sort|_O(n&nbsp;log&nbsp;n)_|_O(n&nbsp;log&nbsp;n)_|_O(n<sup>2</sup>)_|  
+
 <sup>_Quick Sort tends to be the fastest in most cases, explained below*_</sup>
 
 ### Selection / Bubble / Insertion Sort
