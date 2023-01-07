@@ -90,10 +90,10 @@ Sometimes we want to optimize code for using less memory, in addition to using l
 public static int sumArray(int[] array) {  // 4B*n
 	int size = array.length;  // 4B
 	int sum = 0;  // 4B
-	for (int iterator = 0; iterator < size; iterator++) {  // 4B iterator
-		sum += array[iterator];
+	for (int i : array) {  // 4B iterator
+		sum += i;
 	}
-    return sum;
+	return sum;
 }
 ```
 #### Java memory allocation: _Heap Vs Stack_
@@ -152,8 +152,8 @@ public static int binarySearchIter(int arr[], int target) {
 		if (arr[mid] == target) {  // Check if 'target' is present at mid
 			return mid;
 		}
-		if (arr[mid] < target) left = mid + 1;	// If 'target' greater, ignore left half
-		else right = mid - 1;  				// If 'target' smaller, ignore right half
+		if (arr[mid] < target) left = mid + 1;  // If 'target' greater, ignore left half
+		else right = mid - 1;                   // If 'target' smaller, ignore right half
 	}
 	return -1;  // 'target' was not found
 }
@@ -162,13 +162,13 @@ _Recursive approach_
 ```java
 public static int binarySearch(int arr[], int left, int right, int target) {
 	if (left <= right && left <= arr.length - 1) {
-		mid = left + ((right - left) / 2);  // Find the ~middle index
+		int mid = left + ((right - left) / 2);  // Find the ~middle index
 		if (arr[mid] == target) {  // Check if 'target' is present at mid
 			return mid;
 		}
-		if (arr[mid] < target)	// If 'target' greater, ignore left half
+		if (arr[mid] < target)  // If 'target' greater, ignore left half
 			return binarySearch(arr, mid + 1, right, target);
-		else				// If 'target' smaller, ignore right half
+		else                // If 'target' smaller, ignore right half
 			return binarySearch(arr, left, mid - 1, target);
 	}
 	return -1;  // 'target' was not found
@@ -193,7 +193,7 @@ _Node class_
 public class Node {
 	private int value;
 	List<Node> children;
-	
+
 	public int getValue() {
 		return value;
 	}
@@ -202,16 +202,16 @@ public class Node {
 _Iterative approach_
 ```java
 public static Node breadthFirstSearchIter(Node root, int target) {
-	Queue<Node> queue = new LinkedList<>();
-	Node current;
-	queue.add(root);
+    Queue<Node> queue = new LinkedList<>();
+    Node current;
+    queue.add(root);
 
-	while(!queue.isEmpty()) {
-		current = queue.remove();
-		if (current.getValue() == target) return current;
-		else queue.addAll(current.children);
-	}
-	return null;  // Target node not found
+    while (!queue.isEmpty()) {
+        current = queue.remove();
+        if (current.getValue() == target) return current;
+        else queue.addAll(current.children);
+    }
+    return null;  // Target node not found
 }
 ```
 Because the Queue uses the FIFO method, the loop only starts verifying the children of a certain node once all the other neighbor nodes on the same level have been verified, that is, removed from the queue.
@@ -249,13 +249,13 @@ public class Node {
 _Recursive approach_
 ```java
 public static void depthFirstSearch(Node node) {
-    if (node != null) {
-        System.out.println(node.getValue()); 	// Pre-order transversal
-        depthFirstSearch(node.left);
-        // System.out.println(node.value);	// In-order transversal
-        depthFirstSearch(node.right);
-        // System.out.println(node.value);	// Post-order transversal
-    }
+	if (node != null) {
+		System.out.println(node.getValue());    // Pre-order transversal
+		depthFirstSearch(node.left);
+		// System.out.println(node.value);      // In-order transversal
+		depthFirstSearch(node.right);
+		// System.out.println(node.value);      // Post-order transversal
+	}
 }
 ```
 _Iterative approach_ (pre-order)
@@ -267,10 +267,10 @@ public static void depthFirstSearchIter(Node root) {
 
 	while (!stack.isEmpty()) {
 		current = stack.pop();
-		System.out.println(current.getValue());	 // Pre-order transversal
+		System.out.println(current.getValue());  // Pre-order transversal
 		if (current.right != null) {
 			stack.push(current.right);
-		}    
+		}
 		if (current.left != null) {
 			stack.push(current.left);
 		}
@@ -322,51 +322,51 @@ All three algorithms have a quadratic worst-case time complexity and hence work 
 - **Merge Sort**. Works by dividing the list into halves, then iterates through the new halves, continually dividing them down further to their smaller parts. Subsequently, a comparison of smaller halves is conducted, and the results are combined together to form the final sorted list.
 ```java
 public static int[] mergeSort(int[] arr) {
+	if (arr.length <= 1) return arr;  // Base case: single element array
 	// Split the input in half
-    int middleIndex = arr.length / 2;
-    int[] left  = Arrays.copyOfRange(arr, 0, middleIndex);
-    int[] right = Arrays.copyOfRange(arr, middleIndex, arr.length);
+	int middleIndex = arr.length / 2;
+	int[] left = Arrays.copyOfRange(arr, 0, middleIndex);
+	int[] right = Arrays.copyOfRange(arr, middleIndex, arr.length);
 
-    // Sort each half
-    int[] leftSorted = mergeSort(left);
-    int[] rightSorted = mergeSort(right);
+	// Sort each half
+	int[] leftSorted = mergeSort(left);
+	int[] rightSorted = mergeSort(right);
 
-    return mergeArrays(leftSorted, rightSorted);  // Merge the sorted halves
+	return mergeArrays(leftSorted, rightSorted);  // Merge the sorted halves
 }
 
 private static int[] mergeArrays(int[] arr1, int[] arr2) {
 	int arrOneIdx = 0;
-    int arrTwoIdx = 0;
-    int mergedArrIdx = 0;
-    int[] mergedArray = new int[arr1.length + arr2.length];
+	int arrTwoIdx = 0;
+	int mergedArrIdx = 0;
+	int[] mergedArray = new int[arr1.length + arr2.length];
 
 	// Both arrays to merge have some items left in them
 	while (arrOneIdx < arr1.length && arrTwoIdx < arr2.length) {
 		// Pick the smaller element and add it to the merged array
-        if (arr1[arrOneIdx] <= arr2[arrTwoIdx]) {
-            mergedArray[mergedArrIdx] = arrayOne[arrOneIdx];
-            arrOneIdx++;
-        }
-        else {
-            mergedArray[mergedArrIdx] = arrayTwo[arrTwoIdx];
-            arrTwoIdx++;
-        }
-        mergedArrIdx++;
+		if (arr1[arrOneIdx] <= arr2[arrTwoIdx]) {
+			mergedArray[mergedArrIdx] = arr1[arrOneIdx];
+			arrOneIdx++;
+		} else {
+			mergedArray[mergedArrIdx] = arr2[arrTwoIdx];
+			arrTwoIdx++;
+		}
+		mergedArrIdx++;
 	}
 
-    // Copy remaining elements of 'arr1', if any
+	// Copy remaining elements of 'arr1', if any
 	while (arrOneIdx < arr1.length) {
-        mergedArray[mergedArrIdx] = arr1[arrOneIdx];
-        mergedArrIdx++;
-        arrOneIdx++;
-    }
+		mergedArray[mergedArrIdx] = arr1[arrOneIdx];
+		mergedArrIdx++;
+		arrOneIdx++;
+	}
 
-    // Copy remaining elements of 'arr2', if any
+	// Copy remaining elements of 'arr2', if any
 	while (arrTwoIdx < arr2.length) {
-        mergedArray[mergedArrIdx] = arr2[arrTwoIdx];
-        mergedArrIdx++;
-        arrTwoIdx++;
-    }
+		mergedArray[mergedArrIdx] = arr2[arrTwoIdx];
+		mergedArrIdx++;
+		arrTwoIdx++;
+	}
 
 	return mergedArray;
 }

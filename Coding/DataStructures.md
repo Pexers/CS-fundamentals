@@ -38,10 +38,10 @@ _Insert manual copy_
 ```java
 public static int[] insert(int[] arr, int pos, int num) {
     int[] result = new int[arr.length];
-    for(int i = 0; i < pos; i++)  // Copy left items
+    for (int i = 0; i < pos; i++)  // Copy left items
         result[i] = arr[i];
     result[pos] = num;  // Insert number
-    for(int i = pos + 1; i < arr.length; i++)  // Copy rest of the items (right)
+    for (int i = pos + 1; i < arr.length; i++)  // Copy rest of the items (right)
         result[i] = arr[i - 1];
     return result;
 }
