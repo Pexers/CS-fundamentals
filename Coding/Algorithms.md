@@ -7,18 +7,19 @@ Algorithms are widely used throughout all areas of mathematics and computer scie
 ## Big-O Notation
 Big-O notation is a formal expression of an algorithm’s complexity in relation to the growth of the input size. Hence, it is used to rank algorithms based on their performance with large inputs.
 
-We can express it as the best, average, and worst-case complexity of an algorithm. Most discussions of Big-O focus on the "upper-bound" complexity of an algorithm, that is, the worst-case.
+We can express it as the _best_, _average_, and _worst-case_ complexity of an algorithm. Most discussions of Big-O focus on the "upper-bound" complexity of an algorithm, that is, the worst-case.
 
 ### Time complexity
 It's hard to pin down the exact runtime of an algorithm. It depends on the speed of the processor, what else the computer is running, etc. So instead of talking about the runtime directly, we use the Big-O notation to talk about _how quickly the runtime grows_.
 
-|Notation|Meaning|Description|
+|Notation<br><sup>:arrow_down:+Time</sup></br>|Meaning|Description|
 |:---:|:---:|---|
 |_O(1)_|Constant Time|The runtime is constant, regardless of the size of the input.<br/><sub>E.g. indexing an array, fetching from hash map given a key, returning a value from a function, etc.</sub>|
 |_O(log&nbsp;n)_&nbsp;[^1]|Logarithmic Time|The running time grows in proportion to the logarithm of the input size, meaning that the time barely increases as you exponentially increase the input. The time increases approximately by a constant amount when the number of input elements doubles.<br/><sub>E.g. binary search, finding largest/smallest number in a binary search tree, etc. |
 |_O(n)_|Linear Time|The time grows linearly with the number of input elements _n_. If _n_ doubles, the time approximately doubles too. "Approximately" because the time may also include components with lower complexity classes that are omitted in the notation.<br/><sub>E.g. forEach / map / reduce run through the entire collection, comparing two strings, checking for palindrome, etc.</sub>|
 |_O(n&nbsp;log&nbsp;n)_|Log-linear Time|A combination of linear and logarithmic complexity. Sorting algorithms that utilize a _divide-and-conquer_ strategy are _linearithmic_.<br/><sub>E.g. merge sort, heap sort, etc. |
-|_O(n<sup>2</sup>)_|Quadratic Time|The time grows linearly to the square of the number of input elements.<br/><sub>E.g. bubble sort, insertion sort, selection sort, {1.._n_} nested loops, etc.|
+|_O(n<sup>2</sup>)_|Quadratic Time|The time grows linearly to the square of the number of input elements.<br/><sub>E.g. selection sort, bubble sort, insertion sort, {1.._n_} nested loops, etc.|
+|_O(n!)_|Factorial Time|Any time _n_ increases by 1, the running time increases by a factor of _n_.<br/><sub>E.g. solving the traveling salesman problem via brute-force, generating all unrestricted permutations of a partially ordered set, etc.|
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/47757441/209826182-d619af3d-45ec-477b-87a5-a4e157d215e6.png" width="500">
@@ -27,7 +28,7 @@ It's hard to pin down the exact runtime of an algorithm. It depends on the speed
 #### _Calculation_
 - **Dropping constants**. The below code snippet takes _O(1 + n/2 + 100)_ time to complete, but we simplify it to _O(n)_.
 ```java
-public static void printRandomStuff(int[] items) {
+public static void printStuff(int[] items) {
 	System.out.println(items[0]);  // O(1)
 
 	int middleIdx = items.length / 2;  // O(1)
@@ -74,7 +75,7 @@ public static void printTwoArrays(int[] arr1, int[] arr2) {
 Sometimes we want to optimize code for using less memory, in addition to using less runtime. Talking about space complexity, or memory cost, is very similar to talking about time cost. We simply look at the total size of any new variables we're allocating with respect to the size of the input.
 
 #### _Calculation_
-|Data type|Size|Description|
+|Data&nbsp;type<br><sup>:arrow_down:+Size</sup></br>|Size|Description|
 |:---:|---|---|
 |`boolean`|1 bit|Stores true or false values.|
 |`byte`|1 byte|Stores whole numbers from -128 to 127.|
@@ -86,14 +87,12 @@ Sometimes we want to optimize code for using less memory, in addition to using l
 |`double`|8 bytes|Stores fractional numbers. Sufficient for storing 15 decimal digits.|
 - **Dropping constants**. The below code snippet has a total memory usage of _O(4*n + 4 + 4 + 4)_, but we simplify it to _O(n)_.
 ```java
-public int sumArray(int[] array) {  // 4B*n
-    int size = array.length;  // 4B
-    int sum = 0;  // 4B
-
-    for (int iterator = 0; iterator < size; iterator++) {  // 4B iterator
-        sum += array[iterator];
-    }
-
+public static int sumArray(int[] array) {  // 4B*n
+	int size = array.length;  // 4B
+	int sum = 0;  // 4B
+	for (int iterator = 0; iterator < size; iterator++) {  // 4B iterator
+		sum += array[iterator];
+	}
     return sum;
 }
 ```
@@ -107,7 +106,6 @@ _Stack_ memory is always referenced in LIFO (Last-In-First-Out) order. Whenever 
 _Practical example_
 ```java
 public class Memory {
-
 	public static int counter = 0;  // Heap, global variable
 
 	public static void main(String[] args) {  // Stack, main method block
@@ -133,47 +131,47 @@ The main reasons to use Recursion are:
 - Recursion is closely related to the term of _reduction_, which plays a central role in many algorithms and in computer science in general.
 
 ## Searching Algorithms
-TODO:
+The searching algorithms are used to search or find one or more than one element from a dataset. Searching may be sequential or not. If the data in the dataset are **random**, then we need to use sequential searching. Otherwise we can use other different techniques to reduce complexity.
 
 ### Linear Search
 <sup>**Time complexity**: _O(n)_</sup>  
-Linear Search is the simplest algorithm employed to search for an element in a data collection. It examines each element until it finds a match, starting from the beginning of the collection until the end.
+Linear Search is the simplest algorithm employed to search for an element in a data collection. It examines each element until it finds a match, starting from the beginning of the collection until the end. Hence, it is defined as a sequential search algorithm.
 
 ### Binary Search
-<sup>**Time complexity**: _O(log n)_</sup>  
+<sup>**Time complexity**: _O(log n)_ || **Space complexity**: _O(1)_ – iterative or _O(log n)_ – recursive</sup>  </sup>  
 Binary Search is a searching algorithm used in **sorted arrays** by repeatedly dividing the search interval in half. The idea of the algorithm is to take advantage of the sorted property and reduce the time complexity of the linear search. 
 
-In order for Binary Search to be considered a D&C (_divide-and-conquer_) algorithm, it would need to use two disjoint recursive calls, just like QuickSort does. Binary Search does not have this, even though it can be implemented recursively.
+In order for Binary Search to be considered a D&C (_divide-and-conquer_) algorithm, it would need to use two disjoint recursive calls, just like Quick Sort does. Binary Search does not have this, even though it can be implemented recursively.
 
 _Iterative approach_
 ```java
-public static int binarySearchIter(int arr[], int x) {
+public static int binarySearchIter(int arr[], int target) {
 	int mid, left = 0, right = arr.length - 1;
 	while (left <= right) {
 		mid = left + ((right - left) / 2);  // Find the ~middle index
-		if (arr[mid] == x) {  // Check if 'x' is present at mid
+		if (arr[mid] == target) {  // Check if 'target' is present at mid
 			return mid;
 		}
-		if (arr[mid] < x) left = mid + 1;	// If 'x' greater, ignore left half
-		else right = mid - 1;  				// If 'x' smaller, ignore right half
+		if (arr[mid] < target) left = mid + 1;	// If 'target' greater, ignore left half
+		else right = mid - 1;  				// If 'target' smaller, ignore right half
 	}
-	return -1;  // 'x' was not found
+	return -1;  // 'target' was not found
 }
 ```
 _Recursive approach_
 ```java
-public static int binarySearch(int arr[], int left, int right, int x) {
-    if (left <= right && left <= arr.length - 1) {
+public static int binarySearch(int arr[], int left, int right, int target) {
+	if (left <= right && left <= arr.length - 1) {
 		mid = left + ((right - left) / 2);  // Find the ~middle index
-		if (arr[mid] == x) {  // Check if 'x' is present at mid
+		if (arr[mid] == target) {  // Check if 'target' is present at mid
 			return mid;
 		}
-		if (arr[mid] < x)	// If 'x' greater, ignore left half
-			return binarySearch(arr, mid + 1, right, x);
-		else				// If 'x' smaller, ignore right half
-			return binarySearch(arr, left, mid - 1, x);
+		if (arr[mid] < target)	// If 'target' greater, ignore left half
+			return binarySearch(arr, mid + 1, right, target);
+		else				// If 'target' smaller, ignore right half
+			return binarySearch(arr, left, mid - 1, target);
 	}
-	return -1;  // 'x' was not found
+	return -1;  // 'target' was not found
 }
 ```
 The space complexity of Binary Search, without considering inputs, is _O(1)_ in the iterative approach, while for the recursive implementation is _O(log n)_, due to the need for extra function calls.
@@ -195,7 +193,7 @@ _Node class_
 public class Node {
 	private int value;
 	List<Node> children;
-
+	
 	public int getValue() {
 		return value;
 	}
@@ -213,7 +211,6 @@ public static Node breadthFirstSearchIter(Node root, int target) {
 		if (current.getValue() == target) return current;
 		else queue.addAll(current.children);
 	}
-
 	return null;  // Target node not found
 }
 ```
@@ -251,7 +248,7 @@ public class Node {
 ```
 _Recursive approach_
 ```java
-public void depthFirstSearch(Node node) {
+public static void depthFirstSearch(Node node) {
     if (node != null) {
         System.out.println(node.getValue()); 	// Pre-order transversal
         depthFirstSearch(node.left);
@@ -263,20 +260,20 @@ public void depthFirstSearch(Node node) {
 ```
 _Iterative approach_ (pre-order)
 ```java
-public void depthFirstSearch(Node root) {
+public static void depthFirstSearchIter(Node root) {
 	Stack<Node> stack = new Stack<>();
 	Node current = root;
 	stack.push(root);
 
 	while (!stack.isEmpty()) {
 		current = stack.pop();
-        System.out.println(current.getValue());	 // Pre-order transversal
-        if (current.right != null) {
-            stack.push(current.right);
-        }    
-        if (current.left != null) {
-            stack.push(current.left);
-        }
+		System.out.println(current.getValue());	 // Pre-order transversal
+		if (current.right != null) {
+			stack.push(current.right);
+		}    
+		if (current.left != null) {
+			stack.push(current.left);
+		}
 	}
 }
 ```
@@ -289,6 +286,141 @@ In-order, Pre-order, and Post-order transversal algorithms for the iterative app
 - DFS doesn't necessarily find the shortest path to a node, while BFS does.
 
 ## Sorting Algorithms
-TODO:
+A sorting algorithm is used to arrange elements of an array/list in a specific order.
+
+||Best|Average|Worst-case|
+|:---:|:---:|:---:|:---:|
+|Selection Sort|_O(n<sup>2</sup>)_|_O(n<sup>2</sup>)_|_O(n<sup>2</sup>)_|
+|Bubble Sort|_O(n)_|_O(n<sup>2</sup>)_|_O(n<sup>2</sup>)_|
+|Insertion Sort|_O(n)_|_O(n<sup>2</sup>)_|_O(n<sup>2</sup>)_|
+|Heap Sort|_O(n)_|_O(n&nbsp;log&nbsp;n)_|_O(n&nbsp;log&nbsp;n)_|
+|Merge Sort|_O(n&nbsp;log&nbsp;n)_|_O(n&nbsp;log&nbsp;n)_|_O(n&nbsp;log&nbsp;n)_|
+|Quick Sort|_O(n&nbsp;log&nbsp;n)_|_O(n&nbsp;log&nbsp;n)_|_O(n<sup>2</sup>)_|
+<sup>_Quick Sort tends to be the fastest in most cases, explained below*_</sup>
+
+### Selection / Bubble / Insertion Sort
+- **Selection Sort**. Works by repeatedly selecting the next-smallest element from the unsorted array and moving it to the front.
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/47757441/211066328-a80139a7-c2cf-4d45-811b-8f4bba20e501.png" width="275">
+</p>
+
+- **Bubble Sort**. Works by repeatedly comparing two adjacent elements and swaps them until they are in the intended order. Just like the movement of air bubbles in the water that rise up to the surface, each element of the array move to the end in each iteration.
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/47757441/211066330-59a4af6c-e9ce-4470-a29e-5c60d0678ec9.png" width="275">
+</p>
+
+- **Insertion Sort**. Works by inserting elements from an unsorted array into a sorted subsection of the array, one item at a time. It places an unsorted element at its suitable place in each iteration.
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/47757441/211066324-ef45864a-f287-4991-bab4-1ca40d18f191.png" width="275">
+</p>
+
+All three algorithms have a quadratic worst-case time complexity and hence work slowly on large datasets.
+### Heap / Merge / Quick Sort
+- **Heap Sort**. Similar to Selection Sort, where we repeatedly select the largest item and move it to the end of the array. The main difference is that instead of scanning through the entire array to find the largest item, we convert the array into a _max-heap_ to speed things up. A _max-heap_ is a complete binary tree in which the value of each internal node is greater than or equal to the values of its children.  
+<sup>_No need to know Heap Sort by heart_</sup>
+
+- **Merge Sort**. Works by dividing the list into halves, then iterates through the new halves, continually dividing them down further to their smaller parts. Subsequently, a comparison of smaller halves is conducted, and the results are combined together to form the final sorted list.
+```java
+public static int[] mergeSort(int[] arr) {
+	// Split the input in half
+    int middleIndex = arr.length / 2;
+    int[] left  = Arrays.copyOfRange(arr, 0, middleIndex);
+    int[] right = Arrays.copyOfRange(arr, middleIndex, arr.length);
+
+    // Sort each half
+    int[] leftSorted = mergeSort(left);
+    int[] rightSorted = mergeSort(right);
+
+    return mergeArrays(leftSorted, rightSorted);  // Merge the sorted halves
+}
+
+private static int[] mergeArrays(int[] arr1, int[] arr2) {
+	int arrOneIdx = 0;
+    int arrTwoIdx = 0;
+    int mergedArrIdx = 0;
+    int[] mergedArray = new int[arr1.length + arr2.length];
+
+	// Both arrays to merge have some items left in them
+	while (arrOneIdx < arr1.length && arrTwoIdx < arr2.length) {
+		// Pick the smaller element and add it to the merged array
+        if (arr1[arrOneIdx] <= arr2[arrTwoIdx]) {
+            mergedArray[mergedArrIdx] = arrayOne[arrOneIdx];
+            arrOneIdx++;
+        }
+        else {
+            mergedArray[mergedArrIdx] = arrayTwo[arrTwoIdx];
+            arrTwoIdx++;
+        }
+        mergedArrIdx++;
+	}
+
+    // Copy remaining elements of 'arr1', if any
+	while (arrOneIdx < arr1.length) {
+        mergedArray[mergedArrIdx] = arr1[arrOneIdx];
+        mergedArrIdx++;
+        arrOneIdx++;
+    }
+
+    // Copy remaining elements of 'arr2', if any
+	while (arrTwoIdx < arr2.length) {
+        mergedArray[mergedArrIdx] = arr2[arrTwoIdx];
+        mergedArrIdx++;
+        arrTwoIdx++;
+    }
+
+	return mergedArray;
+}
+```
+
+- **Quick Sort**. Works by dividing the input into two sub-arrays: one with small items and the other with large items. Then, it recursively sorts both the sub-arrays.
+```java
+/**
+* Sorts [arr] from [start] index to [end] index.
+*/
+public static void quickSort(int[] arr, int start, int end) {
+	if (start < end) {
+		int partitionIdx = partition(arr, start, end);  // Divide the array into two smaller sub-arrays
+		// Recursively sort each sub-array
+		quickSort(arr, start, partitionIdx - 1);
+		quickSort(arr, partitionIdx + 1, end);
+	}
+}
+
+private static int partition(int[] arr, int start, int end) {
+	swap(arr, end / 2, end);  // Choose middle element as pivot to avoid worst-case
+	int pivotIdx = end;
+	int pivot = arr[pivotIdx];
+	int i = start - 1;
+
+	for (int j = start; j < end; j++) {
+		if (arr[j] <= pivot) {
+			i++;
+			// Swap element at 'i' for element at 'j'
+			swap(arr, i, j);
+		}
+	}
+	// Swap the pivot element with the greater element at position 'i + 1'
+	swap(arr, i + 1, pivotIdx);
+	return i + 1;  // Return the position from where partition is done
+}
+
+private static void swap(int[] arr, int i, int j) {
+	int temp = arr[i];
+	arr[i] = arr[j];
+	arr[j] = temp;
+}
+```
+
+Quick Sort and Merge Sort are examples of **_divide-and-conquer_** algorithms, they decompose a complex problem into smaller sub-parts, where a defined solution is applied recursively to each sub-part. Each sub-part is then solved separately, and the solutions are recombined to solve the original problem. 
+
+#### Why is Quick Sort usually faster in practice?
+The secret of Quick Sort is that it almost doesn't do unnecessary element swaps, which are time consuming. With Heap Sort, even when the data is already sorted, the algorithm will swap 100% of the elements to sort the array. With Merge Sort, it's even worse, we write 100% of elements in a secondary array, and write it back in the original one, even if the data is already sorted.
+
+With Quick Sort, we don't swap what is already sorted. If the data is completely sorted, we swap almost nothing! Less swap, more speed.
+
+Quick Sort's performance is mainly dependent on the pivot selection algorithm. Ideally, the pivot should be picked randomly. In the above implementation, we opt for using the middle element of the array as the pivot.
+
+An alternative way to avoid Quick Sort’s worst-case is to randomly shuffle the input before sorting it. In real life scenarios, the input can be nearly sorted, that’s why most programming languages, such as Python, Java and JavaScript, all use a modified version of Merge Sort (known as _Tim Sort_) as their default sorting algorithm.
+
 
 [^1]: In computer science, exponential growth usually occurs as a consequence of discrete processes like the _divide-and-conquer_ algorithms or in manipulation of binary values. Consequently, we typically use base _2_ in logarithmic functions, since it just arises so frequently, meaning that _log<sub>2</sub> n_ is simplified to _log n_.
