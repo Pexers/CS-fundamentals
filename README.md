@@ -1,5 +1,5 @@
 # _Computer Science_ Fundamentals 📖💻
-![](https://progress-bar.dev/70?title=Coding)
+![](https://progress-bar.dev/70?title=Programming)
 ![](https://progress-bar.dev/0?title=Databases)
 ![](https://progress-bar.dev/0?title=DistributedSystems)
 ![](https://progress-bar.dev/0?title=NetworkAndSecurity)
