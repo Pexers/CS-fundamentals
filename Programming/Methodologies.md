@@ -7,7 +7,24 @@ Software development methodologies (SDMs) can help a team to complete project se
 Almost all software development methodologies are non-technical. This means they do not deal with the technical aspects of software design and development. They focus more on the internal operations, and other processes involved in the project.
 
 ## 1. Waterfall
-TODO
+When it comes to software development, Waterfall is the most traditional and sequential choice. Although it’s usually viewed as an outdated method, it’s helpful to understand its structure to better appreciate the flexibility of more modern methodologies.
+
+Waterfall requires plenty of structure and documentation up front. It is divided into self-contained stages. The first stage is vital, requiring a full understanding by both developers and customers of the project’s demands and scope before anything begins.
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/47757441/211622541-7b499331-472e-4a0f-8e1b-a20856d2ffc1.png" width="440">
+</p>
+
+#### _Strengths_
+- Follows a clear and precise structure.
+- Works well for small projects
+- Transparency will not be an issue for both parties.
+- Robust transfer of information from one phase to another because of its systematic approach.
+
+#### _Weaknesses_
+- High risk and uncertainty.
+- It doesn’t encourage active participation of customers.
+- Inadequate for long-term projects.
+- Not appropriate for projects with a moderate to high probability of change in requirements.
 
 ## 2. Agile
 The Agile methodology was developed as a response to growing frustrations with Waterfall and other highly structured, inflexible methodologies. This approach is designed to accommodate change and the need to produce software faster. It aims to reduce risks such as bugs, cost overruns and sudden changes in software requirements.
@@ -31,7 +48,7 @@ There may be many projects operating simultaneously, multiple iterations running
 #### Iteration workflow
 Agile _iterations_ are usually between two to four weeks long, with a final completion date pre-established.
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/47757441/211388455-eb90c032-d5da-4808-a72d-dbde3cc8d65d.png" width="300">
+  <img src="https://user-images.githubusercontent.com/47757441/211388455-eb90c032-d5da-4808-a72d-dbde3cc8d65d.png" width="290">
 </p>
 
 1. **Requirements**. Define the deliverables for each iteration based on the product backlog. Product backlogs are lists made from the review/feedback stage of the previous iterations. This is often the most crucial stage of an iteration.
@@ -55,11 +72,30 @@ Agile _iterations_ are usually between two to four weeks long, with a final comp
 - Overall, it requires more time and energy from everyone.
 
 ## 3. Rapid
-TODO
+Rapid Application Development (RAD) is an agile project management strategy where the key benefits are efficiency and fast delivery, making it an attractive choice for developers working in a fast-paced environment. This rapid pace is made possible by RAD’s focus on minimizing the planning stage and maximizing prototype development. 
+
+The end goal of the whole methodology is to deliver working software products to the market faster, as the demand for new applications is ever increasing. It is designed to be flexible to changes and to accept new inputs, like feedback and features, at every stage of the development process.
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/47757441/211629997-fdf50d41-afa8-4265-b84e-f5ebd4d3947d.png" width="500">
+</p>
+
+1. **Requirements**. Rather than spending months developing specifications with customers, RAD begins by defining a loose set of requirements. "Loose" because among the key principles of rapid application development is the permission to change requirements at any point in the cycle.
+2. **Prototype**. Once a project has been scoped, teams begin building out the initial models and prototypes. The goal is to rapidly produce a working design that satisfies all or only a portion of requirements. This prototype may cut corners to reach a working state, and that’s acceptable.
+3. **Construction & Feedback gathering**. Rapid construction is where application coding, system testing, and unit integration occurs, converting prototype and beta systems into a working model. This stage may also be repeated as required, supporting new components and alterations. The majority of problems and customer changes were addressed during the iterative prototyping stage.
+4. **Cutover**. During this stage, developers may optimize or even re-engineer their implementation to improve stability and maintainability. They may also spend this phase connecting the back-end to production data, writing thorough documentation, and doing any other maintenance tasks required before handing the product over with confidence.
+
+#### _Strengths_
+- Quick iterations drastically reduce development time and clients receive a working product within a shorter time frame.
+- Development is focused on specific customer requirements, instead of building features that could be removed from the final product, which saves time and money.
+- Due to the constant feedback, developers can handle and resolve any issues in a timely manner, while ensuring a high-quality product.
+
+#### _Weaknesses_
+- It can be difficult to scale RAD, especially when working with larger teams, as this often requires frequent meetings with stakeholders in order to receive feedback. A small team can easily sync with each other, however, inter-team communication can slow down the process.
+- Some developers can ignore best practices on the backend to accelerate development of the frontend focused prototype (interface-focus).
+- If developers are not committed to delivering software on time, RAD projects can fail. For that reason it requires highly skilled professionals.
 
 ## 4. Scrum
 TODO
-
 
 ## 5. Kanban
 TODO
