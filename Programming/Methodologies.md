@@ -14,9 +14,6 @@ Waterfall requires plenty of structure and documentation up front. It is divided
   <img src="https://user-images.githubusercontent.com/47757441/211622541-7b499331-472e-4a0f-8e1b-a20856d2ffc1.png" width="440">
 </p>
 
-#### Roles
-TODO:
-
 #### _Strengths_
 - Follows a clear and precise structure.
 - Works well for small projects
@@ -63,7 +60,12 @@ Agile _iterations_ are usually between two to four weeks long, with a final comp
 6. **Review / Feedback**. The team elicits, analyzes, and uses feedback from customers and stakeholders to shape the next iteration's requirements. All feedback should be reviewed in the next iteration. Thus, starting another iteration workflow cycle.
 
 #### Roles
-TODO:
+These roles can have different naming conventions depending on the Agile methodology implementation.
+- _**Product Owner**_: understands the customer and business requirements, creates and manages the product backlog based on those requirements.
+- _**Team Leader**_ / _**Scrum Master**_: responsible for gluing everything together and ensuring that agile is being done well. In practical terms, that means they help the product owner to define value, the development team to deliver the value and get better. The team leader is a servant leader which not only describes a supportive style of leadership but describes what they do on a day-to-day basis.
+- _**Development Team**_: composed of professionals who do the hands-on work of completing the tasks in a iteration / scrum sprint.
+- _**Stakeholders**_: those who have an interest in the project that is being undertaken. They can be internal or external to the organization, and they may have a financial, operational, or strategic interest in the project.
+- _**Customers**_: individuals who receive or purchase a product or service. A customer should have the ability to buy or rate this product or service. The feedback is frequently used to improve organizational processes and set requirements.
 
 #### _Strengths_
 - Face-to-face conversation with team members and stakeholders.
@@ -115,12 +117,6 @@ Scrum incorporates the structure and discipline of more traditional software dev
 2. **Implementation & Daily Scrum**. The objective of the Daily Scrum is to evaluate the progress and trend until the end of the sprint, synchronizing the activities and creating a plan for the next 24h. It is a brief meeting that takes place daily where three questions must be answered individually:  What did I do yesterday? What am I going to do today? What help do I need? The Scrum Master should try to solve problems or obstacles that arise.
 3. **Review**. The goal of the sprint review is to show what work has been completed with regards to the Product Backlog for future deliveries. This can allow the team and key stakeholders to work together to brainstorm ideas for further improvements. This stage will determine if completed tasks can be removed from the backlog, or need to be added back.
 4. **Retrospective**. This stage serves to implement improvements from the point of view of the development process. The goal of the sprint retrospective is to identify possible process improvements and generate a plan to implement them in the next sprint.
-
-#### Roles
-- _Product Owner_: understands the customer and business requirements, creates and manages the product backlog based on those requirements.
-- _Scrum Master_: responsible for gluing everything together and ensuring that scrum is being done well. In practical terms, that means they help the product owner to define value, the development team to deliver the value and get better. The scrum master is a servant leader which not only describes a supportive style of leadership but describes what they do on a day-to-day basis.
-- _Development Team_: composed of professionals who do the hands-on work of completing the tasks in a scrum sprint.
-- _Stakeholders_: those who have an interest in the project that is being undertaken. They can be internal or external to the organization, and they may have a financial, operational, or strategic interest in the project.
 
 #### _Strengths_
 - Large projects are divided into easily manageable sprints.
