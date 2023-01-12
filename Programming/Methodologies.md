@@ -128,10 +128,32 @@ Scrum incorporates the structure and discipline of more traditional software dev
 - The workflow can be easily compromised if individuals aren't very committed or cooperative.
 - Difficult to estimate the resources, it lacks the end-to-end visibility of the software development process.
 
-## 5. Kanban
-TODO
+## 5. Lean
+Lean is an agile workflow methodology but at the same time a mindset, incorporating principles and practices from the manufacturing space and applying them broadly to a variety of industries, including software development. It is based on the philosophy of optimizing development time and resources in the manufacturing process while eliminating waste and maximizing value to the customer.
 
-## 6. Lean
+Agile is an excellent methodology for the practical application of development best practices, but it does not include instructions for scaling these practices across the organization or applying them outside of development-type work.
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/47757441/212072107-d737677d-7ae0-4804-83a2-b977be2d6eaa.png" width="400">
+</p>
+
+- **Eliminate waste**. Eliminates anything that does not add value to the customer, such as unnecessary code, unclear goals, additional features, extra processes, etc.
+- **Create knowledge**. Encourages lean teams to do code reviews, perform training, code comments, project documentation, pair programming, sharing sessions, etc.
+- **Build quality**. In trying to ensure quality, many teams actually create waste through excessive testing of code or mistakes in logging and resolving them, which takes time and pushes development costs higher. Lean strives to address such issues before they occur.
+- **Fast delivery**. Every business strives to deliver fast, to supply value to the customers as quickly as possible. However, there are a few issues that could slow them down like, such as excessive planning, blockers that are not dealt with immediately or over-engineering solutions and business needs.
+- **Empower your team**. When things go south or not according to plan, the focus should be kept on checking for gaps in the work process that might have led to conflicts and challenges. 
+Lean development encourages respect for people with proactive communication, encouraging healthy conflict, solving work-related issues as a team and empowering each other to work better.
+- **Delay decision making** / **Defer Commitment**. Deciding late is not equal to becoming irresponsible. In fact, it encourages the team to keep their options open for a long period of time so that they can gather data which can help in taking important decisions. 
+- **Optimize the whole**. Lean software development teams often fail due to releasing sloppy code for the sake of speed or overloading of testers. Optimizing the whole encourages businesses to reduce these issues by operating with an improved understanding of capacity and downstream effects of work. The sequence of activities needed to design, produce and deliver a product or service to customers must be optimized in order to deliver maximum value.
+
+#### _Strengths_
+- Reduces resource wastage which optimizes the software development process.
+- Empowerment of the development team helps in developing the decision making ability of the team members which creates a more motivated team.
+
+#### _Weaknesses_
+- Project success is highly dependent on how disciplined the team members are and how exceptional are their technical skills.
+- Project stakeholders need to know what they want and make decisions they will stick to in order to enable fast development and optimize costs. The problem is that stakeholders tend to be paralyzed by fear when it comes to making the tough decisions.
+
+## 6. Kanban
 TODO
 
 ## 7. DevOps
@@ -142,9 +164,6 @@ TODO
 - Trello
 
 ----
-
-#### Roles
-- 
 
 #### _Strengths_
 - 
