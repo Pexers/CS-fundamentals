@@ -154,7 +154,20 @@ Lean development encourages respect for people with proactive communication, enc
 - Project stakeholders need to know what they want and make decisions they will stick to in order to enable fast development and optimize costs. The problem is that stakeholders tend to be paralyzed by fear when it comes to making the tough decisions.
 
 ## 6. Kanban
-TODO
+Kanban is a popular lean workflow methodology for defining, visualizing, managing, and improving software development continuously. Work is represented on _kanban boards_. A _board_ is an agile project management tool designed to help visualize work, limit work-in-progress, and maximize efficiency. More over, a _kanban card_ represents a single work item as it moves through various stages of completion which are represented on either a physical or virtual _kanban board_.
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/47757441/212106433-48a2e8c7-56b8-4f38-a0a9-ae46bd9940c1.png" width="430">
+</p>
+
+#### _Strengths_
+- Very simple and easy to understand approach, doesn't require putting the whole team through a training course.
+- Supervision of the use of a kanban board, cards, and analysis of the output is easier as compared to most approaches of project management.
+- Encourages collaboration given that everyone can easily identify when a team member is falling behind. This should lead to a greater team effort in order to help those professional where needed. 
+
+#### _Weaknesses_
+- As the tasks are continuously shifted between the columns of the _kanban board_, the prediction of specific timelines for completion of tasks or activities becomes difficult.
+- Kanban will become very difficult to apply if too much activities or tasks are interrelated in a system.
+- There's a lack of explicit iteration. When a card reaches the end of the board, the task is given as completed and usually forgotten after a while. For instance, there's no information of it being a first attempt that needs refinement.
 
 ## 7. DevOps
 TODO
@@ -162,11 +175,3 @@ TODO
 ## Tools
 - Jira
 - Trello
-
-----
-
-#### _Strengths_
-- 
-
-#### _Weaknesses_
-- 
