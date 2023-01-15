@@ -6,6 +6,14 @@ Software development methodologies (SDMs) can help a team to complete a project 
 
 Almost all software development methodologies are non-technical. This means they do not deal with the technical aspects of software design and development. They focus more on the internal operations, and other processes involved in the project.
 
+#### Fundamental roles
+These roles can have different naming conventions depending on the adopted methodology:
+- **Product Owner**: understands the customer and business requirements, creates and manages the product backlog based on those requirements.
+- **Team Leader** / **Scrum Master**: responsible for gluing everything together and ensuring that agile is being done well. In practical terms, that means they help the product owner to define value, the development team to deliver the value and get better. The team leader is a servant leader which not only describes a supportive style of leadership but describes what they do on a day-to-day basis.
+- **Development Team**: composed of professionals who do the hands-on work of completing the tasks in a iteration / scrum sprint.
+- **Stakeholders**: those who have an interest in the project that is being undertaken. They can be internal or external to the organization, and they may have a financial, operational, or strategic interest in the project.
+- **Customers**: individuals who receive or purchase a product or service. A customer should have the ability to buy or rate this product or service. The feedback is frequently used to improve organizational processes and set requirements.
+
 ## 1. Waterfall
 When it comes to software development, Waterfall is the most traditional and sequential choice. Although it’s usually viewed as an outdated method, it’s helpful to understand its structure to better appreciate the flexibility of more modern methodologies.
 
@@ -59,14 +67,6 @@ Agile _iterations_ are usually between two to four weeks long, with a final comp
 5. **Deployment / Delivery**. The team integrates and delivers the working version of the software into production. Deliver your backlog items to your customer base for the final stage of testing.
 6. **Review / Feedback**. The team elicits, analyzes, and uses feedback from customers and stakeholders to shape the next iteration's requirements. All feedback should be reviewed in the next iteration. Thus, starting another iteration workflow cycle.
 
-#### Roles
-These roles can have different naming conventions depending on the Agile methodology implementation.
-- _**Product Owner**_: understands the customer and business requirements, creates and manages the product backlog based on those requirements.
-- _**Team Leader**_ / _**Scrum Master**_: responsible for gluing everything together and ensuring that agile is being done well. In practical terms, that means they help the product owner to define value, the development team to deliver the value and get better. The team leader is a servant leader which not only describes a supportive style of leadership but describes what they do on a day-to-day basis.
-- _**Development Team**_: composed of professionals who do the hands-on work of completing the tasks in a iteration / scrum sprint.
-- _**Stakeholders**_: those who have an interest in the project that is being undertaken. They can be internal or external to the organization, and they may have a financial, operational, or strategic interest in the project.
-- _**Customers**_: individuals who receive or purchase a product or service. A customer should have the ability to buy or rate this product or service. The feedback is frequently used to improve organizational processes and set requirements.
-
 #### _Strengths_
 - Face-to-face conversation with team members and stakeholders.
 - Ensure and promote customer satisfaction.
@@ -110,7 +110,7 @@ Team members break down end goals into smaller goals at the beginning and work t
 
 Scrum incorporates the structure and discipline of more traditional software development methodologies with the flexibility and iterative practices of modern Agile.
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/47757441/211806333-ef489d89-5ed9-4b1e-8314-0932ca4362eb.png" width="430">
+  <img src="https://user-images.githubusercontent.com/47757441/211806333-ef489d89-5ed9-4b1e-8314-0932ca4362eb.png" width="450">
 </p>
 
 1. **Planning**. Defines what is going to be done in the sprint and how it is going to be done. This meeting is held at the beginning of each sprint and determines how to approach the project coming from the Product Backlog stages and deadlines. Each sprint is composed of different features.
@@ -128,8 +128,32 @@ Scrum incorporates the structure and discipline of more traditional software dev
 - The workflow can be easily compromised if individuals aren't very committed or cooperative.
 - Difficult to estimate the resources, it lacks the end-to-end visibility of the software development process.
 
-## 5. Lean
-Lean is an agile workflow methodology but at the same time a mindset, incorporating principles and practices from the manufacturing space and applying them broadly to a variety of industries, including software development. It is based on the philosophy of optimizing development time and resources in the manufacturing process while eliminating waste and maximizing value to the customer.
+## 5. DevOps
+With DevOps, the developers (Dev), who are experts in coding, and the operations engineers (Ops), who are experts in maintaining the environment and systems engineering, work collaboratively to infuse stability, reliability, and performance requirements into development practices, while also bringing development into the management of the production environment. This is what DevOps intends to do, taking the best parts of both disciplines.
+
+Ideally, DevOps means that a development team writes software that perfectly meets user requirements, deploys without any wasted time, and runs optimally on the first try.
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/47757441/212539744-e9008ff5-50b8-45d0-b3b5-23c83a8d39cc.png" width="360">
+</p>
+
+#### Foundations
+- **Continuous Integration**: automatically building and unit testing an entire application whenever a code change is checked into source control, in small increments.
+- **Continuous Deployment**: after testing every code change, automatically deploying it to a running environment, including production.
+- **Continuous Delivery**: a DevOps methodology in which engineers code, test, and release software into a running environment frequently, in really small batches, so that you can improve the overall quality and velocity; it is continuous integration plus continuous deployment.
+- **DevSecOps**: the extension of DevOps culture for the benefit and inclusion of security.
+
+#### _Strengths_
+- Detect configuration errors and programming bugs earlier.
+- Improves collaboration and efficiency.
+- Faster development and delivery of software.
+
+#### _Weaknesses_
+- Lacks standardization, businesses that adopt DevOps may need to create their own customized process and toolsets, which can be time-consuming and costly.
+- Often leads to an increase in complexity within an organization’s IT infrastructure due to the integration of multiple tools and technologies, making it more difficult to manage and troubleshoot.
+- Requires highly experienced professionals.
+
+## 6. Lean
+A DevOps methodology focusing on using small batches of work, work-in-progress limits, feedback loops, and visualization. It is based on the philosophy of optimizing development time and resources in the manufacturing process while eliminating waste and maximizing value to the customer.
 
 Agile is an excellent methodology for the practical application of development best practices, but it does not include instructions for scaling these practices across the organization or applying them outside of development-type work.
 <p align="center">
@@ -153,7 +177,7 @@ Lean development encourages respect for people with proactive communication, enc
 - Project success is highly dependent on how disciplined the team members are and how exceptional are their technical skills.
 - Project stakeholders need to know what they want and make decisions they will stick to in order to enable fast development and optimize costs. The problem is that stakeholders tend to be paralyzed by fear when it comes to making the tough decisions.
 
-## 6. Kanban
+## 7. Kanban
 Kanban is a popular lean workflow methodology for defining, visualizing, managing, and improving software development continuously. Work is represented on _kanban boards_. A _board_ is an agile project management tool designed to help visualize work, limit work-in-progress, and maximize efficiency. More over, a _kanban card_ represents a single work item as it moves through various stages of completion which are represented on either a physical or virtual _kanban board_.
 <p align="center">
   <img src="https://user-images.githubusercontent.com/47757441/212106433-48a2e8c7-56b8-4f38-a0a9-ae46bd9940c1.png" width="430">
@@ -168,9 +192,6 @@ Kanban is a popular lean workflow methodology for defining, visualizing, managin
 - As the tasks are continuously shifted between the columns of the _kanban board_, the prediction of specific timelines for completion of tasks or activities becomes difficult.
 - Kanban will become very difficult to apply if too much activities or tasks are interrelated in a system.
 - There's a lack of explicit iteration. When a card reaches the end of the board, the task is given as completed and usually forgotten after a while. For instance, there's no information of it being a first attempt that needs refinement.
-
-## 7. DevOps
-TODO
 
 ## Tools
 - Jira
