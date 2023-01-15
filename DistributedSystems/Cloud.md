@@ -1,0 +1,1 @@
+IaaS Vs PaaS Vs FaaS Vs SaaS
