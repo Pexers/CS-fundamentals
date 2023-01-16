@@ -1,5 +1,0 @@
-SOLID
-
-Abstraction
-Inheritance
-Polymorphism
