@@ -6,7 +6,6 @@ The application’s success is inevitably dependent on the software engineers’
 
 There are many different software development principles that can help in creating an application by maintaining the code clean. These principles should be constantly implied by software developers from time to time for the seamless evolvement of projects.
 
-
 ## 1. SOLID
 The broad goal of the SOLID principles is to reduce dependencies so that engineers can change one area of software without impacting others. Additionally, they’re intended to make designs easier to understand, maintain, and extend. Ultimately, using these design principles makes it easier for software engineers to avoid issues and to build adaptive, effective, and agile software.
 
