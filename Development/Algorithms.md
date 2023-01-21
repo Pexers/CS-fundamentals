@@ -119,7 +119,6 @@ public class Memory {
 		String str = param.toString();  // 'str' reference in Stack, String object in Heap (within the String pool)
 		System.out.println(str);
 	}  // Method block becomes free in Stack
-
 }
 ```
 #### Recursive Vs Iterative solutions
