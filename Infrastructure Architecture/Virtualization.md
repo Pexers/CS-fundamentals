@@ -58,17 +58,99 @@ _In summary:_
 Both containers and virtual machines will continue to have new use cases as enterprises seek to leverage the power of their infrastructure – or the cloud – in new ways to support heavy-duty application and networking workloads. Containers are an excellent choice for tasks with a short lifecycle and for deployment of microservices. Virtual machines have a longer lifecycle than containers, and are best used for longer periods of time. In short, containers are lighter weight, more rapid, and more maintainable than VMs. 
 
 ## Docker Engine
-The Docker Engine is an open source containerization technology for building and containerizing applications. Before Docker, an application was entirely tied to the machine/server it was running on. With Docker, we can now take this application and _contain it_ in a **docker image**, and redeployed it later on in any other server to duplicate its functionality. Therefore, Docker's container-based platform allows for **highly portable** workloads.
+The Docker Engine is an open source containerization technology for building and containerizing applications. Before Docker, an application was entirely tied to the machine/server it was running on. With Docker, we can now take this application and _contain it_ in a **docker image**, and redeployed it later on in any other server to duplicate its functionality. Therefore, Docker's container-based platform allows for highly portable workloads.
 
-Docker also promotes the usage of microservices. Microservices decentralize packages and divide tasks into separate, stand-alone integrations that collaborate with each other. These are much **easier to scale** when compared to monoliths. Organizations can deploy multiple services or applications on a machine through containers while maintaining a degree of isolation between them.
+Docker also promotes the usage of microservices. Microservices decentralize packages and divide tasks into separate, stand-alone integrations that collaborate with each other. These are much easier to scale when compared to monoliths. Organizations can deploy multiple services or applications on a machine through containers while maintaining a degree of isolation between them.
 
 Docker can fully run in WSL 2. This means that Linux containers can run natively without emulation, resulting in better performance and interoperability between Windows and Linux tools.
 
-TODO: Docker Hub
+**Docker Hub**: a hosted repository service provided by Docker for finding and sharing container images.
 
 #### Dockerfile
-TODO:
-docker file, contains instructions for packaging an application into an image that can be run anywhere using docker.
+Docker can build images automatically by reading the instructions from a Dockerfile. A Dockerfile is a text document that contains instructions for packaging an application into an image that can be run anywhere using Docker.
+
+Instruction are not case-sensitive. However, convention is for them to be UPPERCASE to distinguish them from arguments more easily. Docker runs instructions in a Dockerfile in order. A Dockerfile must begin with a `FROM` instruction. The `FROM` instruction specifies the _parent image_ from which you are building.
+
+```sh
+# syntax=docker/dockerfile:1
+FROM python:3.8-slim-buster
+
+WORKDIR /app
+
+COPY code/requirements.txt code/requirements.txt
+
+RUN pip3 install -r code/requirements.txt
+
+COPY . .
+
+ENV MY_TOKEN=random_token
+
+CMD ["python3", "code/main.py"]
+```
+
+#### Dockerfile Cheatsheet
+```sh
+# FROM must be the first non-comment instruction in the Dockerfile
+FROM image
+FROM image[:tag]    # Optional
+FROM image[@digest] # Optional
+
+# Allows you to set the Author field of the generated images
+MAINTAINER name
+
+# Sets the user name or UID to use when running the image and for any RUN, CMD and ENTRYPOINT instructions that follow it in the Dockerfile
+USER username
+
+# Sets the working directory for any RUN, CMD, ENTRYPOINT, COPY, and ADD instructions that follow it
+WORKDIR /path/to/workdir
+
+# RUN is an image build step, the state of the container after a RUN command will be committed to the container image. A Dockerfile can have many RUN steps that layer on top of one another to build the image
+RUN command
+RUN ["executable", "param1", "param2"]
+
+# CMD is the command the container executes by default when you launch the built image. A Dockerfile will only use the final CMD defined
+CMD ["executable", "param1", "param2"]
+
+# Used to configure the executables that will always run after the container is initiated, for instance, a script
+ENTRYPOINT ["executable", "param1", "param2"]
+
+# Copies new files or directories from source directory and adds them to the filesystem of the image at the path destination
+COPY src dest
+COPY ["src", ... "dest"]  # This form is required for paths containing whitespace
+
+# Sets an environment key to a value
+ENV key=value
+
+# Defines a variable that users can pass at build-time. These are visible to any user of the image with the docker history command
+ARG name[=default value]
+
+# Adds to the image a trigger instruction to be executed at a later time, when the image is used as the base for another build
+ONBUILD dockerfile_instruction
+
+# ADD does the same as COPY, but in addition, it also supports 2 other sources: (i) a URL instead of a local file/directory, and (ii) extract tar from the source directory into the destination
+ADD src dest
+ADD ["src", ... "dest"]
+
+# Adds metadata to the image
+LABEL key=value
+
+# Informs Docker that the container listens on the specified network port(s) at runtime
+EXPOSE port
+
+# Creates a mount point with the specified name and marks it as holding externally mounted volumes from native host or other containers
+VOLUME path
+
+# Tells Docker how to test a container to check that it is still working
+HEALTHCHECK [options] CMD command
+
+# Allows the default shell used for the shell form of commands to be overridden
+SHELL ["executable", "param1", "param2"]
+
+# Sets the system call signal that will be sent to the container to exit
+STOPSIGNAL signal
+
+```
+
 #### Docker CLI Cheatsheet
 _Manage images_
 ```sh
@@ -153,5 +235,26 @@ docker port CONTAINER
 ```
 
 ## Kubernetes
-TODO:
- Kubernetes is not a container software, per se, but rather a container orchestrator. In this cloud-native, microservices world, when some apps run hundreds or thousands or even billions of containers, Kubernetes helps automate management of all of those containers. It can’t function without a tool like Docker in tandem, but it’s such a big name in the container space it wouldn’t be a container post without mentioning it.
+Often misunderstood as a choice between one or the other, Kubernetes and Docker are different yet complementary technologies for running containerized applications. Docker is not an alternative to Kubernetes, the difference relates to the role each play in containerizing and running applications. Kubernetes is not a container engine software, per se, but rather a **container orchestrator**.
+
+
+Originally designed by Google, Kubernetes provides automated container orchestration, improves reliability and reduces the time and resources attributed to daily operations. 
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/47757441/213886253-a9ce21d2-ab9c-464d-a255-48f1aa38c9ec.png" width="700">
+</p>
+
+- **Pod**: a group of one or more containers, with shared storage and network resources, and a specification for how to run the containers (pod as in a pod of whales or pea pod).
+- **Control Plane Components**:  makes global decisions about the cluster (for example, scheduling), as well as detecting and responding to cluster events. Control plane components can be run on any machine in the cluster. However, for simplicity, set up scripts typically start all control plane components on the same machine, and do not run user containers on this machine.
+  - _kube-apiserver_: exposes the Kubernetes API designed to scale horizontally, that is, it scales by deploying more instances.
+  - _etcd_: consistent and highly-available key value store used as Kubernetes' backing store for all cluster data.
+  - _kube-scheduler_: watches for newly created pods with no assigned node, and selects a node for them to run on.
+  - _kube-controller-manager_: runs controller processes.
+  - _cloud-controller-manager_: lets customers link the cluster into cloud provider's API, and separates out the components that interact with that cloud platform from components that only interact with the cluster.
+- **Node Components**: run on every node, maintaining running pods and providing the Kubernetes runtime environment.
+  - _kubelet_: takes a set of PodSpecs that are provided through various mechanisms and ensures that the containers described in those PodSpecs are running and healthy.
+  - _kube-proxy_: maintains network rules on nodes. These network rules allow network communication to pods from network sessions inside or outside of the cluster.
+  - _container runtime_: the software that is responsible for running containers. Kubernetes supports container runtimes such as _containerd_, CRI-O, and any other implementation of the Kubernetes CRI (Container Runtime Interface).
+
+In Google Kubernetes Engine (GKE) we can create clusters using one of the following modes of operation:
+- **Autopilot**: provides a fully-provisioned and managed cluster configuration. Autopilot clusters are pre-configured with an optimized cluster configuration that is ready for production workloads. The number of nodes in this mode is not accessible.
+- **Standard**: provides advanced configuration flexibility over the cluster's underlying infrastructure. For clusters created using the Standard mode, the customer determines the configurations needed for production workloads.
