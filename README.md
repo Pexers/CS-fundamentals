@@ -1,9 +1,9 @@
 # _Computer Science_ Fundamentals 📖💻
-![](https://progress-bar.dev/0?title=Databases)
+![](https://progress-bar.dev/0?title=Database+Systems)
 ![](https://progress-bar.dev/70?title=Development)
-![](https://progress-bar.dev/10?title=DistributedSystems)
-![](https://progress-bar.dev/0?title=NetworkAndSecurity)
-![](https://progress-bar.dev/0?title=OperatingSystems)
+![](https://progress-bar.dev/10?title=Infrastructure+Architecture)
+![](https://progress-bar.dev/0?title=Network+and+Security)
+![](https://progress-bar.dev/0?title=Operating+Systems)
 
 A sum up of fundamental concepts in the fields of **Computer Science**.
 
