@@ -68,12 +68,11 @@ Agile _iterations_ are usually between two to four weeks long, with a final comp
 6. **Review / Feedback**. The team elicits, analyzes, and uses feedback from customers and stakeholders to shape the next iteration's requirements. All feedback should be reviewed in the next iteration. Thus, starting another iteration workflow cycle.
 
 #### _Strengths_
-- Face-to-face conversation with team members and stakeholders.
-- Ensure and promote customer satisfaction.
 - Adapts well with changing requirements.
+- Ensure and promote customer satisfaction.
+- Face-to-face conversation with team members and stakeholders.
 - Fast and continuous development.
 - Easy to manage with more flexibility.
-
 
 #### _Weaknesses_
 - Lack of formal documentation and designing.

@@ -19,7 +19,22 @@ It is as simple as it sounds, meaning that every class or module should come wit
 5. **Dependency Inversion**. States that classes should depend upon interfaces or abstract classes, instead of concrete classes and functions. In other words,high level modules should not depend upon low level modules, both should depend on abstractions. If you consequently apply the Open-Closed Principle and the LSP to your code, it will also follow the DIP.
 
 ## 2. DRY - Don't Repeat Yourself
+Popularized by the book "_The Pragmatic Programmer_", the DRY principle states that "_every piece of knowledge must have a single, unambiguous, authoritative representation within a system_." 
 
-## 3. KISS - Keep It Simple Simon
+The goal of the DRY principle is to lower technical debt by eliminating redundancies in process and logic whenever possible.
+
+## 3. KISS - Keep It Simple, Stupid
+The KISS principle is about striving for simplicity. Modern programming languages, frameworks and APIs have powerful means to create sophisticated solutions for various kinds of problems. Sometimes developers might feel tempted to write "clever" solutions that use all these complex features. The KISS principle states that a solution is better when it uses less inheritance, less polymorphism, fewer classes, etc.
+
+A solution that follows the KISS principle might look boring or even “stupid” but simple and understandable. The KISS principle states that there is no value in a solution being "clever" but being easily understandable. This does not mean that features like inheritance and polymorphism should not be used at all. Rather they should only be used when they are necessary or there is some substantial advantage.
+
+This is a very general principle, so there is a large variety of possible strategies to adhere more to this principle largely depending on the given design problem:
+- Avoid inheritance, polymorphism, dynamic binding and other complicated OOP concepts. Use delegation and simple if-constructs instead.
+- Avoid low-level optimization of algorithms, especially when involving Assembler, bit-operations, and pointers when slower implementations will work just fine.
+- Avoid numerous classes and methods as well as large code blocks.
+- For slightly unrelated but rather small pieces of functionality use private methods instead of an additional class.
 
 ## 4. YAGNI - You Aren't Gonna Need It
+The YAGNI principle states that features should only be added when required. It helps developers avoid wasted effort on features that are assumed to be needed at some point in the future.
+
+The main difference compared to KISS is that YAGNI focuses on removing unnecessary functionality and logic, while KISS focuses on avoiding complexity for simplicity reasons.
