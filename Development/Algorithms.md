@@ -5,7 +5,7 @@ Copyright &copy; 2023, Pexers (https://github.com/Pexers)
 Algorithms are widely used throughout all areas of mathematics and computer science. An algorithm is a set of well-defined instructions to solve a particular problem. They are also used as specifications for performing data processing and play a major role in automated systems.
 
 ## Big-O Notation
-Big-O notation is a formal expression of an algorithm’s complexity in relation to the growth of the input size. Hence, it is used to rank algorithms based on their performance with large inputs.
+Big-O notation is a formal expression of an algorithm's complexity in relation to the growth of the input size. Hence, it is used to rank algorithms based on their performance with large inputs.
 
 We can express it as the _best_, _average_, and _worst-case_ complexity of an algorithm. Most discussions of Big-O focus on the "upper-bound" complexity of an algorithm, that is, the worst-case.
 
@@ -420,7 +420,7 @@ With Quick Sort, we don't swap what is already sorted. If the data is completely
 
 Quick Sort's performance is mainly dependent on the pivot selection algorithm. Ideally, the pivot should be picked randomly. In the above implementation, we opt for using the middle element of the array as the pivot.
 
-An alternative way to avoid Quick Sort’s worst-case is to randomly shuffle the input before sorting it. In real life scenarios, the input can be nearly sorted, that’s why most programming languages, such as Python, Java and JavaScript, all use a modified version of Merge Sort (known as _Tim Sort_) as their default sorting algorithm.
+An alternative way to avoid Quick Sort's worst-case is to randomly shuffle the input before sorting it. In real life scenarios, the input can be nearly sorted, that's why most programming languages, such as Python, Java and JavaScript, all use a modified version of Merge Sort (known as _Tim Sort_) as their default sorting algorithm.
 
 
 [^1]: In computer science, exponential growth usually occurs as a consequence of discrete processes like the _divide-and-conquer_ algorithms or in manipulation of binary values. Consequently, we typically use base _2_ in logarithmic functions, since it just arises so frequently, meaning that _log<sub>2</sub> n_ is simplified to _log n_.

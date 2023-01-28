@@ -15,9 +15,9 @@ These roles can have different naming conventions depending on the adopted metho
 - **Customers**: individuals who receive or purchase a product or service. A customer should have the ability to buy or rate this product or service. The feedback is frequently used to improve organizational processes and set requirements.
 
 ## 1. Waterfall
-When it comes to software development, Waterfall is the most traditional and sequential choice. Although it’s usually viewed as an outdated method, it’s helpful to understand its structure to better appreciate the flexibility of more modern methodologies.
+When it comes to software development, Waterfall is the most traditional and sequential choice. Although it's usually viewed as an outdated method, it's helpful to understand its structure to better appreciate the flexibility of more modern methodologies.
 
-Waterfall requires plenty of structure and documentation up front. It is divided into self-contained stages. The first stage is vital, requiring a full understanding by both developers and stakeholders of the project’s demands and scope before anything begins.
+Waterfall requires plenty of structure and documentation up front. It is divided into self-contained stages. The first stage is vital, requiring a full understanding by both developers and stakeholders of the project's demands and scope before anything begins.
 <p align="center">
   <img src="https://user-images.githubusercontent.com/47757441/211622541-7b499331-472e-4a0f-8e1b-a20856d2ffc1.png" width="440">
 </p>
@@ -30,7 +30,7 @@ Waterfall requires plenty of structure and documentation up front. It is divided
 
 #### _Weaknesses_
 - High risk and uncertainty.
-- It doesn’t encourage active participation of stakeholders.
+- It doesn't encourage active participation of stakeholders.
 - Inadequate for long-term projects.
 - Not appropriate for projects with a moderate to high probability of change in requirements.
 
@@ -80,7 +80,7 @@ Agile _iterations_ are usually between two to four weeks long, with a final comp
 - Overall, it requires more time and energy from everyone.
 
 ## 3. Rapid
-Rapid Application Development (RAD) is an agile project management strategy where the key benefits are efficiency and fast delivery, making it an attractive choice for developers working in a fast-paced environment. This rapid pace is made possible by RAD’s focus on minimizing the planning stage and maximizing prototype development. 
+Rapid Application Development (RAD) is an agile project management strategy where the key benefits are efficiency and fast delivery, making it an attractive choice for developers working in a fast-paced environment. This rapid pace is made possible by RAD's focus on minimizing the planning stage and maximizing prototype development. 
 
 The end goal of the whole methodology is to deliver working software products to the market faster, as the demand for new applications is ever increasing. It is designed to be flexible to changes and to accept new inputs, like feedback and features, at every stage of the development process.
 <p align="center">
@@ -88,7 +88,7 @@ The end goal of the whole methodology is to deliver working software products to
 </p>
 
 1. **Requirements**. Rather than spending months developing specifications with stakeholders, RAD begins by defining a loose set of requirements. "Loose" because among the key principles of rapid application development is the permission to change requirements at any point in the cycle.
-2. **Prototype**. Once a project has been scoped, teams begin building out the initial models and prototypes. The goal is to rapidly produce a working design that satisfies all or only a portion of requirements. This prototype may cut corners to reach a working state, and that’s acceptable.
+2. **Prototype**. Once a project has been scoped, teams begin building out the initial models and prototypes. The goal is to rapidly produce a working design that satisfies all or only a portion of requirements. This prototype may cut corners to reach a working state, and that's acceptable.
 3. **Construction & Feedback gathering**. Rapid construction is where application coding, system testing, and unit integration occurs, converting prototype and beta systems into a working model. This stage may also be repeated as required, supporting new components and alterations. The majority of problems and customer changes were addressed during the iterative prototyping stage.
 4. **Cutover**. During this stage, developers may optimize or even re-engineer their implementation to improve stability and maintainability. They may also spend this stage connecting the back-end to production data, writing thorough documentation, and doing any other maintenance tasks required before handing the product over with confidence.
 
@@ -103,7 +103,7 @@ The end goal of the whole methodology is to deliver working software products to
 - If developers are not committed to delivering software on time, RAD projects can fail. For that reason it requires highly skilled professionals.
 
 ## 4. Scrum
-Scrum is a system development methodology that implements agile development. The primary goal of Scrum is to satisfy the customer’s need through an environment of transparency in communication, collective responsibility and continuous progress.
+Scrum is a system development methodology that implements agile development. The primary goal of Scrum is to satisfy the customer's need through an environment of transparency in communication, collective responsibility and continuous progress.
 
 Team members break down end goals into smaller goals at the beginning and work through them using fixed-length _sprints_ to build software and showcase it often, which usually last two weeks. Meetings play an important role in the Scrum approach, and during each sprint, daily planning meetings and demos take place to follow progress and gather feedback.
 
@@ -128,18 +128,37 @@ Scrum incorporates the structure and discipline of more traditional software dev
 - Difficult to estimate the resources, it lacks the end-to-end visibility of the software development process.
 
 ## 5. DevOps
-With DevOps, the developers (Dev), who are experts in coding, and the operations engineers (Ops), who are experts in maintaining the environment and systems engineering, work collaboratively to infuse stability, reliability, and performance requirements into development practices, while also bringing development into the management of the production environment. This is what DevOps intends to do, taking the best parts of both disciplines.
+With DevOps, the developers (Dev), who are experts in coding, and the operations engineers (Ops), who are experts in monitoring, management, and control of your IT infrastructure to ensure that services are delivered according to organizational policies, requirements, and performance standards. Operation teams comprise of a range of cross-functional experts, including security, systems, and network engineers. This is what DevOps intends to do, taking the best parts of both disciplines.
 
-Ideally, DevOps means that a development team writes software that perfectly meets user requirements, deploys without any wasted time, and runs optimally on the first try.
+A DevOps engineer introduces processes, tools, and methodologies to balance needs throughout the software development life cycle, from coding and deployment, to maintenance and updates. This role should not be confused with an Site Reliability Engineer (SRE), whose work has historically been done by an Operations team, but using engineers with software expertise, and banking on the fact that these engineers are inherently both predisposed to, and have the ability to, substitute automation for human labor. 
+
+Continuous Integration, Delivery and Deployment (CI/CD) are practices that seek to speed up the process of releasing software by shortening feedback loops and automating repetitive tasks. These practices play a key role in making the agile principle of frequently delivering valuable, working software to users a reality. A DevOps engineer uses a CI/CD tool such as Jenkins, CircleCI, AWS CodeBuild, Azure DevOps, Atlassian Bamboo, etc. to automate the steps and provide reporting.
 <p align="center">
   <img src="https://user-images.githubusercontent.com/47757441/212539744-e9008ff5-50b8-45d0-b3b5-23c83a8d39cc.png" width="360">
 </p>
 
 #### Foundations
-- **Continuous Integration**: automatically building and unit testing an entire application whenever a code change is checked into source control, in small increments.
-- **Continuous Deployment**: after testing every code change, automatically deploying it to a running environment, including production.
-- **Continuous Delivery**: a DevOps methodology in which engineers code, test, and release software into a running environment frequently, in really small batches, so that you can improve the overall quality and velocity; it is continuous integration plus continuous deployment.
-- **DevSecOps**: the extension of DevOps culture for the benefit and inclusion of security.
+
+- **Continuous Integration, Delivery and Deployment (CI/CD)**
+  1. _Continuous Integration_
+  Automatically building and unit testing an entire application whenever a code change is checked into source control by developers regularly. If something breaks, there are far fewer changes to go through in order to find the source of the problem. Getting feedback quickly to developers also makes it easier to fix any issues, because they don't lose the context of what they were doing.
+  2. _Continuous Delivery_ 
+  An extension of continuous integration where each successful build is automatically deployed to each of the **pre-production** environments, with confidence in the quality increasing with every stage. These can be testing environments for additional layers of testing, such as security, load and performance tests; sandbox environments for support and sales teams to familiarize themselves with new features; and acceptance testing environments for QA and product professionals to verify that changes work as intended.
+  3. _Continuous Deployment_
+  If a build passes all previous stages in the pipeline successfully, it is automatically released to **production**. Continuous deployment shortens the feedback loop from code change to use in production, giving the team timely insight into how their changes perform in the real world without having to compromise on quality. Even with all the previous measures in place, continuous deployment can feel like a risky practice. What happens if a bug goes undetected in testing only to emerge in production? Time, money and reputation are all potentially at stake. This is where being proactive in looking for signs of trouble rather than waiting for bug reports to come in makes all the difference. Monitoring stats for any change from the norm, particularly just after a release, can alert engineers to issues before they cause a noticeable problem for users.
+- **DevSecOps**: stresses the importance of incorporating security into the software development lifecycle (SDLC). Building security into your team's culture, process and tools avoids silos (system parts isolated from the rest) and ensures that rapid delivery is not at the expense of security vulnerabilities.
+
+#### Best practices
+1. Prioritize customer satisfaction.
+2. Active participation of stakeholders.
+3. Make use of agile methodologies.
+4. Implement CI/CD.
+5. Implement test automation.
+6. Monitor the right metrics.
+7. Integrated change management.
+8. Observability.
+9. Switch to microservices.
+10. Build a collaborative culture.
 
 #### _Strengths_
 - Detect configuration errors and programming bugs earlier.
@@ -148,7 +167,7 @@ Ideally, DevOps means that a development team writes software that perfectly mee
 
 #### _Weaknesses_
 - Lacks standardization, businesses that adopt DevOps may need to create their own customized process and toolsets, which can be time-consuming and costly.
-- Often leads to an increase in complexity within an organization’s IT infrastructure due to the integration of multiple tools and technologies, making it more difficult to manage and troubleshoot.
+- Often leads to an increase in complexity within an organization's IT infrastructure due to the integration of multiple tools and technologies, making it more difficult to manage and troubleshoot.
 - Requires highly experienced professionals.
 
 ## 6. Lean

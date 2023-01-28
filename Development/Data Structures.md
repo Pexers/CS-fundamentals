@@ -194,8 +194,8 @@ Stack<String> stack = new Stack<>();
 - `int search(Object o)`
 
 ## Hashing 
-- `HashMap<k,v>`. Stores elements in form of key-value pair i.e each element has its corresponding key which is required for its retrieval during iteration. Single null key and any number of null value can be inserted in hash map without any restriction. Methods are not synchronized. Multiple threads can operate simultaneously and hence hash map’s object is not thread-safe.
-- `HashTable<k,v>`. Every method is synchronized. Only one thread is allowed to operate the hash table’s object at a time. Hence it is thread-safe. Null is not allowed for both key and value, otherwise, a null pointer exception will be thrown.
+- `HashMap<k,v>`. Stores elements in form of key-value pair i.e each element has its corresponding key which is required for its retrieval during iteration. Single null key and any number of null value can be inserted in hash map without any restriction. Methods are not synchronized. Multiple threads can operate simultaneously and hence hash map's object is not thread-safe.
+- `HashTable<k,v>`. Every method is synchronized. Only one thread is allowed to operate the hash table's object at a time. Hence it is thread-safe. Null is not allowed for both key and value, otherwise, a null pointer exception will be thrown.
 - `HashSet<E>`. Stores only objects, no such key-value pairs are maintained. Allows only one null value in its collection, after which no null value is allowed to be added.
 
 ||Average|Worst-case|
