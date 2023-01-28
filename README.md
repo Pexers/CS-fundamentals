@@ -1,4 +1,4 @@
-# _Computer Science_ Fundamentals 📖💻
+# Computer Science Fundamentals 📖💻
 ![](https://progress-bar.dev/0?title=Database+Systems)  
 ![](https://progress-bar.dev/70?title=Development)  
 ![](https://progress-bar.dev/10?title=Infrastructure+Architecture)  
