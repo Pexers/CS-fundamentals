@@ -2,19 +2,21 @@
 
 Copyright &copy; 2023, Pexers (https://github.com/Pexers)
 
-The application’s success is inevitably dependent on the software engineers’ willingness to use these best practices for software development introduced by some of the well-known and experienced industry experts.
+The application's success is inevitably dependent on the software engineers' willingness to use these best practices for software development introduced by some of the well-known and experienced industry experts.
 
 There are many different software development principles that can help in creating an application by maintaining the code clean. These principles should be constantly implied by software developers from time to time for the seamless evolvement of projects.
 
+TODO: Separation of Concerns (SoC)
+
 ## 1. SOLID
-The broad goal of the SOLID principles is to reduce dependencies so that engineers can change one area of software without impacting others. Additionally, they’re intended to make designs easier to understand, maintain, and extend. Ultimately, using these design principles makes it easier for software engineers to avoid issues and to build adaptive, effective, and agile software.
+The broad goal of the SOLID principles is to reduce dependencies so that engineers can change one area of software without impacting others. Additionally, they're intended to make designs easier to understand, maintain, and extend. Ultimately, using these design principles makes it easier for software engineers to avoid issues and to build adaptive, effective, and agile software.
 
 The SOLID principles were developed by Robert C. Martin in a 2000 essay, "_Design Principles and Design Patterns_", although the acronym was coined later by Michael Feathers.
 
 1. **Single Responsibility**. "_A class should have one and only one reason to change, meaning that a class should have only one job._"
-It is as simple as it sounds, meaning that every class or module should come with its own responsibility for a single part of the software’s functionality. Merge conflicts appear when different teams change the same file. But if the SRP is followed, fewer conflicts will appear – files will only have a single reason to change, and conflicts that do exist will be easier to resolve.
+It is as simple as it sounds, meaning that every class or module should come with its own responsibility for a single part of the software's functionality. Merge conflicts appear when different teams change the same file. But if the SRP is followed, fewer conflicts will appear – files will only have a single reason to change, and conflicts that do exist will be easier to resolve.
 2. **Open-Closed**. Requires that classes should be open for extension and closed to modification. Which means that we should be able to add new functionality without touching the existing class code. This is because whenever we modify the existing code, there's a risk of creating potential bugs. We should avoid touching the tested and reliable (mostly) production code if possible.
-3. **Liskov Substitution**. Requires that every subclass should be substitutable for its superclass. This is the expected behavior, since when using inheritance we assume that the child class inherits everything that the parent class has. The child class extends the behavior but never narrows it down. We can think of the methods defined in the parent class as defining a contract. Every derived class is expected to stick to this contract. If a child class does not adhere to the parent’s contract, it’s violating the LSP.
+3. **Liskov Substitution**. Requires that every subclass should be substitutable for its superclass. This is the expected behavior, since when using inheritance we assume that the child class inherits everything that the parent class has. The child class extends the behavior but never narrows it down. We can think of the methods defined in the parent class as defining a contract. Every derived class is expected to stick to this contract. If a child class does not adhere to the parent's contract, it's violating the LSP.
 4. **Interface Segregation**. States that many client-specific interfaces are better than one general-purpose interface. Clients should not be forced to implement a function they do not need.
 5. **Dependency Inversion**. States that classes should depend upon interfaces or abstract classes, instead of concrete classes and functions. In other words,high level modules should not depend upon low level modules, both should depend on abstractions. If you consequently apply the Open-Closed Principle and the LSP to your code, it will also follow the DIP.
 

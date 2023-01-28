@@ -30,7 +30,7 @@ A **container** is defined as a standard unit of software that packages up code 
   - Containers take up much less space than VMs, given that container images are typically only a few megabytes in size. Containers can handle more applications, and reduce the need for multiple VMs and operating systems. This allows far more containers to run on the same compute capacity as a single VM.
 
 - **Portability**
-  - Virtual machines can be relocated as needed among the physical computers in a network. This makes it possible to allocate workloads to servers that have spare computing power. However, it’s an entire operating system along with all additional user and system data being replicated, which means we’re looking at one or more files that total a few GB in size. As such, VMs are portable but will take significantly longer than containers to move from one location to another.
+  - Virtual machines can be relocated as needed among the physical computers in a network. This makes it possible to allocate workloads to servers that have spare computing power. However, it's an entire operating system along with all additional user and system data being replicated, which means we're looking at one or more files that total a few GB in size. As such, VMs are portable but will take significantly longer than containers to move from one location to another.
   - With containers, applications can be built once, placed inside a container image – or series of images, if the app is composed of multiple services – and executed on the host's OS kernel that supports a container engine (e.g. Docker). We can't run Windows containers on Linux, but the other way around is possible thanks to **WSL 2** (Windows Subsystem for Linux, version 2). On macOS, containers must run a Linux host VM.
  
 - **Scalability** 
@@ -38,8 +38,8 @@ A **container** is defined as a standard unit of software that packages up code 
   - Containers offer near limitless scalability thanks to being lightweight and their almost instantaneous start-up time. An orchestration system, such as Google Kubernetes is capable of determining, based upon traffic patterns, when the quantity of containers needs to be scaled out – replication of container images automatically – or removed from the system.
 
 - **Performance**
-  - Virtual machines are ideal for supporting applications that require an operating system’s full functionality. This can happen when there is a need to manage a wide variety of operating systems. However, VMs are time consuming to build and regenerate because they encompass a full stack system. Any modifications to a virtual machine snapshot can take significant time to regenerate and validate they behave as expected.
-  - Containers enable greater server-efficiency, cost-effectiveness, and reduced-overhead over VMs. A container doesn’t require its own operating system which corresponds to faster boot times, smaller memory footprints, and generally better performance. Containers also help trim hardware, storage, operating system, and server costs as they reduce the need for using VMs.
+  - Virtual machines are ideal for supporting applications that require an operating system's full functionality. This can happen when there is a need to manage a wide variety of operating systems. However, VMs are time consuming to build and regenerate because they encompass a full stack system. Any modifications to a virtual machine snapshot can take significant time to regenerate and validate they behave as expected.
+  - Containers enable greater server-efficiency, cost-effectiveness, and reduced-overhead over VMs. A container doesn't require its own operating system which corresponds to faster boot times, smaller memory footprints, and generally better performance. Containers also help trim hardware, storage, operating system, and server costs as they reduce the need for using VMs.
 
 - **Maintainability**
   - Each OS in every VM instance needs to be maintained and updated separately. This is a time consuming and exhausting task, especially if we have multiple VMs.
@@ -88,7 +88,7 @@ ENV MY_TOKEN=random_token
 CMD ["python3", "code/main.py"]
 ```
 
-#### Dockerfile Cheatsheet
+#### Dockerfile Cheat Sheet
 ```sh
 # FROM must be the first non-comment instruction in the Dockerfile
 FROM image
@@ -148,10 +148,11 @@ SHELL ["executable", "param1", "param2"]
 
 # Sets the system call signal that will be sent to the container to exit
 STOPSIGNAL signal
-
 ```
 
-#### Docker CLI Cheatsheet
+TODO: Docker compose (to manage applications that use multiple containers)
+
+#### Docker CLI Cheat Sheet
 _Manage images_
 ```sh
 # Download an image with an optional tag
@@ -235,26 +236,164 @@ docker port CONTAINER
 ```
 
 ## Kubernetes
-Often misunderstood as a choice between one or the other, Kubernetes and Docker are different yet complementary technologies for running containerized applications. Docker is not an alternative to Kubernetes, the difference relates to the role each play in containerizing and running applications. Kubernetes is not a container engine software, per se, but rather a **container orchestrator**.
-
+Often misunderstood as a choice between one or the other, Kubernetes and Docker are different yet complementary technologies for running containerized applications. Docker is not an alternative to Kubernetes, the difference relates to the role each play in containerizing and running applications. Kubernetes, also known as _K8s_ is not a container engine software, per se, but rather a **container orchestrator**.
 
 Originally designed by Google, Kubernetes provides automated container orchestration, improves reliability and reduces the time and resources attributed to daily operations. 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/47757441/213886253-a9ce21d2-ab9c-464d-a255-48f1aa38c9ec.png" width="700">
 </p>
 
-- **Pod**: a group of one or more containers, with shared storage and network resources, and a specification for how to run the containers (pod as in a pod of whales or pea pod).
-- **Control Plane Components**:  makes global decisions about the cluster (for example, scheduling), as well as detecting and responding to cluster events. Control plane components can be run on any machine in the cluster. However, for simplicity, set up scripts typically start all control plane components on the same machine, and do not run user containers on this machine.
+- **Pod**: the smallest unit of execution in Kubernetes, consisting of one or more containers (a group), with shared storage, network resources, and a specification for how to run the containers (pod as in a pod of whales or pea pod). Complex systems with multiple microservices should be deployed using **a single pod per microservice**, containing one or more containers. Is not a good practice to configure a pod with more than one microservice, otherwise they won't be able to scale independently.
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  labels:
+    app.kubernetes.io/name: proxy
+spec:
+  containers:
+  - name: nginx
+    image: nginx:stable
+    ports:
+      - containerPort: 80
+        name: http-web-svc
+```
+- **Node**: are the physical servers or VMs that make up the Kubernetes cluster. Nodes are interchangeable and typically not addressed individually by developers, other than when maintenance is required. Each node can have multiple pods.
+- **Kubernetes Cluster**: a set of nodes that run containerized applications. They are more lightweight and flexible than virtual machines. In this way, Kubernetes clusters allow for applications to be more easily developed, moved and managed. While it seems quite logical to have each environment and/or application in its own cluster, it is not required, and it's not the only way. Kubernetes makes this easy enough by making it possible to quickly roll out multiple nodes with the same configuration.
+- **Service**: pods are created and destroyed to match the desired state of the cluster. Each pod gets its own IP address, however in a _deployment_, the set of pods running in one moment in time could be different from the set of pods running that application a moment later (IPs can change). A Service in Kubernetes allows to have a permanent IP address, that we don't have to change the endpoint every time the pod is recreated. In case we have the same pod replicated in different nodes that use the same service, it can also act like a **load balancer**. The service will redirect the workload to the less occupied pod.
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  selector:
+    app.kubernetes.io/name: proxy
+  ports:
+  - name: name-of-service-port
+    protocol: TCP
+    port: 80
+    targetPort: http-web-svc
+```
+<sup>Note: setting the spec `clusterIP` to `None` will make the service to return the IP addresses of the pods, instead of the IP address of the service (_headless service_).</sup>
+- **Deployment**: is a specialized term in the context of Kubernetes. It doesn't necessarily refer to the deployment of applications or services. Rather, a deployment is a file that defines a pod's desired behavior or characteristics. It provides a way to communicate the desired state to Kubernetes deployments, and the controller works on changing the present state into the desired state.
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:  # 'spec' attributes are specific to the resource 'kind'
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+```
+- **StatefulSets**: used to host stateful applications (such as databases) on Kubernetes to guarantee state consistency. However, it's a common practice to **host stateful applications outside the Kubernetes cluster**, in order to avoid data inconsistencies, and host only stateless applications on Kubernetes.
+- **Node Components**: components that run on every node, maintaining running pods and providing the Kubernetes runtime environment.
+  - _kubelet_: takes a set of PodSpecs that are provided through various mechanisms and ensures that the containers described in those PodSpecs are running and healthy.
+  - _kube-proxy_: maintains network rules on nodes. These network rules allow network communication to pods from network sessions inside or outside of the cluster.
+  - _container runtime_: the software that is responsible for running containers. Kubernetes supports container runtimes such as _containerd_, CRI-O, and any other implementation of the Kubernetes CRI (Container Runtime Interface).
+- **Control Plane Components**:  the control plane makes global decisions about the cluster (for example, scheduling), as well as detecting and responding to cluster events. Control plane components can be run on any machine in the cluster. However, for simplicity, set up scripts typically start all control plane components on the same machine, and do not run user containers on this machine. The control plane is essential because it features automatic scheduling that distributes resources to the pods across each node. 
   - _kube-apiserver_: exposes the Kubernetes API designed to scale horizontally, that is, it scales by deploying more instances.
   - _etcd_: consistent and highly-available key value store used as Kubernetes' backing store for all cluster data.
   - _kube-scheduler_: watches for newly created pods with no assigned node, and selects a node for them to run on.
   - _kube-controller-manager_: runs controller processes.
   - _cloud-controller-manager_: lets customers link the cluster into cloud provider's API, and separates out the components that interact with that cloud platform from components that only interact with the cluster.
-- **Node Components**: run on every node, maintaining running pods and providing the Kubernetes runtime environment.
-  - _kubelet_: takes a set of PodSpecs that are provided through various mechanisms and ensures that the containers described in those PodSpecs are running and healthy.
-  - _kube-proxy_: maintains network rules on nodes. These network rules allow network communication to pods from network sessions inside or outside of the cluster.
-  - _container runtime_: the software that is responsible for running containers. Kubernetes supports container runtimes such as _containerd_, CRI-O, and any other implementation of the Kubernetes CRI (Container Runtime Interface).
+- **Namespaces**: a mechanism for isolating certain resource groups within a cluster, and then managing them accordingly.
 
-In Google Kubernetes Engine (GKE) we can create clusters using one of the following modes of operation:
+TODO: NodePort vs Ingress for external access
+Ingress actually acts as a proxy to bring traffic into the cluster, then uses internal service routing to get the traffic where it is going. Under the hood, Ingress will use a NodePort or LoadBalancer service to expose itself to the world so it can act as that proxy.
+TODO: ConfigMap and Secrets.
+
+In Google Kubernetes Engine (GKE), we can create clusters using one of the following modes of operation:
 - **Autopilot**: provides a fully-provisioned and managed cluster configuration. Autopilot clusters are pre-configured with an optimized cluster configuration that is ready for production workloads. The number of nodes in this mode is not accessible.
 - **Standard**: provides advanced configuration flexibility over the cluster's underlying infrastructure. For clusters created using the Standard mode, the customer determines the configurations needed for production workloads.
+
+#### Kubernetes CLI Cheat Sheet
+_Syntax_
+```sh
+kubectl [command] [TYPE] [NAME] [flags]
+
+# command: The operation to perform on one or more resources, for example: create, get, describe, delete
+# TYPE: The resource type. Resource types are case-insensitive and can be specified in singular, plural, or abbreviated forms
+# NAME: The name of the resource. Names are case-sensitive. If the name is omitted, details for all resources are displayed, for example 'kubectl get pods'
+# flags: Optional flags. For example, you can use the -s or --server flags to specify the address and port of the Kubernetes API server
+```
+
+_Manage pods_
+```sh
+# Get the documentation for pod manifests
+kubectl explain pods
+
+# List all pods in the namespace
+kubectl get pods
+
+# List all pods with extra information, such as IP addresses
+kubectl get pods -o wide
+
+# List all pods in all namespaces
+kubectl get pods --all-namespaces
+
+# Get all running pods in the namespace
+kubectl get pods --field-selector=status.phase=Running
+
+# Get a pod's YAML
+kubectl get pod my-pod -o yaml
+
+# Dump pod logs (stdout)
+kubectl logs my-pod
+```
+_Manage configurations_
+
+```sh
+# Set a cluster entry in the kubeconfig
+kubectl config set-cluster my-cluster-name 
+
+# Add a new user to your kubeconf that supports basic auth
+kubectl config set-credentials kubeuser/foo.kubernetes.com --username=kubeuser --password=kubepassword
+
+# Delete user foo
+kubectl config unset users.foo
+```
+
+_Manage nodes and cluster_
+```sh
+# List all nodes
+kubectl get nodes
+# Show metrics for a given node
+kubectl top node my-node
+
+# Display addresses of the master and services
+kubectl cluster-info
+
+# Dump current cluster state to stdout
+kubectl cluster-info dump
+
+# Dump current cluster state to /path/to/cluster-state
+kubectl cluster-info dump --output-directory=/path/to/cluster-state
+```
+
+_Other_
+```sh
+# Display the Kubernetes version running on the client and server
+kubectl version
+
+# List all services in the namespace
+kubectl get services
+
+# List a particular deployment
+kubectl get deployment my-dep
+```

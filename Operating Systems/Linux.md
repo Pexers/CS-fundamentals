@@ -5,4 +5,4 @@
 Given that Linux is open-source, that are many Linux Distributions (distros):
 Ubuntu, Debian, Alpine, Fedora, CentOS, etc.
 
-Linux CLI Cheatsheet
+Linux CLI Cheat Sheet
