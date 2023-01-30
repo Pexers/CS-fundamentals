@@ -1,0 +1,4 @@
+name: 'Update README.md'
+runs:
+  using: 'node16'
+  main: 'index.js'
