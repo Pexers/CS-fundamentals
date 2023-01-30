@@ -66,11 +66,11 @@ Docker can fully run in WSL 2. This means that Linux containers can run natively
 
 **Docker Hub**: a hosted repository service provided by Docker for finding and sharing container images.
 
-#### Dockerfile
+### Dockerfile
 Docker can build images automatically by reading the instructions from a Dockerfile. A Dockerfile is a text document that contains instructions for packaging an application into an image that can be run anywhere using Docker.
 
 Instruction are not case-sensitive. However, convention is for them to be UPPERCASE to distinguish them from arguments more easily. Docker runs instructions in a Dockerfile in order. A Dockerfile must begin with a `FROM` instruction. The `FROM` instruction specifies the _parent image_ from which you are building.
-
+_Dockerfile example_
 ```sh
 # syntax=docker/dockerfile:1
 FROM python:3.8-slim-buster
@@ -152,7 +152,7 @@ STOPSIGNAL signal
 
 TODO: Docker compose (to manage applications that use multiple containers)
 
-#### Docker CLI cheat sheet
+### Docker CLI cheat sheet
 _Manage images_
 ```sh
 # Download an image with an optional tag
@@ -240,7 +240,7 @@ Often misunderstood as a choice between one or the other, Kubernetes and Docker 
 
 Originally designed by Google, Kubernetes provides automated container orchestration, improves reliability and reduces the time and resources attributed to daily operations. 
 
-#### Kubernetes components
+### Kubernetes components
 _In summary_:
 > A Kubernetes **cluster** consists of a set of worker machines, called **nodes**, that run containerized applications. Every cluster has at least one worker node.
 >
@@ -283,7 +283,7 @@ In Google Kubernetes Engine (GKE), we can create clusters using one of the follo
 - **Autopilot**: provides a fully-provisioned and managed cluster configuration. Autopilot clusters are pre-configured with an optimized cluster configuration that is ready for production workloads. The number of nodes in this mode is not accessible.
 - **Standard**: provides advanced configuration flexibility over the cluster's underlying infrastructure. For clusters created using the Standard mode, the customer determines the configurations needed for production workloads.
 
-#### Kubernetes objects
+### Kubernetes objects
 Persistent entities in the Kubernetes system. Kubernetes uses these entities to represent the state of your cluster, and are expressed using the **YAML format**.
   - _Service_: pods are created and destroyed to match the desired state of the cluster. Each pod gets its own IP address, however in a _deployment_, the set of pods running in one moment in time could be different from the set of pods running that application a moment later (IPs can change). A Service in Kubernetes allows to have a permanent IP address, that we don't have to change the endpoint every time the pod is recreated. In case we have the same pod replicated in different nodes that use the same service, it can also act like a **load balancer**. The service will redirect the workload to the less occupied pod.
     ```yaml
@@ -333,7 +333,7 @@ TODO: NodePort vs Ingress for external access
 Ingress actually acts as a proxy to bring traffic into the cluster, then uses internal service routing to get the traffic where it is going. Under the hood, Ingress will use a NodePort or LoadBalancer service to expose itself to the world so it can act as that proxy.
 TODO: ConfigMap and Secrets.
 
-#### Kubernetes patterns
+### Kubernetes patterns
 Source: "_O'Reilly: Kubernetes patterns for designing cloud-native apps_"
 TODO: Intro and review patterns. Add images?
 TODO: there are many patterns missing.
@@ -349,7 +349,7 @@ TODO: there are many patterns missing.
   - _Init Containers_: introduces a separate life cycle for initialization-related tasks and the main application containers. Init Containers enable separation of concerns by providing a separate life cycle for initialization-related tasks distinct from the main application containers. This pattern introduces a fundamental Kubernetes concept that is used in many other patterns when initialization logic is required.
   - _Sidecar_: describes how to extend and enhance the functionality of a pre-existing container without changing it. This pattern is one of the fundamental container patterns that allows single-purpose containers to cooperate closely together.
 
-#### Kubectl CLI cheat sheet
+### Kubectl CLI cheat sheet
 Kubernetes provides a command line tool for communicating with a Kubernetes cluster's control plane, using the Kubernetes API, named _kubectl_ (Kubernetes Control).
 
 _Syntax_

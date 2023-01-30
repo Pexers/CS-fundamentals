@@ -6,7 +6,7 @@ Software development methodologies (SDMs) can help a team to complete a project 
 
 Almost all software development methodologies are non-technical. This means they do not deal with the technical aspects of software design and development. They focus more on the internal operations, and other processes involved in the project.
 
-#### Fundamental roles
+### Fundamental roles
 These roles can have different naming conventions depending on the adopted methodology:
 - **Product Owner**: understands the customer and business requirements, creates and manages the product backlog based on those requirements.
 - **Team Leader** / **Scrum Master**: responsible for gluing everything together and ensuring that agile is being done well. In practical terms, that means they help the product owner to define value, the development team to deliver the value and get better. The team leader is a servant leader which not only describes a supportive style of leadership but describes what they do on a day-to-day basis.
@@ -41,7 +41,7 @@ Using the Agile approach, teams develop in short _iterations_ (also called _spri
 
 Agile is collaboration-heavy, focusing on team strengths and efficiency, along with internal feedback from various departments and customers. Customer satisfaction is the highest priority with the Agile approach, which teams achieve by continuously delivering working, tested, prioritized features.
 
-#### Project lifecycle
+### Project lifecycle
 
 The Agile lifecycle typically consists of six phases, found below, that can vary slightly based on the project methodology variant being used by the organization. The core of the agile workflow process lifecycle lies in experimentation and adaptability. 
 
@@ -54,7 +54,7 @@ The Agile lifecycle typically consists of six phases, found below, that can vary
 
 There may be many projects operating simultaneously, multiple iterations running on different product lines, and a variety of stakeholders, both external and internal, with a range of business needs.
 
-#### Iteration workflow
+### Iteration workflow
 Agile _iterations_ are usually between two to four weeks long, with a final completion date pre-established.
 <p align="center">
   <img src="https://user-images.githubusercontent.com/47757441/211388455-eb90c032-d5da-4808-a72d-dbde3cc8d65d.png" width="290">
@@ -137,7 +137,7 @@ Continuous Integration, Delivery and Deployment (CI/CD) are practices that seek 
   <img src="https://user-images.githubusercontent.com/47757441/212539744-e9008ff5-50b8-45d0-b3b5-23c83a8d39cc.png" width="360">
 </p>
 
-#### Foundations
+### Foundations
 
 - **Continuous Integration, Delivery and Deployment (CI/CD)**
   1. _Continuous Integration_: automatically building and unit testing an entire application whenever a code change is checked into source control by developers regularly. If something breaks, there are far fewer changes to go through in order to find the source of the problem. Getting feedback quickly to developers also makes it easier to fix any issues, because they don't lose the context of what they were doing.
@@ -145,7 +145,7 @@ Continuous Integration, Delivery and Deployment (CI/CD) are practices that seek 
   3. _Continuous Deployment_: if a build passes all previous stages in the pipeline successfully, it is automatically released to **production**. Continuous deployment shortens the feedback loop from code change to use in production, giving the team timely insight into how their changes perform in the real world without having to compromise on quality. Even with all the previous measures in place, continuous deployment can feel like a risky practice. What happens if a bug goes undetected in testing only to emerge in production? Time, money and reputation are all potentially at stake. This is where being proactive in looking for signs of trouble rather than waiting for bug reports to come in makes all the difference. Monitoring stats for any change from the norm, particularly just after a release, can alert engineers to issues before they cause a noticeable problem for users.
 - **DevSecOps**: stresses the importance of incorporating security into the software development lifecycle (SDLC). Building security into your team's culture, process and tools avoids silos (system parts isolated from the rest) and ensures that rapid delivery is not at the expense of security vulnerabilities.
 
-#### Best practices
+### Best practices
 1. Prioritize customer satisfaction.
 2. Active participation of stakeholders.
 3. Make use of agile methodologies.
