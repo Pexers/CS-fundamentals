@@ -132,7 +132,7 @@ With DevOps, the developers (Dev), who are experts in coding, and the operations
 
 A DevOps engineer introduces processes, tools, and methodologies to balance needs throughout the software development life cycle, from coding and deployment, to maintenance and updates. This role should not be confused with an Site Reliability Engineer (SRE), whose work has historically been done by an Operations team, but using engineers with software expertise, and banking on the fact that these engineers are inherently both predisposed to, and have the ability to, substitute automation for human labor. 
 
-Continuous Integration, Delivery and Deployment (CI/CD) are practices that seek to speed up the process of releasing software by shortening feedback loops and automating repetitive tasks. These practices play a key role in making the agile principle of frequently delivering valuable, working software to users a reality. A DevOps engineer uses a CI/CD tool such as Jenkins, CircleCI, AWS CodeBuild, Azure DevOps, Atlassian Bamboo, etc. to automate the steps and provide reporting.
+Continuous Integration, Delivery and Deployment (CI/CD) are practices that seek to speed up the process of releasing software by shortening feedback loops and automating repetitive tasks. These practices play a key role in making the agile principle of frequently delivering valuable, working software to users a reality. A DevOps engineer uses a CI/CD tool such as Jenkins, GitHub Actions, CircleCI, AWS CodeBuild, Azure DevOps, Atlassian Bamboo, etc. to automate the steps and provide reporting.
 <p align="center">
   <img src="https://user-images.githubusercontent.com/47757441/212539744-e9008ff5-50b8-45d0-b3b5-23c83a8d39cc.png" width="360">
 </p>
