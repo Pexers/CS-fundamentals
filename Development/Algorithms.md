@@ -137,7 +137,7 @@ The searching algorithms are used to search or find one or more than one element
 Linear Search is the simplest algorithm employed to search for an element in a data collection. It examines each element until it finds a match, starting from the beginning of the collection until the end. Hence, it is defined as a sequential search algorithm.
 
 ### Binary Search
-<sup>**Time complexity**: _O(log n)_ || **Space complexity**: _O(1)_ – iterative or _O(log n)_ – recursive</sup>  </sup>  
+<sup>**Time complexity**: _O(log n)_ || **Space complexity**: _O(1)_ – iterative Or _O(log n)_ – recursive</sup>  </sup>  
 Binary Search is a searching algorithm used in **sorted arrays** by repeatedly dividing the search interval in half. The idea of the algorithm is to take advantage of the sorted property and reduce the time complexity of the linear search. 
 
 In order for Binary Search to be considered a D&C (_divide-and-conquer_) algorithm, it would need to use two disjoint recursive calls, just like Quick Sort does. Binary Search does not have this, even though it can be implemented recursively.
@@ -222,7 +222,7 @@ Because the Queue uses the FIFO method, the loop only starts verifying the child
 - BFS on a binary tree generally requires more memory than DFS.
 
 ### Depth-First Search (DFS)
-<sup>**Time complexity**: _O(n)_ || **Space complexity**: _O(n)_ – iterative or _O(h)_ – recursive, where _h_ is the maximum tree depth</sup>  
+<sup>**Time complexity**: _O(n)_ || **Space complexity**: _O(n)_ – iterative Or _O(h)_ – recursive, where _h_ is the maximum tree depth</sup>  
 A method for exploring a **tree or graph**. In a DFS, we go as deep as possible down one path before backing up and trying a different one.
 
 DFS uses _Stack_ data structure, so it works on the concept of LIFO. When the target is **far from the source**, DFS is preferable to BFS.
@@ -416,11 +416,13 @@ Quick Sort and Merge Sort are examples of **_divide-and-conquer_** algorithms, t
 #### Why is Quick Sort usually faster in practice?
 The secret of Quick Sort is that it almost doesn't do unnecessary element swaps, which are time consuming. With Heap Sort, even when the data is already sorted, the algorithm will swap 100% of the elements to sort the array. With Merge Sort, it's even worse, we write 100% of elements in a secondary array, and write it back in the original one, even if the data is already sorted.
 
-With Quick Sort, we don't swap what is already sorted. If the data is completely sorted, we swap almost nothing! Less swap, more speed.
-
 Quick Sort's performance is mainly dependent on the pivot selection algorithm. Ideally, the pivot should be picked randomly. In the above implementation, we opt for using the middle element of the array as the pivot.
 
-An alternative way to avoid Quick Sort's worst-case is to randomly shuffle the input before sorting it. In real life scenarios, the input can be nearly sorted, that's why most programming languages, such as Python, Java and JavaScript, all use a modified version of Merge Sort (known as _Tim Sort_) as their default sorting algorithm.
+In early versions of Quick Sort, where the leftmost (or rightmost) element was chosen as a pivot, the following scenarios would cause the worst-case to occur:
+- When the input array is **already sorted**, and we choose the **leftmost** element as the pivot element. In this case, we'll have two extremely unbalanced arrays. One array will have [0] elements, and the other one will have [n - 1] elements.
+- When the given array is **reverse sorted**, and we choose the **rightmost** element as the pivot element. Again, in this case, the pivot elements will split the input array into two unbalanced arrays of size [0] and [n - 1].
+- When all the elements in the given array **are the same**. In such a scenario, the pivot element divides the array into one sub-array of length [n - 1], and the time complexity of Quick Sort increases significantly.
 
+An alternative way to avoid Quick Sort's worst-case is to randomly shuffle the input before sorting it. In real life scenarios, the input can be nearly sorted, that's why most programming languages, such as Python, Java and JavaScript, all use a modified version of Merge Sort (known as _Tim Sort_) as their default sorting algorithm.
 
 [^1]: In computer science, exponential growth usually occurs as a consequence of discrete processes like the _divide-and-conquer_ algorithms or in manipulation of binary values. Consequently, we typically use base _2_ in logarithmic functions, since it just arises so frequently, meaning that _log<sub>2</sub> n_ is simplified to _log n_.
