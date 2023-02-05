@@ -149,90 +149,143 @@ SHELL ["executable", "param1", "param2"]
 # Sets the system call signal that will be sent to the container to exit
 STOPSIGNAL signal
 ```
+#### Docker Compose file cheat sheet
+```sh
+version: "3.9"
+services:
+  calculator:
+    container_name: calculator
+    labels:
+      app: cloud-challenge
+    build:
+      context: services/calculator  # To locate the Dockerfile
+      dockerfile: Dockerfile
+    # Each microservice has its own image with its own sources on Docker Hub
+    image: pexers/calculator
+    ports:
+      - 3000:80  # EXPOSED_PORT:CONTAINER_PORT
+    links:
+      - addition
+      - division
+      - multiplication
+      - remainder
+      - subtraction
 
-TODO: Docker compose (to manage applications that use multiple containers)
+  addition:
+    container_name: addition
+    labels:
+      app: cloud-challenge
+    build:
+      context: services/addition
+      dockerfile: Dockerfile
+    image: pexers/addition
+    ports:
+      - 3001:80
+      
+  division: ...
+```
+- _links_: instructs Docker to link containers over a network. Docker creates environment variables and adds containers to the known hosts list so they can discover each other.
+- _depends_on_: sets the order in which services must start and stop.
 
 ### Docker CLI cheat sheet
 _Manage images_
 ```sh
-# Download an image with an optional tag
-docker pull IMAGE[:TAG]
+# Build and tag an image from a Dockerfile
+$ docker build -t IMAGE[:TAG] DIRECTORY
 
-# Upload an image to a repository on DockerHub
-docker push IMAGE[:TAG]
+# Associate image with Docker Hub repository
+$ docker image tag IMAGE[:TAG] USERNAME/REPOSITORY
+
+# Push an image to a repository on DockerHub
+$ docker push USERNAME/REPOSITORY
+
+# Download an image with an optional tag
+$ docker pull IMAGE[:TAG]
 
 # List all images
-docker images
-
-# Build and tag an image from a Dockerfile
-docker build -t IMAGE[:TAG] DIRECTORY
+$ docker images
 
 # Delete an image
-docker rmi IMAGE
+$ docker rmi IMAGE
 
 # Delete dangling images. These are untagged and unnamed (<none>)
-docker image prune
+$ docker image prune
 
 # Delete all unused images. These have not been assigned or used in a container
-docker image prune -a
+$ docker image prune -a
 
 # Save an image to a .tar file
-docker save IMAGE > TAR_FILE
+$ docker save IMAGE > TAR_FILE
 
 # Load an image from a .tar file
-docker load -i TAR_FILE
-```
-_Run containers_
-```shell
-# Start a new container
-docker run IMAGE
-
-# Start a new container in the background with no input or output (detached mode)
-docker run -d IMAGE
-
-# Run and map a port on the Docker host
-docker run -p [host_port]:[container_port] [image]
-
-# Run and add a DNS entry. Useful when a service within the container needs to connect to an external host
-docker run --add-host HOSTNAME:IP IMAGE
+$ docker load -i TAR_FILE
 ```
 _Manage containers_
 ```sh
-# List running containers or all containers (-a)
-docker ps [-a]
+# Start a new container
+$ docker run IMAGE
 
-# Start a shell inside a running container. For instance EXECUTABLE=bash
-docker exec -it CONTAINER EXECUTABLE
+# Start a new container in the background with no input or output (detached mode)
+$ docker run -d IMAGE
+
+# Run and map a port on the Docker host
+$ docker run -p [host_port]:[container_port] [image]
+
+# Run and add a DNS entry. Useful when a service within the container needs to connect to an external host
+$ docker run --add-host HOSTNAME:IP IMAGE
+
+# List running containers or all containers (-a)
+$ docker ps [-a]
+
+# Start a shell inside a running container. For instance EXECUTABLE=/bin/sh
+$ docker exec -it CONTAINER EXECUTABLE
 
 # Copy a file from a container to the host
-docker cp CONTAINER:SOURCE TARGET
+$ docker cp CONTAINER:SOURCE TARGET
 
 # Copy a file from the host to a container
-docker cp TARGET CONTAINER:SOURCE
+$ docker cp TARGET CONTAINER:SOURCE
 
 # Show logs of a container
-docker logs CONTAINER
-
-# Delete a container
-docker rm CONTAINER
-
-# Force delete a running container
-docker rm -f CONTAINER
-
-# Delete stopped containers
-docker container prune
+$ docker logs CONTAINER
 
 # Stop/Start a container
-docker stop/start CONTAINER
+$ docker stop/start CONTAINER
+
+# Delete a container
+$ docker rm CONTAINER
+
+# Force delete a running container
+$ docker rm -f CONTAINER
+
+# Delete stopped containers
+$ docker container prune
 
 # Rename a container
-docker rename OLD_NAME NEW_NAME
+$ docker rename OLD_NAME NEW_NAME
 
 # Create an image out of a container
-docker commit CONTAINER
+$ docker commit CONTAINER
 
 # Show mapped ports of a container
-docker port CONTAINER
+$ docker port CONTAINER
+```
+_Manage Docker Compose containers_
+```sh
+# Build docker images defined in docker-compose.yaml
+$ docker-compose build
+
+# Start application stack in background defined in docker-compose.yaml
+$ docker-compose up -d
+
+# Remove application stack defined in docker-compose.yaml
+$ docker-compose down
+
+# Force recreation of containers images
+$ docker-compose up --force-recreate --build
+
+# Push images defined in docker-compose.yaml quietly
+$ docker-compose push --quiet
 ```
 
 ## Kubernetes
@@ -242,14 +295,14 @@ Originally designed by Google, Kubernetes provides automated container orchestra
 
 ### Kubernetes components
 _In summary_:
-> A Kubernetes **cluster** consists of a set of worker machines, called **nodes**, that run containerized applications. Every cluster has at least one worker node.
+> A Kubernetes **Cluster** consists of a set of worker machines, called **Nodes**, that run containerized applications. Every Cluster has at least one worker Node.
 >
-> The worker node(s) host the **pods** that are the components of the application workload. The **control plane** manages the worker nodes and the pods in the cluster. In production environments, the control plane usually runs across multiple computers and a cluster usually runs multiple nodes, providing fault-tolerance and high availability.
+> The worker Node(s) host the **Pods** that are the components of the application workload. The **Control Plane** manages the worker Nodes and the Pods in the Cluster. In production environments, the Control Plane usually runs across multiple computers and a Cluster usually runs multiple Nodes, providing fault-tolerance and high availability.
 <p align="center">
   <img src="https://user-images.githubusercontent.com/47757441/213886253-a9ce21d2-ab9c-464d-a255-48f1aa38c9ec.png" width="600">
 </p>
 
-- **Pod**: the smallest unit of execution in Kubernetes, consisting of one or more containers, with shared storage, network resources, and a specification for how to run the containers (pod as in a pod of whales or pea pod). Complex systems with multiple microservices should be deployed using **a single pod per microservice**, containing one or more containers. Is not a good practice to configure a pod with more than one microservice, otherwise they won't be able to scale independently.
+- **Pod**: the smallest unit of execution in Kubernetes, consisting of one or more containers, with shared storage, network resources, and a specification for how to run the containers (Pod as in a pod of whales or pea pod). Complex systems with multiple microservices should be deployed using **a single Pod per microservice**, containing one or more containers. Is not a good practice to configure a Pod with more than one microservice, otherwise they won't be able to scale independently.
   ```yaml
   apiVersion: v1
   kind: Pod
@@ -265,164 +318,196 @@ _In summary_:
         - containerPort: 80
           name: http-web-svc
   ```
-- **Node**: are the physical servers or VMs that make up the Kubernetes cluster. Nodes are interchangeable and typically not addressed individually by developers, other than when maintenance is required. Each node can have multiple pods.
-- **Cluster**: a set of nodes that run containerized applications. They are more lightweight and flexible than virtual machines. In this way, Kubernetes clusters allow for applications to be more easily developed, moved and managed. While it seems quite logical to have each environment and/or application in its own cluster, it is not required, and it's not the only way. Kubernetes makes this easy enough by making it possible to quickly roll out multiple nodes with the same configuration.
-- **Control Plane**: makes global decisions about the cluster (for instance, scheduling), as well as detecting and responding to cluster events (for instance, starting up a new pod when a deployment's replicas field is unsatisfied). The control plane not only exposes the layer that deploys the containers, but also manages their lifecycle.
-- **Node Components**: components that run on every node, maintaining running pods and providing the Kubernetes runtime environment.
+- **Node**: are the physical servers or VMs that make up the Kubernetes Cluster. Nodes are interchangeable and typically not addressed individually by developers, other than when maintenance is required. Each Node can have multiple Pods.
+- **Namespaces**: provides a mechanism for isolating groups of resources within a single cluster. Organizations that use a single cluster for development, testing, and production can also use namespaces to isolate environments. Additionally, namespaces enable the use of RBAC, so teams can define roles that group lists of permissions.
+- **Cluster**: a set of Nodes that run containerized applications. They are more lightweight and flexible than virtual machines. In this way, Kubernetes Clusters allow for applications to be more easily developed, moved and managed. While it seems quite logical to have each environment and/or application in its own Cluster, it is not required, and it's not the only way. Kubernetes makes this easy enough by making it possible to quickly roll out multiple Nodes with the same configuration.
+- **Control Plane**: makes global decisions about the Cluster (for instance, scheduling), as well as detecting and responding to Cluster events (for instance, starting up a new Pod when a deployment's replicas field is unsatisfied). The Control Plane not only exposes the layer that deploys the containers, but also manages their lifecycle.
+- **Node Components**: components that run on every Node, maintaining running Pods and providing the Kubernetes runtime environment.
   - _kubelet_: takes a set of PodSpecs that are provided through various mechanisms and ensures that the containers described in those PodSpecs are running and healthy.
-  - _kube-proxy_: maintains network rules on nodes. These network rules allow network communication to pods from network sessions inside or outside of the cluster.
+  - _kube-proxy_: maintains network rules on Nodes. These network rules allow network communication to Pods from network sessions inside or outside of the Cluster.
   - _container runtime_: the software that is responsible for running containers. Kubernetes supports container runtimes such as _containerd_, CRI-O, and any other implementation of the Kubernetes CRI (Container Runtime Interface).
-- **Control Plane Components**: control plane components can be run on any machine in the cluster. However, for simplicity, set up scripts typically start all control plane components on the same machine, and do not run user containers on this machine.
+- **Control Plane Components**: components that can be run on any machine in the Cluster. However, for simplicity, set up scripts typically start all Control Plane components on the same machine, and do not run user containers on this machine.
   - _kube-apiserver_: exposes the Kubernetes API designed to scale horizontally, that is, it scales by deploying more instances.
-  - _etcd_: consistent and highly-available key value store used as Kubernetes' backing store for all cluster data.
-  - _kube-scheduler_: watches for newly created pods with no assigned node, and selects a node for them to run on.
+  - _etcd_: consistent and highly-available key value store used as Kubernetes' backing store for all Cluster data.
+  - _kube-scheduler_: watches for newly created Pods with no assigned Node, and selects a Node for them to run on.
   - _kube-controller-manager_: runs controller processes.
-  - _cloud-controller-manager_: lets customers link the cluster into cloud provider's API, and separates out the components that interact with that cloud platform from components that only interact with the cluster.
+  - _cloud-controller-manager_: lets customers link the Cluster into cloud provider's API, and separates out the components that interact with that cloud platform from components that only interact with the Cluster.
 
-In Google Kubernetes Engine (GKE), we can create clusters using one of the following modes of operation:
-- **Autopilot**: provides a fully-provisioned and managed cluster configuration. Autopilot clusters are pre-configured with an optimized cluster configuration that is ready for production workloads. The number of nodes in this mode is not accessible.
-- **Standard**: provides advanced configuration flexibility over the cluster's underlying infrastructure. For clusters created using the Standard mode, the customer determines the configurations needed for production workloads.
+In Google Kubernetes Engine (GKE), we can create Clusters using one of the following modes of operation:
+- _Autopilot_: provides a fully-provisioned and managed Cluster configuration. Autopilot Clusters are pre-configured with an optimized Cluster configuration that is ready for production workloads. The number of Nodes in this mode is not accessible.
+- _Standard_: provides advanced configuration flexibility over the Cluster's underlying infrastructure. For Clusters created using the Standard mode, the customer determines the configurations needed for production workloads.
 
 ### Kubernetes objects
-Persistent entities in the Kubernetes system. Kubernetes uses these entities to represent the state of your cluster, and are expressed using the **YAML format**.
-  - _Service_: pods are created and destroyed to match the desired state of the cluster. Each pod gets its own IP address, however in a _deployment_, the set of pods running in one moment in time could be different from the set of pods running that application a moment later (IPs can change). A Service in Kubernetes allows to have a permanent IP address, that we don't have to change the endpoint every time the pod is recreated. In case we have the same pod replicated in different nodes that use the same service, it can also act like a **load balancer**. The service will redirect the workload to the less occupied pod.
-    ```yaml
-    apiVersion: v1
-    kind: Service
-    metadata:
-      name: nginx-service
-    spec:
-      selector:
-        app.kubernetes.io/name: proxy
-      ports:
-      - name: name-of-service-port
-        protocol: TCP
-        port: 80
-        targetPort: http-web-svc
-    ```
-    <sup>Note: setting the spec `clusterIP` to `None` will make the service to return the IP addresses of the pods, instead of the IP address of the service (_headless service_).</sup>
-  - _Deployment_: is a specialized term in the context of Kubernetes. It doesn't necessarily refer to the deployment of applications or services. Rather, a deployment is a file that defines a pod's desired behavior or characteristics. It provides a way to communicate the desired state to Kubernetes deployments, and the controller works on changing the present state into the desired state.
+Persistent entities in the Kubernetes system. Kubernetes uses these entities to represent the state of the Cluster, and are expressed using the **YAML format**.
+  - **Deployment**: is a specialized term in the context of Kubernetes. It doesn't necessarily refer to the deployment of applications or services. Rather, a deployment is a file that defines a Pod's desired behavior or characteristics. It provides a way to communicate the desired state to Kubernetes deployments, and the controller works on changing the present state into the desired state. Deployment is a higher-level concept that manages ReplicaSets and provides declarative updates to Pods along with a lot of other useful features. Therefore, it is recommend using Deployments instead of directly using ReplicaSets, unless a custom update orchestration is required.
     ```yaml
     apiVersion: apps/v1
     kind: Deployment
     metadata:
-      name: nginx-deployment
+      name: calculator-deployment
       labels:
-        app: nginx
+        app: calculator-app
     spec:  # 'spec' attributes are specific to the resource 'kind'
-      replicas: 3
+      replicas: 1  # Number of replicas to create for this Pod
       selector:
         matchLabels:
-          app: nginx
+          app: calculator-app
       template:
         metadata:
           labels:
-            app: nginx
+            app: calculator-app
         spec:
           containers:
-          - name: nginx
-            image: nginx:1.14.2
-            ports:
-            - containerPort: 80
+            - name: calculator-app
+              image: pexers/calculator:latest
+              imagePullPolicy: Always  # Always pull the latest image from Docker Hub on start
+              ports:
+                - containerPort: 80    # The port where container is running
     ```
-  - _StatefulSets_: used to host stateful applications (such as databases) on Kubernetes to guarantee state consistency. However, it's a common practice to **host stateful applications outside the Kubernetes cluster**, in order to avoid data inconsistencies, and host only stateless applications on Kubernetes.
-  - _DaemonSet_: ensures that all (or some) Nodes run a copy of a Pod. As nodes are added to the cluster, Pods are added to them. As nodes are removed from the cluster, those Pods are garbage collected. Deleting a DaemonSet will clean up the Pods it created.
+  - **Service**: Pods are created and destroyed to match the desired state of the Cluster. Each Pod gets its own IP address, however, in a _deployment_, the set of Pods running in one moment in time could be different from the set of Pods running that application a moment later (IPs can change). A Service in Kubernetes allows to have a permanent IP address, that we don't have to change the endpoint every time the Pod is recreated. In case we have the same Pod replicated in different Nodes that use the same Service, it can also act like a load balancer. The Service will redirect the workload to the less occupied Pod. A _headless_ Service is a regular Kubernetes Service where the `spec.clusterIP` is explicitly set to _None_ and the `spec.type` is set to _ClusterIP_.
+    ```yaml
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: calculator-service
+      labels:
+        app: calculator-app
+    spec:
+      type: LoadBalancer  # Exposes an external IP
+      ports:
+        - protocol: TCP
+          port: 3000      # The exposed port
+          targetPort: 80  # The actual port were container is running
+      selector: 
+        app: calculator-app
+    ```
+    There are four kinds of Services:
+      - _ClusterIP_ (default): internal clients send requests to a stable internal IP address.
+      - _LoadBalancer_: is the standard way to expose a Service to the internet. Clients send requests to the exposed IP address of a network load balancer.
+      - _NodePort_: as the name implies, it opens a specific port on all the Nodes (the VMs) of the Cluster, and any traffic that is sent to this port is forwarded to the Service. There are a few downsides with this approach: (i) we can only have one Service per port and (ii) we can only use a **port range** of 30000–32767.
+      - _ExternalName_: acts as a proxy, allowing to redirect requests to a service sitting outside (or inside) the Cluster. It works as other regular services, but instead of returning the Cluster IP of the service, it returns the CNAME record with the value mentioned in the `externalName` attribute.
+  - **Ingress**: an API object that manages external access to the Services in a Cluster, typically HTTP. Ingress will use a NodePort or LoadBalancer service to expose itself to the world so it can act as a proxy. For instance, we can use an NGINX Ingress Controller for routing incoming HTTP requests to different Services based on their host HTTP header and URL.
+    ```yaml
+    apiVersion: networking.k8s.io/v1
+    kind: Ingress
+    metadata:
+      name: fruits-ingress
+      annotations:
+        ingress.kubernetes.io/rewrite-target: /
+    spec:
+      rules:
+      - http:
+          paths:
+            - path: /apple
+              pathType: Prefix
+              backend:
+                service: 
+                  name: apple-service
+                  port:
+                    number: 3000
+            - path: /banana
+              pathType: Prefix
+              backend:
+                service: 
+                  name: banana-service
+                  port:
+                    number: 3001
+    ```
+  - **StatefulSet**: used to host stateful applications (such as databases) on Kubernetes to guarantee state consistency. However, it's a common practice to host stateful applications **outside** the Kubernetes Cluster, in order to avoid data inconsistencies, and host only stateless applications on Kubernetes.
+  - **DaemonSet**: ensures that all (or some) Nodes run a copy of a Pod. As Nodes are added to the Cluster, Pods are added to them. As Nodes are removed from the Cluster, those Pods are garbage collected. Deleting a DaemonSet will clean up the Pods it created.
+  - **Job**: creates one or more Pods and will continue to retry execution of the Pods until a specified number of them successfully terminate. As Pods successfully complete, the Job tracks the successful completions. When a specified number of successful completions is reached, the task (ie, Job) is complete. Deleting a Job will clean up the Pods it created. It can also be used to run multiple Pods in parallel.
 
-TODO: Namespaces: a mechanism for isolating certain resource groups within a cluster, and then managing them accordingly.
-TODO: NodePort vs Ingress for external access
-Ingress actually acts as a proxy to bring traffic into the cluster, then uses internal service routing to get the traffic where it is going. Under the hood, Ingress will use a NodePort or LoadBalancer service to expose itself to the world so it can act as that proxy.
 TODO: ConfigMap and Secrets.
 
 ### Kubernetes patterns
-Source: "_O'Reilly: Kubernetes patterns for designing cloud-native apps_"
-TODO: Intro and review patterns. Add images?
-TODO: there are many patterns missing.
+TODO: Work in progress
+**Note**: Read "_O'Reilly: Kubernetes patterns for designing cloud-native apps_" for a more complete list of K8s patterns.
 - **Foundational patterns**: cover the core concepts of Kubernetes. These patterns are the underlying principles and practices for building container-based cloud-native applications.
   - _Health Probe_: dictates that every container should implement specific APIs to help the platform observe and manage the application in the healthiest way possible. To be fully automatable, a cloud-native application must be highly observable by allowing its state to be inferred so that Kubernetes can detect whether the application is up and ready to serve requests. 
   - _Predictable Demands_: explains why every container should declare its resource profile and stay confined to the indicated resource requirements. This pattern describes how you should declare application requirements, whether they are hard runtime dependencies or resource requirements.
-  - _Automated Placements_: explains how to influence workload distribution in a multi-node cluster. Placement is the core function of the Kubernetes scheduler for assigning new Pods to nodes satisfying container resource requests and honoring scheduling policies. This pattern describes the principles of Kubernetes' scheduling algorithm and the way to influence the placement decisions from the outside.
+  - _Automated Placements_: explains how to influence workload distribution in a multi-node Cluster. Placement is the core function of the Kubernetes scheduler for assigning new Pods to Nodes satisfying container resource requests and honoring scheduling policies. This pattern describes the principles of Kubernetes' scheduling algorithm and the way to influence the placement decisions from the outside.
 - **Behavioral patterns**: describe the patterns that sit on top of foundational patterns and add granularity to concepts for managing various types of container and platform interactions.
   - _Batch Job_: describes how to run an isolated, atomic unit of work until completion. This pattern is suited for managing isolated atomic units of work in a distributed environment.
-  - _Service Discovery_: explains how clients can access and discover the instances that are providing application services. For this purpose, Kubernetes provides multiple mechanisms, depending on whether the service consumers and producers are located on or off the cluster.
+  - _Service Discovery_: explains how clients can access and discover the instances that are providing application Services. For this purpose, Kubernetes provides multiple mechanisms, depending on whether the Service consumers and producers are located on or off the Cluster.
   - _Stateful Service_: describes how to create and manage distributed stateful applications with Kubernetes. Such applications require features such as persistent identity, networking, storage, and ordinality. The _StatefulSet_ primitive provides these building blocks with strong guarantees ideal for the management of stateful applications.
-- **Structural patterns**: are related to organizing containers within a Kubernetes pod.
+- **Structural patterns**: are related to organizing containers within a Kubernetes Pod.
   - _Init Containers_: introduces a separate life cycle for initialization-related tasks and the main application containers. Init Containers enable separation of concerns by providing a separate life cycle for initialization-related tasks distinct from the main application containers. This pattern introduces a fundamental Kubernetes concept that is used in many other patterns when initialization logic is required.
   - _Sidecar_: describes how to extend and enhance the functionality of a pre-existing container without changing it. This pattern is one of the fundamental container patterns that allows single-purpose containers to cooperate closely together.
 
 ### Kubectl CLI cheat sheet
-Kubernetes provides a command line tool for communicating with a Kubernetes cluster's control plane, using the Kubernetes API, named _kubectl_ (Kubernetes Control).
+Kubernetes provides a command line tool for communicating with a Kubernetes Cluster's Control Plane, using the Kubernetes API, named _kubectl_ (Kubernetes Control).
 
 _Syntax_
 ```sh
-kubectl [command] [TYPE] [NAME] [flags]
+$ kubectl [command] [TYPE] [NAME] [flags]
 
 # command: The operation to perform on one or more resources, for example: create, get, describe, delete
 # TYPE: The resource type. Resource types are case-insensitive and can be specified in singular, plural, or abbreviated forms
 # NAME: The name of the resource. Names are case-sensitive. If the name is omitted, details for all resources are displayed, for example 'kubectl get pods'
 # flags: Optional flags. For example, you can use the -s or --server flags to specify the address and port of the Kubernetes API server
 ```
-
-_Manage pods_
+_Manage Pods and Services_
 ```sh
 # Get the documentation for pod manifests
-kubectl explain pods
+$ kubectl explain [TYPE] [NAME]
 
 # List all pods in the namespace
-kubectl get pods
+$ kubectl get pods
+
+# List all services in the namespace
+$ kubectl get services
 
 # List all pods with extra information, such as IP addresses
-kubectl get pods -o wide
+$ kubectl get pods -o wide
 
 # List all pods in all namespaces
-kubectl get pods --all-namespaces
-
-# Get all running pods in the namespace
-kubectl get pods --field-selector=status.phase=Running
+$ kubectl get pods --all-namespaces
 
 # Get a pod's YAML
-kubectl get pod my-pod -o yaml
+$ kubectl get pod POD -o yaml
+
+# Allow restart to take place with zero downtime by incrementally updating Pods instances with new ones
+$ kubectl rollout restart deploy
 
 # Dump pod logs (stdout)
-kubectl logs my-pod
+$ kubectl logs POD
+
+# Delete pod
+$ kubectl delete pod POD
+
+# Start interactive shell
+$ kubectl exec -it POD -- sh
 ```
 _Manage configurations_
-
 ```sh
 # Set a cluster entry in the kubeconfig
-kubectl config set-cluster my-cluster-name 
+$ kubectl config set-cluster my-cluster-name 
 
 # Add a new user to your kubeconf that supports basic auth
-kubectl config set-credentials kubeuser/foo.kubernetes.com --username=kubeuser --password=kubepassword
+$ kubectl config set-credentials kubeuser/foo.kubernetes.com --username=kubeuser --password=kubepassword
 
 # Delete user foo
-kubectl config unset users.foo
+$ kubectl config unset users.foo
 ```
-
-_Manage nodes and cluster_
+_Manage Nodes and Cluster_
 ```sh
 # List all nodes
-kubectl get nodes
+$ kubectl get nodes
+
 # Show metrics for a given node
-kubectl top node my-node
+$ kubectl top node my-node
 
 # Display addresses of the master and services
-kubectl cluster-info
+$ kubectl cluster-info
 
 # Dump current cluster state to stdout
-kubectl cluster-info dump
+$ kubectl cluster-info dump
 
 # Dump current cluster state to /path/to/cluster-state
-kubectl cluster-info dump --output-directory=/path/to/cluster-state
+$ kubectl cluster-info dump --output-directory=/path/to/cluster-state
 ```
-
 _Other_
 ```sh
 # Display the Kubernetes version running on the client and server
-kubectl version
-
-# List all services in the namespace
-kubectl get services
-
-# List all deployments in the namespace
-kubectl get deployments
+$ kubectl version
 ```
