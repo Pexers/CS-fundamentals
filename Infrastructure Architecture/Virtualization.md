@@ -72,28 +72,24 @@ Docker can build images automatically by reading the instructions from a Dockerf
 Instruction are not case-sensitive. However, convention is for them to be UPPERCASE to distinguish them from arguments more easily. Docker runs instructions in a Dockerfile in order. A Dockerfile must begin with a `FROM` instruction. The `FROM` instruction specifies the _parent image_ from which you are building.
 _Dockerfile example_
 ```sh
-# syntax=docker/dockerfile:1
-FROM python:3.8-slim-buster
+FROM node:alpine
 
-WORKDIR /app
+WORKDIR /usr/src/app
+COPY package*.json ./
+RUN npm install
+COPY ./ /usr/src/app
 
-COPY code/requirements.txt code/requirements.txt
+EXPOSE 8080  # Target port (optional)
 
-RUN pip3 install -r code/requirements.txt
-
-COPY . .
-
-ENV MY_TOKEN=random_token
-
-CMD ["python3", "code/main.py"]
+CMD ["node", "server.js"]
 ```
 
 #### Dockerfile cheat sheet
 ```sh
 # FROM must be the first non-comment instruction in the Dockerfile
 FROM image
-FROM image[:tag]    # Optional
-FROM image[@digest] # Optional
+FROM image[:tag]
+FROM image[@digest]
 
 # Allows you to set the Author field of the generated images
 MAINTAINER name
@@ -116,7 +112,7 @@ ENTRYPOINT ["executable", "param1", "param2"]
 
 # Copies new files or directories from source directory and adds them to the filesystem of the image at the path destination
 COPY src dest
-COPY ["src", ... "dest"]  # This form is required for paths containing whitespace
+COPY ["src", ... "dest"]  # Copy multiple sources into 'dest'
 
 # Sets an environment key to a value
 ENV key=value
@@ -134,7 +130,7 @@ ADD ["src", ... "dest"]
 # Adds metadata to the image
 LABEL key=value
 
-# Informs Docker that the container listens on the specified network port(s) at runtime
+# Informs Docker that the container listens on the specified network port(s) at runtime (optional)
 EXPOSE port
 
 # Creates a mount point with the specified name and marks it as holding externally mounted volumes from native host or other containers
@@ -163,8 +159,8 @@ services:
     # Each microservice has its own image with its own sources on Docker Hub
     image: pexers/calculator
     ports:
-      - 3000:80  # EXPOSED_PORT:CONTAINER_PORT
-    links:
+      - 80:8080  # EXPOSED_PORT:CONTAINER_PORT
+    links:  # Docker creates env. variables and adds containers to the "known hosts" so that they can discover each other
       - addition
       - division
       - multiplication
@@ -180,11 +176,11 @@ services:
       dockerfile: Dockerfile
     image: pexers/addition
     ports:
-      - 3001:80
+      - 80:8080
       
   division: ...
 ```
-- _links_: instructs Docker to link containers over a network. Docker creates environment variables and adds containers to the known hosts list so they can discover each other.
+- _links_: instructs Docker to link containers over a network. Docker creates environment variables and adds containers to the known hosts list so that they can discover each other.
 - _depends_on_: sets the order in which services must start and stop.
 
 ### Docker CLI cheat sheet
@@ -222,14 +218,11 @@ $ docker load -i TAR_FILE
 ```
 _Manage containers_
 ```sh
-# Start a new container
-$ docker run IMAGE
-
-# Start a new container in the background with no input or output (detached mode)
+# Start a new container in the background (-d) with no input or output (detached mode)
 $ docker run -d IMAGE
 
 # Run and map a port on the Docker host
-$ docker run -p [host_port]:[container_port] [image]
+$ docker run -p [exposed_port]:[container_port] [image]
 
 # Run and add a DNS entry. Useful when a service within the container needs to connect to an external host
 $ docker run --add-host HOSTNAME:IP IMAGE
@@ -303,21 +296,6 @@ _In summary_:
 </p>
 
 - **Pod**: the smallest unit of execution in Kubernetes, consisting of one or more containers, with shared storage, network resources, and a specification for how to run the containers (Pod as in a pod of whales or pea pod). Complex systems with multiple microservices should be deployed using **a single Pod per microservice**, containing one or more containers. Is not a good practice to configure a Pod with more than one microservice, otherwise they won't be able to scale independently.
-  ```yaml
-  apiVersion: v1
-  kind: Pod
-  metadata:
-    name: nginx
-    labels:
-      app.kubernetes.io/name: proxy
-  spec:
-    containers:
-    - name: nginx
-      image: nginx:stable
-      ports:
-        - containerPort: 80
-          name: http-web-svc
-  ```
 - **Node**: are the physical servers or VMs that make up the Kubernetes Cluster. Nodes are interchangeable and typically not addressed individually by developers, other than when maintenance is required. Each Node can have multiple Pods.
 - **Namespaces**: provides a mechanism for isolating groups of resources within a single cluster. Organizations that use a single cluster for development, testing, and production can also use namespaces to isolate environments. Additionally, namespaces enable the use of RBAC, so teams can define roles that group lists of permissions.
 - **Cluster**: a set of Nodes that run containerized applications. They are more lightweight and flexible than virtual machines. In this way, Kubernetes Clusters allow for applications to be more easily developed, moved and managed. While it seems quite logical to have each environment and/or application in its own Cluster, it is not required, and it's not the only way. Kubernetes makes this easy enough by making it possible to quickly roll out multiple Nodes with the same configuration.
@@ -347,8 +325,8 @@ Persistent entities in the Kubernetes system. Kubernetes uses these entities to 
       name: calculator-deployment
       labels:
         app: calculator-app
-    spec:  # 'spec' attributes are specific to the resource 'kind'
-      replicas: 1  # Number of replicas to create for this Pod
+    spec:           # 'spec' properties are specific to the resource 'kind'
+      replicas: 1   # Ensures there is always a stable set of running Pods
       selector:
         matchLabels:
           app: calculator-app
@@ -358,60 +336,74 @@ Persistent entities in the Kubernetes system. Kubernetes uses these entities to 
             app: calculator-app
         spec:
           containers:
-            - name: calculator-app
-              image: pexers/calculator:latest
-              imagePullPolicy: Always  # Always pull the latest image from Docker Hub on start
-              ports:
-                - containerPort: 80    # The port where container is running
+          - name: calculator-app
+            image: pexers/calculator:latest
+            imagePullPolicy: Always   # Always pull the latest image from Docker Hub on start
+            ports:
+            - containerPort: 80       # The actual port where the container is running (=targetPort)
     ```
   - **Service**: Pods are created and destroyed to match the desired state of the Cluster. Each Pod gets its own IP address, however, in a _deployment_, the set of Pods running in one moment in time could be different from the set of Pods running that application a moment later (IPs can change). A Service in Kubernetes allows to have a permanent IP address, that we don't have to change the endpoint every time the Pod is recreated. In case we have the same Pod replicated in different Nodes that use the same Service, it can also act like a load balancer. The Service will redirect the workload to the less occupied Pod. A _headless_ Service is a regular Kubernetes Service where the `spec.clusterIP` is explicitly set to _None_ and the `spec.type` is set to _ClusterIP_.
-    ```yaml
-    apiVersion: v1
-    kind: Service
-    metadata:
-      name: calculator-service
-      labels:
-        app: calculator-app
-    spec:
-      type: LoadBalancer  # Exposes an external IP
-      ports:
-        - protocol: TCP
-          port: 3000      # The exposed port
-          targetPort: 80  # The actual port were container is running
-      selector: 
-        app: calculator-app
-    ```
     There are four kinds of Services:
       - _ClusterIP_ (default): internal clients send requests to a stable internal IP address.
+        ```yaml
+        apiVersion: v1
+        kind: Service
+        metadata:
+          name: addition
+          labels:
+            app: addition-app
+        spec:
+          type: ClusterIP     # No external IP exposed, only internal
+          selector: 
+            app: addition-app
+          ports:
+          - protocol: TCP
+            port: 80          # The exposed port within the Cluster
+            targetPort: 8080  # The actual port where the container is running (=containerPort)
+        ```
       - _LoadBalancer_: is the standard way to expose a Service to the internet. Clients send requests to the exposed IP address of a network load balancer.
+        ```yaml
+        apiVersion: v1
+        kind: Service
+        metadata:
+          name: calculator-service
+          labels:
+            app: calculator-app
+        spec:
+          type: LoadBalancer  # Exposes an external IP
+          selector: 
+            app: calculator-app
+          ports:
+          - protocol: TCP
+            port: 80          # The exposed port outside/within the Cluster
+            targetPort: 8080  # The actual port where the container is running (=containerPort)
+        ```
       - _NodePort_: as the name implies, it opens a specific port on all the Nodes (the VMs) of the Cluster, and any traffic that is sent to this port is forwarded to the Service. There are a few downsides with this approach: (i) we can only have one Service per port and (ii) we can only use a **port range** of 30000–32767.
       - _ExternalName_: acts as a proxy, allowing to redirect requests to a service sitting outside (or inside) the Cluster. It works as other regular services, but instead of returning the Cluster IP of the service, it returns the CNAME record with the value mentioned in the `externalName` attribute.
-  - **Ingress**: an API object that manages external access to the Services in a Cluster, typically HTTP. Ingress will use a NodePort or LoadBalancer service to expose itself to the world so it can act as a proxy. For instance, we can use an NGINX Ingress Controller for routing incoming HTTP requests to different Services based on their host HTTP header and URL.
+  - **Ingress**: an API object that manages external access to the internal Services in a Cluster, typically HTTP. Ingress will use a NodePort or LoadBalancer service to expose itself to the world so it can act as a proxy. For instance, we can use an NGINX Ingress Controller for routing incoming HTTP requests to different Services based on their host HTTP header and URL.
     ```yaml
     apiVersion: networking.k8s.io/v1
     kind: Ingress
     metadata:
-      name: fruits-ingress
-      annotations:
-        ingress.kubernetes.io/rewrite-target: /
+      name: calculator-ingress
     spec:
       rules:
       - http:
-          paths:
-            - path: /apple
-              pathType: Prefix
-              backend:
-                service: 
-                  name: apple-service
-                  port:
-                    number: 3000
-            - path: /banana
-              pathType: Prefix
-              backend:
-                service: 
-                  name: banana-service
-                  port:
-                    number: 3001
+          paths:  # Proxy incoming requests to internal services
+          - path: /addition
+            pathType: Prefix
+            backend:
+              service: 
+                name: addition-service
+                port:
+                  number: 80    # The exposed port within the Cluster
+          - path: /division
+            pathType: Prefix
+            backend:
+              service: 
+                name: division-service
+                port:
+                  number: 80    # The exposed port within the Cluster
     ```
   - **StatefulSet**: used to host stateful applications (such as databases) on Kubernetes to guarantee state consistency. However, it's a common practice to host stateful applications **outside** the Kubernetes Cluster, in order to avoid data inconsistencies, and host only stateless applications on Kubernetes.
   - **DaemonSet**: ensures that all (or some) Nodes run a copy of a Pod. As Nodes are added to the Cluster, Pods are added to them. As Nodes are removed from the Cluster, those Pods are garbage collected. Deleting a DaemonSet will clean up the Pods it created.
@@ -433,6 +425,12 @@ TODO: Work in progress
 - **Structural patterns**: are related to organizing containers within a Kubernetes Pod.
   - _Init Containers_: introduces a separate life cycle for initialization-related tasks and the main application containers. Init Containers enable separation of concerns by providing a separate life cycle for initialization-related tasks distinct from the main application containers. This pattern introduces a fundamental Kubernetes concept that is used in many other patterns when initialization logic is required.
   - _Sidecar_: describes how to extend and enhance the functionality of a pre-existing container without changing it. This pattern is one of the fundamental container patterns that allows single-purpose containers to cooperate closely together.
+
+### Kubernetes autoscaling
+Kubernetes lets us automate many management tasks, including provisioning and scaling. Instead of manually allocating resources, we can create automated processes that save time, lets us respond quickly to peaks in demand, and conserve costs by scaling down when resources are not needed.
+- **Horizontal Pod Autoscaling (HPA)**: automatically updates a workload resource (such as a Deployment or StatefulSet), with the aim of automatically scaling the workload to match demand. Kubernetes already does this automatically, but can be configured. Each Pod is meant to run a single instance of a given application. If you want to scale your application horizontally (to provide more overall resources by running more instances), you should use multiple Pods, one for each instance. In Kubernetes, this is typically referred to as replication. Replicated Pods are usually created and managed as a group by a workload resource and its controller.
+- **Vertical Pod Autoscaling (VPA)**: TODO:
+- **Cluster Autoscaling**: TODO: scales the overall cluster size. Adds extra machines that pods can run on.
 
 ### Kubectl CLI cheat sheet
 Kubernetes provides a command line tool for communicating with a Kubernetes Cluster's Control Plane, using the Kubernetes API, named _kubectl_ (Kubernetes Control).
@@ -465,6 +463,9 @@ $ kubectl get pods --all-namespaces
 
 # Get a pod's YAML
 $ kubectl get pod POD -o yaml
+
+# Creates and updates resources in a cluster defined in the pods directory
+$ kubectl apply -f ./pods
 
 # Allow restart to take place with zero downtime by incrementally updating Pods instances with new ones
 $ kubectl rollout restart deploy
