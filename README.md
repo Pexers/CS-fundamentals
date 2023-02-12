@@ -14,17 +14,17 @@ A sum up of fundamental concepts in the fields of **Computer Science**.
 - Database Systems
 - Development
 	- [**Algorithms**](/Development/Algorithms.md)
-	- [**Architectural & Design Patterns**](/Development/Architectural & Design Patterns.md)
-	- [**Data Structures**](/Development/Data Structures.md)
-	- [**Design Principles**](/Development/Design Principles.md)
+	- [**Architectural & Design Patterns**](/Development/Architectural%20& Design Patterns.md)
+	- [**Data Structures**](/Development/Data%20Structures.md)
+	- [**Design Principles**](/Development/Design%20Principles.md)
 	- [**Methodologies**](/Development/Methodologies.md)
-	- [**Object-Oriented Programming**](/Development/Object-Oriented Programming.md)
-	- [**Programming Languages**](/Development/Programming Languages.md)
-	- [**Source Control**](/Development/Source Control.md)
+	- [**Object-Oriented Programming**](/Development/Object-Oriented%20Programming.md)
+	- [**Programming Languages**](/Development/Programming%20Languages.md)
+	- [**Source Control**](/Development/Source%20Control.md)
 - Infrastructure Architecture
-	- [**Cloud**](/Infrastructure Architecture/Cloud.md)
-	- [**Message Brokers**](/Infrastructure Architecture/Message Brokers.md)
-	- [**Virtualization**](/Infrastructure Architecture/Virtualization.md)
+	- [**Cloud**](/Infrastructure%20Architecture/Cloud.md)
+	- [**Message Brokers**](/Infrastructure%20Architecture/Message Brokers.md)
+	- [**Virtualization**](/Infrastructure%20Architecture/Virtualization.md)
 - Network & Security
 - Operating Systems
-	- [**Linux**](/Operating Systems/Linux.md)
+	- [**Linux**](/Operating%20Systems/Linux.md)
