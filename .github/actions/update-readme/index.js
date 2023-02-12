@@ -44,5 +44,5 @@ function readDirectory(directoryPath, level) {
 }
 
 function addToIndexQueue(name, isDirectory, level, path) {
-  indexQueue.push({ name, isDirectory, level, path: path.split(root)[1] })  // Remove root part from path
+  indexQueue.push({ name, isDirectory, level, path: path.split(root)[1].replace(' ', '%20') })  // Remove root part from path
 }
