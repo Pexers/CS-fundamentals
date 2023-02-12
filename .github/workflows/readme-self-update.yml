@@ -8,6 +8,9 @@ on:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+
+env:
+  REPO_WORKSPACE: '${{ github.workspace }}'
   
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -19,11 +22,11 @@ jobs:
     runs-on: ubuntu-latest
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v3
-        # Runs 'action.yml' from local action directory
-      - name: Use local action
-        uses: ./.github/actions/update-readme
-      - uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: Update README.md
+    - name: Check out repository
+      uses: actions/checkout@v3
+      # Runs 'action.yml' from local action directory
+    - name: Use local action
+      uses: ./.github/actions/update-readme
+    - uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: Update README.md

@@ -53,11 +53,11 @@ public static int[] insert(int[] arr, int pos, int num) {
 - `T[] copyOf(T[] original, int newLength)`
 - `T[] copyOfRange(T[] original, int from, int to)`
 
-## Dynamic Array
-<sup> Also called: array list, mutable array, resizable array</sup>  
+## Array List
+<sup> Also called: dynamic array, mutable array, resizable array</sup>  
 One limitation of arrays is that they're fixed size, meaning that the number of items hold by the array needs to be specified ahead of time.
 
-A dynamic array expands as we add more items, so we don't need to determine the size ahead of time. Usually, dynamic arrays don't shrink automatically in order to avoid additional runtime.
+An array list expands as we add more items, so we don't need to determine the size ahead of time. Usually, array lists don't shrink automatically in order to avoid additional runtime.
 
 Although this array looks like a dynamically growing collection, internally it does an array copy when it needs to expand.
 
@@ -75,11 +75,11 @@ ArrayList<String> arr = new ArrayList<String>();
 ```
 #### _Strengths_
 - **Fast lookups**. Just like arrays, retrieving an item at a given index takes _O(1)_ time, regardless of the length of the array. This is due to being cache-friendly.
-- **Cache-friendly**. Just like arrays, dynamic arrays place items right next to each other in memory, making efficient use of caches.
-- **Mutable size**. We can add as many items as we want, and the dynamic array will expand to hold them.
+- **Cache-friendly**. Just like arrays, array lists place items right next to each other in memory, making efficient use of caches.
+- **Mutable size**. We can add as many items as we want, and the array list will expand to hold them.
 
 #### _Weaknesses_
-- **Slow worst-case appends**. Usually, adding a new item at the end of the dynamic array takes _O(1)_ time. But if the dynamic array doesn't have enough room for the new item, it'll need to expand, which takes _O(n)_ time.
+- **Slow worst-case appends**. Usually, adding a new item at the end of the array list takes _O(1)_ time. But if the array list doesn't have enough room for the new item, it'll need to expand, which takes _O(n)_ time.
 - **Costly inserts/deletes**. We have to _shift_ the remaining items to fill in (insert) or close (delete) gaps, which takes _O(n)_ time in a worst-case scenario.
 
 #### _Operations_ (`java.util.ArrayList`)
