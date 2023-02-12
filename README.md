@@ -14,7 +14,7 @@ A sum up of fundamental concepts in the fields of **Computer Science**.
 - Database Systems
 - Development
 	- [**Algorithms**](/Development/Algorithms.md)
-	- [**Architectural & Design Patterns**](/Development/Architectural%20& Design Patterns.md)
+	- [**Architectural & Design Patterns**](/Development/Architectural%20&%20Design%20Patterns.md)
 	- [**Data Structures**](/Development/Data%20Structures.md)
 	- [**Design Principles**](/Development/Design%20Principles.md)
 	- [**Methodologies**](/Development/Methodologies.md)
@@ -23,7 +23,7 @@ A sum up of fundamental concepts in the fields of **Computer Science**.
 	- [**Source Control**](/Development/Source%20Control.md)
 - Infrastructure Architecture
 	- [**Cloud**](/Infrastructure%20Architecture/Cloud.md)
-	- [**Message Brokers**](/Infrastructure%20Architecture/Message Brokers.md)
+	- [**Message Brokers**](/Infrastructure%20Architecture/Message%20Brokers.md)
 	- [**Virtualization**](/Infrastructure%20Architecture/Virtualization.md)
 - Network & Security
 - Operating Systems
