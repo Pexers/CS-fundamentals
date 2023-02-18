@@ -71,7 +71,7 @@ Docker can build images automatically by reading the instructions from a Dockerf
 
 Instruction are not case-sensitive. However, convention is for them to be UPPERCASE to distinguish them from arguments more easily. Docker runs instructions in a Dockerfile in order. A Dockerfile must begin with a `FROM` instruction. The `FROM` instruction specifies the _parent image_ from which you are building.
 _Dockerfile example_
-```sh
+```dockerfile
 FROM node:alpine
 
 WORKDIR /usr/src/app
@@ -85,7 +85,7 @@ CMD ["node", "server.js"]
 ```
 
 #### Dockerfile cheat sheet
-```sh
+```dockerfile
 # FROM must be the first non-comment instruction in the Dockerfile
 FROM image
 FROM image[:tag]
@@ -146,7 +146,7 @@ SHELL ["executable", "param1", "param2"]
 STOPSIGNAL signal
 ```
 #### Docker Compose file cheat sheet
-```sh
+```yaml
 version: "3.9"
 services:
   calculator:
@@ -222,7 +222,7 @@ _Manage containers_
 $ docker run -d IMAGE
 
 # Run and map a port on the Docker host
-$ docker run -p [exposed_port]:[container_port] [image]
+$ docker run -d -p [exposed_port]:[container_port] [image]
 
 # Run and add a DNS entry. Useful when a service within the container needs to connect to an external host
 $ docker run --add-host HOSTNAME:IP IMAGE
@@ -266,19 +266,19 @@ $ docker port CONTAINER
 _Manage Docker Compose containers_
 ```sh
 # Build docker images defined in docker-compose.yaml
-$ docker-compose build
+$ docker compose build
 
 # Start application stack in background defined in docker-compose.yaml
-$ docker-compose up -d
+$ docker compose up -d
 
 # Remove application stack defined in docker-compose.yaml
-$ docker-compose down
+$ docker compose down
 
 # Force recreation of containers images
-$ docker-compose up --force-recreate --build
+$ docker compose up --force-recreate --build
 
 # Push images defined in docker-compose.yaml quietly
-$ docker-compose push --quiet
+$ docker compose push --quiet
 ```
 
 ## Kubernetes
@@ -447,7 +447,7 @@ $ kubectl [command] [TYPE] [NAME] [flags]
 _Manage Pods and Services_
 ```sh
 # Get the documentation for pod manifests
-$ kubectl explain [TYPE] [NAME]
+$ kubectl explain TYPE NAME
 
 # List all pods in the namespace
 $ kubectl get pods
