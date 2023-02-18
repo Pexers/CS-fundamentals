@@ -6,7 +6,7 @@ on:
   push:
     branches: [ "main" ]
 
-  # Allows you to run this workflow manually from the Actions tab
+  # Allows to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 env:
@@ -14,7 +14,6 @@ env:
   
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   update-readme:
     # Avoids workflow triggering in a loop
     if: github.event.head_commit.message != 'Update README.md'

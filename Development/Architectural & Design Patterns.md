@@ -1,3 +1,6 @@
+> **Note**  
+> Work in progress.
+
 Architectural patterns:
 MVC
 MVP
