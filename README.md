@@ -14,8 +14,9 @@ A sum up of fundamental concepts in the fields of **Computer Science**.
 	- [**Methodologies**](/Development/Methodologies.md)
 	- [**Object-Oriented Programming**](/Development/Object-Oriented%20Programming.md)
 	- [**Programming Languages**](/Development/Programming%20Languages.md)
-	- [**Source Control**](/Development/Source%20Control.md)
+	- [**Version Control**](/Development/Version%20Control.md)
 - Infrastructure Architecture
+	- [**Automation**](/Infrastructure%20Architecture/Automation.md)
 	- [**Cloud**](/Infrastructure%20Architecture/Cloud.md)
 	- [**Message Brokers**](/Infrastructure%20Architecture/Message%20Brokers.md)
 	- [**Virtualization**](/Infrastructure%20Architecture/Virtualization.md)
