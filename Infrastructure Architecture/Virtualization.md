@@ -69,19 +69,41 @@ Docker can fully run in WSL 2. This means that Linux containers can run natively
 ### Dockerfile
 Docker can build images automatically by reading the instructions from a Dockerfile. A Dockerfile is a text document that contains instructions for packaging an application into an image that can be run anywhere using Docker.
 
-Instruction are not case-sensitive. However, convention is for them to be UPPERCASE to distinguish them from arguments more easily. Docker runs instructions in a Dockerfile in order. A Dockerfile must begin with a `FROM` instruction. The `FROM` instruction specifies the _parent image_ from which you are building.
+Instruction are not case-sensitive. However, convention is for them to be UPPERCASE to distinguish them from arguments more easily. Docker runs instructions in a Dockerfile in order. A Dockerfile must begin with a `FROM` instruction. The `FROM` instruction specifies the _parent image_ from which you are building. Commands that are less likely to change should be placed higher on the Dockerfile.
+
 _Dockerfile example_
 ```dockerfile
 FROM node:alpine
+EXPOSE 8080  # Target port (optional)
 
 WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm install
 COPY ./ /usr/src/app
 
-EXPOSE 8080  # Target port (optional)
+ENTRYPOINT ["node", "server.js"]
+```
 
-CMD ["node", "server.js"]
+#### Multi-stage builds
+One of the most challenging things about building images is keeping the image size down. Each `RUN`, `COPY`, and `ADD` instruction in the Dockerfile adds a layer to the image, and you need to remember to clean up any artifacts you don't need before moving on to the next layer.
+
+With multi-stage builds, we can use multiple `FROM` statements in a Dockerfile. Each `FROM` instruction can use a different base, and each of them begins a new stage of the build. We can selectively copy artifacts from one stage to another, leaving behind everything we don't want in the final image. 
+
+_Dockerfile with multi-stage building_
+```dockerfile
+# Use 'AS' to tag multi-stage builds
+FROM golang:alpine AS builder
+
+WORKDIR /go/src/app
+COPY main.go .
+RUN go build -o webserver .
+
+# Starts a new container
+FROM alpine  
+WORKDIR /app
+# Copy binaries form previous container stage
+COPY --from=builder /go/src/app /app
+CMD ["./webserver"]
 ```
 
 #### Dockerfile cheat sheet
@@ -100,19 +122,20 @@ USER username
 # Sets the working directory for any RUN, CMD, ENTRYPOINT, COPY, and ADD instructions that follow it
 WORKDIR /path/to/workdir
 
-# RUN is an image build step, the state of the container after a RUN command will be committed to the container image. A Dockerfile can have many RUN steps that layer on top of one another to build the image
+# Executes commands always on a new image layer. Often used to install software packages and applications
 RUN command
 RUN ["executable", "param1", "param2"]
 
-# CMD is the command the container executes by default when you launch the built image. A Dockerfile will only use the final CMD defined
-CMD ["executable", "param1", "param2"]
-
 # Used to configure the executables that will always run after the container is initiated, for instance, a script
-ENTRYPOINT ["executable", "param1", "param2"]
+# Unlike CMD, the ENTRYPOINT is not overridden by default, extra arguments are used as parameters 
+ENTRYPOINT ["executable"]
+
+# CMD parameters can be overridden when running the Docker image, unlike ENTRYPOINT. When something can be parameterized we should use CMD
+CMD ["executable", "param1", "param2"]
 
 # Copies new files or directories from source directory and adds them to the filesystem of the image at the path destination
 COPY src dest
-COPY ["src", ... "dest"]  # Copy multiple sources into 'dest'
+COPY ["src", ... "dest"] # Copy multiple sources into dest
 
 # Sets an environment key to a value
 ENV key=value
@@ -164,7 +187,6 @@ services:
       - addition
       - division
       - multiplication
-      - remainder
       - subtraction
 
   addition:
