@@ -2,7 +2,7 @@
 > Work in progress.
 
 Jenkins, GitLab CI/CD, GitHub Actions, Azure DevOps,
-Ansible, Puppet, Chef
+Ansible, Puppet, Chef, Salt
 - Ansible in agentless
 - Uses YAML instead of Ruby (more difficult to learn)
 
@@ -10,21 +10,68 @@ Infrastructure as Code - Terraform, Pulumi
 
 ---
 
-Ansible:
-Enables to make changes on multiple machines at once using the "Control Station". Avoids the tedious time-consuming manual work of SSH to every machine one by one to do the same tasks over and over again.
+## Configuration Management
+The process of maintaining systems, such as computer hardware and software, in a desired state. Configuration Management (CM) is also a method of ensuring that systems perform in a manner consistent with expectations over time.
+
+### Ansible
+An infrastructure as Code tool. Enables to make changes on multiple machines at once using the "Control Station". Avoids the tedious time-consuming manual work of SSH to every machine one by one to do the same tasks over and over again.
 
 - Owned by RedHat
-- Agentless: connects over SSH and runs commands. We don't need to install an agent on each machine we want to interact with.
+- Agentless: connects over SSH and runs commands. We don't need to configure an agent on each machine we want to interact with.
 - Playbook: YAML file. A Playbook has Plays, and each Play can have multiple Tasks.
 
-Ansible Vs Puppet Vs Chef
-- Ansible in agentless
+Hosts of Inventory file is located in the **Management Node** as well as the playbook file.
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/47757441/220987896-ddf29e6a-08a9-4bb3-95b1-4fc0d96bfce1.png" width="350">
+</p>
+
+#### Ansible Vs Puppet Vs Chef Vs Salt
+- Ansible in agentless, uses SSH
 - Uses YAML instead of Ruby (more difficult to learn)
 
-Works using modules for specific stuff. There's a Docker Module to manage containers (create, destroy, etc), a Jenkins Module to manage Jobs, Cloud Modules, Database Modules, etc. All of these using YAML.
+#### Ansible modules and plugins
+If you are looking to add functionality to Ansible, you might wonder whether you need a module or a plugin. Here is a quick overview to help you understand what you need:
+- Plugins extend Ansible's core functionality. Most plugin types execute on the control node within the `/usr/bin/ansible` process. Plugins offer options and extensions for the core features of Ansible: transforming data, logging output, connecting to inventory, and more.
+- Modules are a type of plugin that execute automation tasks on a ‘target' (usually a remote system). Modules work as standalone scripts that Ansible executes in their own process outside of the controller. Modules interface with Ansible mostly via JSON, accepting arguments and returning information by printing a JSON string to stdout before exiting. Unlike the other plugins (which must be written in Python), modules can be written in any language; although Ansible provides modules in Python and Powershell only.
 
+#### Ansible inventory Vs hosts file
+Your inventory defines the managed nodes you automate, with groups so you can run automation tasks on multiple hosts at the same time. Once your inventory is defined, you use patterns to select the hosts or groups you want Ansible to run against.
+
+The default INI format hosts file:
+```
+mail.example.com
+
+[webservers]
+foo.example.com
+bar.example.com
+
+[dbservers]
+one.example.com
+two.example.com
+three.example.com
+```
+
+Ansible YAML Inventory using YAML:
+```yaml
+all:
+  hosts:
+    mail.example.com:
+  children:
+    webservers:
+      hosts:
+        foo.example.com:
+        bar.example.com:
+    dbservers:
+      hosts:
+        one.example.com:
+        two.example.com:
+        three.example.com:
+```
+
+#### Ansible playbooks
 Run a playbook:
-$ ansible-playbook <playbook_file>
+`$ ansible-playbook <playbook_file>`
 
 Each Play can define:
 _hosts_: used to identify what machines should run the tasks of a Play.
@@ -33,33 +80,46 @@ _remote_user_: for instance `root`.
 We can have multiple Plays in the same Playbook.
 
 ```yaml
-- name: install and start nginx server  # Play name
+- name: install and start nginx server  # The play name
   hosts: webservers
-  remote_user: root
-  
+  vars:
+    ...
   tasks:
   - name: create directory for nginx
     file:
       path: /path/to/nginx/dir
       state: directory
   - name: install nginx latest version
-    yum:
+    apt:  # or 'yum'
       name: nginx
       state: latest
   - name: start nginx
     service:
       name: nginx
       state: started
+  handlers:
+  - name: restart nginx
+    service:
+      name=nginx
+      state=restarted
 ```
 
-Hosts file:
-```
-...
-[webservers]
-10.24.0.1
-10.24.0.2
+#### Ansible Tower
+It is a web-based solution that allows use for several different kinds of IT teams. Ansible Tower is the enterprise version of Ansible. It allows sysadmins to deploy all of the benefits of Ansible at scale. And, like Ansible, it integrates with a broad base of your existing technology infrastructure: networking, security, application deployment, storage, software development lifecycle processes, etc.
 
-[databases]
-10.24.0.7
-10.24.0.8
-```
+---
+
+CI/CD Pipelines:
+Push event	A push is made to the repository.
+Tag event	Tags are created or deleted in the repository.
+Issue event	A new issue is created or an existing issue is updated, closed, or reopened.
+Comment event	A new comment is made on commits, merge requests, issues, and code snippets.
+Merge request event	A merge request is created, updated, merged, or closed, or a commit is added in the source branch.
+Wiki page event	A wiki page is created, updated, or deleted.
+Pipeline event	A pipeline status changes.
+Job event	A job status changes.
+Deployment event	A deployment starts, succeeds, fails, or is canceled.
+Group member event	A user is added or removed from a group, or a user's access level or access expiration date changes.
+Subgroup event	A subgroup is created or removed from a group.
+Feature flag event	A feature flag is turned on or off.
+Release event	A release is created or updated.

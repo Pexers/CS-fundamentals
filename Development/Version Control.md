@@ -14,7 +14,29 @@ In Git, the workflow is mainly divided into three areas:
 - **Staging Area or Index**: where the files from the working area are staged and snapshots are added. It's how Git knows what change are going to be made between the current commit and the new one (a commit is a snapshot in time).
 - **Git Repository**: It is basically where you perform all the changes that need to be made i.e. perform commits to branch, checkout branch, make changes etc.
 
+#### Daily Git Workflow
+1. Pull changes from master branch before start working on a new feature using `git pull`.
+2. See what changes were made using `git log` or `git show COMMIT_SHA` to see the details.
+3. Create a new branch for the feature using `git checkout -b BRANCH`.
+4. Develop feature.
+5. Stage and Commit changes without pushing.
+6. Push to feature branch using `git push`.
+7. Pull from master branch into feature branch and Rebase feature branch using `git pull --rebase ALIAS MASTER`.
+8.  - _option 1_:
+        - Pull from feature branch into master branch and Rebase master branch using `git pull --rebase ALIAS BRANCH`.
+        - Push to master branch using `git push`.
+    - _option 2_:
+        - Create a Pull Request on a management tool, such as GitHub, so that it can be validated and merged into the code base.
+
+#### Best practices
+- Commit naming conventions
+- Version/Tag naming conventions
+
 ### Git CLI cheat sheet
+Some definitions:
+- The `origin` is an alias on your system for a particular remote repository. It's not actually a property of that repository.
+- A _Upstream Branch_ is a remote branch.
+
 _Setup_
 ```sh
 # List configurations
@@ -40,6 +62,9 @@ $ git add DIR
 # Unstage changes while retaining them in working directory
 $ git reset DIR
 
+# Used to record the current state of the working directory and the index, but want to go back to a clean working directory
+$ git stash DIR
+
 # Commit the staged snapshot, but instead of launching a text editor, use MESSAGE as the commit message (-m)
 $ git commit -m "MESSAGE"
 $ git commit --amend -m "NEW MESSAGE"  # Amend local commit message
@@ -49,6 +74,8 @@ $ git rm FILE
 ```
 _Inspect & Compare_
 ```sh
+# The following commands only use the local repository history
+
 # Show which changes that are staged, unstaged, and untracked
 $ git status
 
@@ -58,8 +85,11 @@ $ git diff
 # Show the differences of what is in branchA that is not in branchB
 $ git diff branchB...branchA
 
-# Show all commits in the current branch's history
+# Show the last 5 commits on the current branch's history
 $ git log
+
+# Show log message and textual diff of a specific commit
+$ git show COMMIT_SHA
 ```
 _Branch & Merge_
 ```sh
@@ -74,6 +104,7 @@ $ git branch BRANCH
 
 # Switch to another branch and check it out into the working directory
 $ git checkout BRANCH
+$ git checkout -b BRANCH  # Creates a new branch and checkouts to it
 
 # Delete local branch
 $ git branch -d BRANCH
@@ -83,7 +114,7 @@ $ git merge BRANCH
 ```
 _Share & Update_
 ```sh
-# Updates all the remote tracking branches in local repository
+# Updates all the remote tracking branches in local repository (no merge)
 $ git fetch
 $ git fetch ALIAS BRANCH  # Fetch down specific BRANCH
 
@@ -94,9 +125,10 @@ $ git merge  # Merges with tracked remote branch. Only one branch is merged
 # Fetch and merge any commits from the tracking remote branch. Essentially: git_pull = git_fetch + git_merge
 $ git pull
 $ git pull --rebase  # Pull and Rebase on tracked branch
-$ git pull --rebase ALIAS BRANCH  # Pull from BRANCH and Rebase tracked branch
+$ git pull --rebase ALIAS BRANCH  # Pull from BRANCH and Rebase on tracked branch
 
-# Apply any commits of current branch ahead of the specified BRANCH. Rebasing requires to fetch, stash and commit changes first
+# Apply any commits of current branch ahead of the specified BRANCH.
+# Rebasing requires to fetch, stash and commit changes first
 $ git rebase BRANCH  # Rebase BRANCH
 $ git rebase  # Rebase tracked branch
 
@@ -105,7 +137,7 @@ $ git push  # Push to tracked branch
 $ git push ALIAS BRANCH  # Push to BRANCH (also used to transform local branch into a remote branch)
 
 # Delete remote branch
-$ git push ALIAS -d BRANCH
+$ git push -d ALIAS BRANCH
 
 # Reset staging area and working directory to match most recent commit and overwrite all changes in the working directory
 $ git reset --hard ALIAS/BRANCH
@@ -123,14 +155,13 @@ $ git reset --hard LAST_GOOD_COMMIT_SHA
 $ git push --force
 ```
 
-### Best practices
-- Commit naming conventions
-- Version/Tag naming conventions
+## Git flow
+Used for larger projects
 
 ---
 TODO list:
 
-Git Pull Rebase vs Git Pull Merge
+Git Pull Rebase vs Git Pull Merge:
 While both of these options will combine the changes fetched from your remote, the outcome will look very different in your Git history.
 Git pull merge is the default method for combining changes in Git, and will merge the unpublished changes with the published changes, resulting in a merge commit.
 With Git pull rebase, on the other hand, the unpublished changes will be reapplied on top of the published changes and no new commit will be added to your history.
@@ -138,18 +169,3 @@ With this in mind, you can see that Git pull rebase will result in a linear and 
 We're going to walk you through how to perform a Git pull rebase using the CLI and the legendary cross-platform GitKraken Client.
 
 GitHub, GitLab
-
-CI/CD Pipelines:
-Push event	A push is made to the repository.
-Tag event	Tags are created or deleted in the repository.
-Issue event	A new issue is created or an existing issue is updated, closed, or reopened.
-Comment event	A new comment is made on commits, merge requests, issues, and code snippets.
-Merge request event	A merge request is created, updated, merged, or closed, or a commit is added in the source branch.
-Wiki page event	A wiki page is created, updated, or deleted.
-Pipeline event	A pipeline status changes.
-Job event	A job status changes.
-Deployment event	A deployment starts, succeeds, fails, or is canceled.
-Group member event	A user is added or removed from a group, or a user's access level or access expiration date changes.
-Subgroup event	A subgroup is created or removed from a group.
-Feature flag event	A feature flag is turned on or off.
-Release event	A release is created or updated.
