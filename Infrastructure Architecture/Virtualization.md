@@ -240,6 +240,9 @@ $ docker load -i TAR_FILE
 ```
 _Manage containers_
 ```sh
+# Start a new container in interactive mode (-it)
+$ docker run -it IMAGE EXECUTABLE
+
 # Start a new container in the background (-d) with no input or output (detached mode)
 $ docker run -d IMAGE
 
