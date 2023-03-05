@@ -20,7 +20,7 @@ fs.writeFileSync(readMeFilePath, readMeContents + index, function (err) {
 function buildIndex(queue) {
   return queue.map(file => {
     if (file.isDirectory) {
-      str = file.level > 0 ? `- /${file.name}\n` : `- ${file.name}\n`
+      str = file.level > 0 ? `- _/${file.name}_\n` : `- ### ${file.name}\n`
     }
     else {
       str = `- [**${file.name.split('.')[0]}**](${file.path})\n`  // Remove file extension
