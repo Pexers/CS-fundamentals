@@ -14,14 +14,27 @@ In Git, the workflow is mainly divided into three areas:
 - **Staging Area or Index**: where the files from the working area are staged and snapshots are added. It's how Git knows what change are going to be made between the current commit and the new one (a commit is a snapshot in time).
 - **Git Repository**: It is basically where you perform all the changes that need to be made i.e. perform commits to branch, checkout branch, make changes etc.
 
+#### Gitflow
+TODO:
+The Git Flow is the most known workflow on this list. It was created by Vincent Driessen in 2010 and it is based in two main branches with infinite lifetime:
+
+- `master`: this branch contains production code. All development code is merged into master in sometime.
+- `develop`: this branch contains pre-production code. When the features are finished then they are merged into develop.
+
+During the development cycle, a variety of supporting branches are used:
+
+- `feature-*`: feature branches are used to develop new features for the upcoming releases. May branch off from develop and must merge into develop.
+- `hotfix-*`: hotfix branches are necessary to act immediately upon an undesired status of master. May branch off from master and must merge into master and develop.
+- `release-*`: release branches support preparation of a new production release. They allow many minor bug to be fixed and preparation of meta-data for a release. May branch off from develop and must merge into master and develop.
+
 #### Daily Git Workflow
 1. Pull changes from master branch before start working on a new feature using `git pull`.
 2. See what changes were made using `git log` or `git show COMMIT_SHA` to see the details.
 3. Create a new branch for the feature using `git checkout -b BRANCH`.
 4. Develop feature.
 5. Stage and Commit changes without pushing.
-6. Push to feature branch using `git push`.
-7. Pull from master branch into feature branch and Rebase feature branch using `git pull --rebase ALIAS MASTER`.
+6. Pull from master branch into feature branch and Rebase feature branch using `git pull --rebase ALIAS MASTER`.
+7. Push to feature branch using `git push`.
 8.  - _option 1_:
         - Pull from feature branch into master branch and Rebase master branch using `git pull --rebase ALIAS BRANCH`.
         - Push to master branch using `git push`.

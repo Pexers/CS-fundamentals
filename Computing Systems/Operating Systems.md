@@ -80,7 +80,7 @@ $ mv FILE FILE_NEW_NAME
 $ mv FILE PATH
 
 # Copy file
-cp FILE1 FILE2
+$ cp FILE1 FILE2
 
 # Get type of file
 $ file FILE
@@ -93,6 +93,7 @@ $ cat FILE1 FILE2 > FILE3
 ```
 _File permissions_ TODO:
 ```sh
+# Allows to change the permission of a file (Read, Write, Execute)
 $ chmod
 
 $ chown
@@ -123,6 +124,10 @@ $ ifconfig
 
 # Send ICMP echo requests to check the network connectivity. Stands for Packet INternet Groper
 $ ping DESTINATION
+
+# Check open ports. The '-tulpn' flags instruct netstat to display all the listening ports (0:::port)
+$ netstat -tulpn
+$ apt-get install -y net-tools  # Install net-tools
 
 # Used in DNS lookup to query the DNS name server. It is also used to troubleshoot DNS related issues. Stands for Domain Information Groper
 $ dig DOMAIN
@@ -170,6 +175,9 @@ $ VARIABLE=VALUE
 
 # Remove environment variable
 $ unset VARIABLE
+
+# List all alises. Aliases are like custom shortcuts used to represent a command
+$ alias
 ```
 
 #### Bash Vs Shell
