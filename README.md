@@ -5,6 +5,10 @@ A sum up of fundamental concepts in the fields of **Computer Science**.
 > - Code snippets are written in **Java** programming language.
 
 ## Table of Contents
+- Computing Systems
+	- [**Hardware Components**](/Computing%20Systems/Hardware%20Components.md)
+	- [**Memory Management**](/Computing%20Systems/Memory%20Management.md)
+	- [**Operating Systems**](/Computing%20Systems/Operating%20Systems.md)
 - Database Systems
 - Development
 	- [**Algorithms**](/Development/Algorithms.md)
@@ -17,14 +21,20 @@ A sum up of fundamental concepts in the fields of **Computer Science**.
 	- [**Programming Languages**](/Development/Programming%20Languages.md)
 	- [**Version Control**](/Development/Version%20Control.md)
 - Infrastructure Architecture
-	- [**Automation**](/Infrastructure%20Architecture/Automation.md)
-	- [**Cloud**](/Infrastructure%20Architecture/Cloud.md)
-	- [**Distributed Computing**](/Infrastructure%20Architecture/Distributed%20Computing.md)
+	- Automation
+		- [**Configuration Management**](/Infrastructure%20Architecture/Automation/Configuration%20Management.md)
+		- [**Continuous Integration & Deployment**](/Infrastructure%20Architecture/Automation/Continuous%20Integration%20&%20Deployment.md)
+		- [**Infrastructure as Code**](/Infrastructure%20Architecture/Automation/Infrastructure%20as%20Code.md)
+	- Cloud
+		- [**Environments**](/Infrastructure%20Architecture/Cloud/Environments.md)
+		- [**Kubernetes**](/Infrastructure%20Architecture/Cloud/Kubernetes.md)
+	- [**Distributed Systems**](/Infrastructure%20Architecture/Distributed%20Systems.md)
 	- [**Message Brokers**](/Infrastructure%20Architecture/Message%20Brokers.md)
+	- [**Monitoring**](/Infrastructure%20Architecture/Monitoring.md)
 	- [**Virtualization**](/Infrastructure%20Architecture/Virtualization.md)
 - Network & Security
 	- [**Cryptography**](/Network%20&%20Security/Cryptography.md)
+	- [**Cyber Attacks**](/Network%20&%20Security/Cyber%20Attacks.md)
 	- [**OSI Model**](/Network%20&%20Security/OSI%20Model.md)
+	- [**The Internet**](/Network%20&%20Security/The%20Internet.md)
 	- [**Web Security**](/Network%20&%20Security/Web%20Security.md)
-- Operating Systems
-	- [**Linux**](/Operating%20Systems/Linux.md)
