@@ -2,13 +2,38 @@
 > Work in progress.
 
 ### Jenkins
+Jenkins is an open source automation platform which enables developers to reliably build, test, and deploy their software using pipelines. It's not limited to creating pipelines for code, it can be used to automate any task, such as running Bash and Python scripts as well as Ansible playbooks.
 
-- Groovy is a JVM-based programming language
+Jenkins provides a web GUI where we can create jobs and customize all the functionality that we want, such as Source Control Management (SCM), pre/post build actions, as well as build triggers. We can run tasks on demand by clicking a button, or have them triggered automatically via webhooks.
 
 
-### Pipeline
-Both Declarative and Scripted Pipeline are DSLs [1] to describe portions of your software delivery pipeline. Scripted Pipeline is written in a limited form of Groovy syntax.
+#### Running Jenkins system
+Jenkins' source code is mostly Java, with a few Groovy, Ruby, and Antlr files. We  can run the Jenkins WAR standalone or as a servlet in a Java application server such as Tomcat. In either case, it produces a web user interface and accepts calls to its REST API. 
 
+The recommended way to install Jenkins is though Docker. The Docker image to use is the official `jenkins/jenkins` image from the Docker Hub repository. This image contains the current Long-Term Support (LTS) release of Jenkins (which is production-ready). However this image doesn’t have docker CLI inside it and is not bundled with frequently used Blue Ocean plugins and features. 
+
+Blue Ocean as it stands provides easy-to-use Pipeline visualization. It was intended to be a rethink of the Jenkins user experience, designed from the ground up for Jenkins Pipeline. Blue Ocean was intended to reduce clutter and increases clarity for all users.
+
+_Build the Jenkins BlueOcean Docker Image_
+```sh
+$ docker build -t myjenkins-blueocean:TAG .
+```
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/47757441/222973544-9780c963-3e02-4c08-94d2-4b33ceafd99f.png" width="350">
+</p>
+
+- Jenkins requires Java 11 or 17 since Jenkins 2.357 and LTS 2.361.1.
+- SSH should also be installed given that the Master server usually makes connections over SSH.
+- Any type of build tools should be installed on Agents. Agents are going to be the work horses that run builds.
+
+#### Setting up agents
+TODO:
+**Menu**: _Dashboard :arrow_right: Manage Jenkins :arrow_right: Manage Nodes and Clouds_.
+- _Permanent Agent_:
+- _Cloud Agent_:
+
+#### Pipeline syntax
 A Pipeline can be created in one of the following ways:
 - Through Blue Ocean: after setting up a Pipeline project in Blue Ocean, the Blue Ocean UI helps you write the Pipeline's Jenkinsfile and commit it to source control.
 - Through the classic UI: you can enter a basic Pipeline directly in Jenkins through the classic UI.
@@ -22,11 +47,14 @@ The syntax for defining a Pipeline with either approach is the same, but while J
     - Usually more complex than declarative pipelines.
     - Can lead to the creation of unstable pipeline code that is difficult to maintain and interpret.
 - **Declarative**:
-    - Pre-defined structure.
+    - A more strict and pre-defined structure.
+    - Easy to read syntax.
+    - Ideal choice for simpler CI/CD pipelines.
 
+_Jenkinsfile - Declarative pipeline_
 ```groovy
 pipeline {
-    agent { label 'docker-build-node' }  // Agent configured with Docker installed
+    agent { label 'docker-agent-alpine' }  // Agent configured with Docker installed
     environment {
         // It is a good practice to generate an Access Token in Docker Hub and use it as the password 
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials')
@@ -45,22 +73,23 @@ pipeline {
                 sh 'docker build -t user/image_repo:$BUILD_NUMBER'
             }
         }
-        stage('Login & Push to Docker Hub') {
-            steps {
-                // DOCKERHUB_CREDENTIALS => DOCKERHUB_CREDENTIALS_PSW = password; DOCKERHUB_CREDENTIALS_USR = user
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                sh 'docker push user/image_repo:$BUILD_NUMBER'
-            }
-        }
         stage('Test') {
-            agent {
-                docker { image 'user/image_repo:$BUILD_NUMBER' }
-            }
             options {  // Avoid pipeline hanging forever using timeouts
                 timeout(time: 5, unit: 'MINUTES')
             }
             steps {
-                echo 'Testing...'
+                // Run container in interactive mode & run NPM tests
+                sh '''
+                docker run -it IMAGE EXECUTABLE
+                npm run test
+                '''
+            }
+        }
+        stage('Package') {  // Login & Push image to Docker Hub
+            steps {
+                // DOCKERHUB_CREDENTIALS => DOCKERHUB_CREDENTIALS_PSW = password; DOCKERHUB_CREDENTIALS_USR = user
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                sh 'docker push user/image_repo:$BUILD_NUMBER'
             }
         }
         stage('Deployment') {
