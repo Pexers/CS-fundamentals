@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 env:
-  REPO_WORKSPACE: '${{ github.workspace }}'
+  REPO_WORKSPACE: ${{ github.workspace }}
   
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:

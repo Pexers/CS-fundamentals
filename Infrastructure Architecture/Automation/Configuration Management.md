@@ -1,15 +1,6 @@
 > **Note**  
 > Work in progress.
 
-Jenkins, GitLab CI/CD, GitHub Actions, Azure DevOps,
-Ansible, Puppet, Chef, Salt
-- Ansible in agentless
-- Uses YAML instead of Ruby (more difficult to learn)
-
-Infrastructure as Code - Terraform, Pulumi
-
----
-
 ## Configuration Management
 The process of maintaining systems, such as computer hardware and software, in a desired state. Configuration Management (CM) is also a method of ensuring that systems perform in a manner consistent with expectations over time.
 
@@ -28,25 +19,39 @@ Hosts of Inventory file is located in the **Management Node** as well as the pla
 
 #### Ansible Vs Puppet Vs Chef Vs Salt
 - Ansible in agentless, uses SSH
-- Uses YAML instead of Ruby (more difficult to learn)
+- Uses YAML instead of Ruby to define the state of the systems (more difficult to learn)
 
-#### Ansible modules and plugins
+#### Ansible components
+- Roles:
+  - are 'reusable subsets of a play', mainly they group tasks and resources to accomplish a certain goal
+  - self-contained portable units of ansible
+  - Expressed in YAML
+- Modules:
+  - abstracts complexity away from users to make powerful automation simple
+  - small programs that perform actions on remote hosts.
+  - are expressed as code (Python, Powershell)
+  - called by **Ansible tasks**
+  - do all the heavy lifting in Ansible
+- Plugins:
+  - extend Ansible's core functionality
+  - offer options and extensions for the core features of Ansible: transforming data, logging output, connecting to inventory, and more.
+
 If you are looking to add functionality to Ansible, you might wonder whether you need a module or a plugin. Here is a quick overview to help you understand what you need:
 - Plugins extend Ansible's core functionality. Most plugin types execute on the control node within the `/usr/bin/ansible` process. Plugins offer options and extensions for the core features of Ansible: transforming data, logging output, connecting to inventory, and more.
-- Modules are a type of plugin that execute automation tasks on a ‘target' (usually a remote system). Modules work as standalone scripts that Ansible executes in their own process outside of the controller. Modules interface with Ansible mostly via JSON, accepting arguments and returning information by printing a JSON string to stdout before exiting. Unlike the other plugins (which must be written in Python), modules can be written in any language; although Ansible provides modules in Python and Powershell only.
+- Modules are a type of plugin that execute automation tasks on a 'target' (usually a remote system). Modules work as standalone scripts that Ansible executes in their own process outside of the controller. Modules interface with Ansible mostly via JSON, accepting arguments and returning information by printing a JSON string to stdout before exiting. Unlike the other plugins (which must be written in Python), modules can be written in any language; although Ansible provides modules in Python and Powershell only.
 
 #### Ansible inventory Vs hosts file
 Your inventory defines the managed nodes you automate, with groups so you can run automation tasks on multiple hosts at the same time. Once your inventory is defined, you use patterns to select the hosts or groups you want Ansible to run against.
 
 The default INI format hosts file:
-```
+```ini
 mail.example.com
 
-[webservers]
+[web_servers]
 foo.example.com
 bar.example.com
 
-[dbservers]
+[db_servers]
 one.example.com
 two.example.com
 three.example.com
@@ -58,11 +63,11 @@ all:
   hosts:
     mail.example.com:
   children:
-    webservers:
+    web_servers:
       hosts:
         foo.example.com:
         bar.example.com:
-    dbservers:
+    db_servers:
       hosts:
         one.example.com:
         two.example.com:
@@ -80,10 +85,9 @@ _remote_user_: for instance `root`.
 We can have multiple Plays in the same Playbook.
 
 ```yaml
+---
 - name: install and start nginx server  # The play name
-  hosts: webservers
-  vars:
-    ...
+  hosts: web_servers  # Host group name
   tasks:
   - name: create directory for nginx
     file:
@@ -106,20 +110,3 @@ We can have multiple Plays in the same Playbook.
 
 #### Ansible Tower
 It is a web-based solution that allows use for several different kinds of IT teams. Ansible Tower is the enterprise version of Ansible. It allows sysadmins to deploy all of the benefits of Ansible at scale. And, like Ansible, it integrates with a broad base of your existing technology infrastructure: networking, security, application deployment, storage, software development lifecycle processes, etc.
-
----
-
-CI/CD Pipelines:
-Push event	A push is made to the repository.
-Tag event	Tags are created or deleted in the repository.
-Issue event	A new issue is created or an existing issue is updated, closed, or reopened.
-Comment event	A new comment is made on commits, merge requests, issues, and code snippets.
-Merge request event	A merge request is created, updated, merged, or closed, or a commit is added in the source branch.
-Wiki page event	A wiki page is created, updated, or deleted.
-Pipeline event	A pipeline status changes.
-Job event	A job status changes.
-Deployment event	A deployment starts, succeeds, fails, or is canceled.
-Group member event	A user is added or removed from a group, or a user's access level or access expiration date changes.
-Subgroup event	A subgroup is created or removed from a group.
-Feature flag event	A feature flag is turned on or off.
-Release event	A release is created or updated.
