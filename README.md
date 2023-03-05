@@ -21,11 +21,11 @@ A sum up of fundamental concepts in the fields of **Computer Science**.
 	- [**Programming Languages**](/Development/Programming%20Languages.md)
 	- [**Version Control**](/Development/Version%20Control.md)
 - Infrastructure Architecture
-	- Automation
+	- /Automation
 		- [**Configuration Management**](/Infrastructure%20Architecture/Automation/Configuration%20Management.md)
 		- [**Continuous Integration & Deployment**](/Infrastructure%20Architecture/Automation/Continuous%20Integration%20&%20Deployment.md)
 		- [**Infrastructure as Code**](/Infrastructure%20Architecture/Automation/Infrastructure%20as%20Code.md)
-	- Cloud
+	- /Cloud
 		- [**Environments**](/Infrastructure%20Architecture/Cloud/Environments.md)
 		- [**Kubernetes**](/Infrastructure%20Architecture/Cloud/Kubernetes.md)
 	- [**Distributed Systems**](/Infrastructure%20Architecture/Distributed%20Systems.md)
