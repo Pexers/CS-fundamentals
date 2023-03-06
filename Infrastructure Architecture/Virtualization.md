@@ -106,7 +106,7 @@ COPY --from=builder /go/src/app /app
 CMD ["./webserver"]
 ```
 
-#### Dockerfile cheat sheet
+_A Dockerfile_
 ```dockerfile
 # FROM must be the first non-comment instruction in the Dockerfile
 FROM image
@@ -168,7 +168,7 @@ SHELL ["executable", "param1", "param2"]
 # Sets the system call signal that will be sent to the container to exit
 STOPSIGNAL signal
 ```
-#### Docker Compose file cheat sheet
+_A docker-compose YAML file_
 ```yaml
 version: "3.9"
 services:
@@ -205,7 +205,7 @@ services:
 - _links_: instructs Docker to link containers over a network. Docker creates environment variables and adds containers to the known hosts list so that they can discover each other.
 - _depends_on_: sets the order in which services must start and stop.
 
-### Docker CLI cheat sheet
+### Docker CLI cheatsheet
 _Manage images_
 ```sh
 # Build and tag an image from a Dockerfile
