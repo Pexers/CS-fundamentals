@@ -161,7 +161,7 @@ Kubernetes lets us automate many management tasks, including provisioning and sc
 - **Vertical Pod Autoscaling (VPA)**: TODO:
 - **Cluster Autoscaling**: TODO: scales the overall cluster size. Adds extra machines that pods can run on.
 
-### Kubectl CLI cheat sheet
+### Kubectl CLI cheatsheet
 Kubernetes provides a command line tool for communicating with a Kubernetes Cluster's Control Plane, using the Kubernetes API, named _kubectl_ (Kubernetes Control).
 
 _Syntax_

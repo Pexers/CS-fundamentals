@@ -6,7 +6,6 @@ Jenkins is an open source automation platform which enables developers to reliab
 
 Jenkins provides a web GUI where we can create jobs and customize all the functionality that we want, such as Source Control Management (SCM), pre/post build actions, as well as build triggers. We can run tasks on demand by clicking a button, or have them triggered automatically via webhooks.
 
-
 #### Running Jenkins system
 Jenkins' source code is mostly Java, with a few Groovy, Ruby, and Antlr files. We  can run the Jenkins WAR standalone or as a servlet in a Java application server such as Tomcat. In either case, it produces a web user interface and accepts calls to its REST API. 
 
@@ -33,6 +32,14 @@ TODO:
 - _Permanent Agent_:
 - _Cloud Agent_:
 
+Specifications to consider when setting up Jenkins Slaves Cloud Agents:
+- The node CPU/memory.
+- The Docker image the slave agent will be based on and what libraries the job builds will need.
+- Cloud permissions. Does the job communicate with other cloud services?
+- What network security group will be assigned, in case we want to restrict the slave's network traffic.
+- Logging configuration, what will be their destination?
+
+
 #### Pipeline syntax
 A Pipeline can be created in one of the following ways:
 - Through Blue Ocean: after setting up a Pipeline project in Blue Ocean, the Blue Ocean UI helps you write the Pipeline's Jenkinsfile and commit it to source control.
@@ -57,10 +64,10 @@ pipeline {
     agent { label 'docker-agent-alpine' }  // Agent configured with Docker installed
     environment {
         // It is a good practice to generate an Access Token in Docker Hub and use it as the password 
-        DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials')
+        DOCKERHUB_CREDENTIALS=credentials('dockerhub-credentials')
 
         // Setting environment variable dynamically using returnStdout
-        A_ENV_VARIABLE = """${sh(
+        A_ENV_VARIABLE="""${sh(
                 returnStdout: true,
                 script: 'echo "A value"'
             )}""" 
@@ -87,7 +94,7 @@ pipeline {
         }
         stage('Package') {  // Login & Push image to Docker Hub
             steps {
-                // DOCKERHUB_CREDENTIALS => DOCKERHUB_CREDENTIALS_PSW = password; DOCKERHUB_CREDENTIALS_USR = user
+                // DOCKERHUB_CREDENTIALS => DOCKERHUB_CREDENTIALS_PSW=password; DOCKERHUB_CREDENTIALS_USR=user
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                 sh 'docker push user/image_repo:$BUILD_NUMBER'
             }
@@ -146,4 +153,3 @@ Group member event	A user is added or removed from a group, or a user's access l
 Subgroup event	A subgroup is created or removed from a group.
 Feature flag event	A feature flag is turned on or off.
 Release event	A release is created or updated.
-

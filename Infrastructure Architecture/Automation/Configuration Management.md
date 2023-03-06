@@ -11,17 +11,20 @@ An infrastructure as Code tool. Enables to make changes on multiple machines at 
 - Agentless: connects over SSH and runs commands. We don't need to configure an agent on each machine we want to interact with.
 - Playbook: YAML file. A Playbook has Plays, and each Play can have multiple Tasks.
 
-Hosts of Inventory file is located in the **Management Node** as well as the playbook file.
+Both the playbook and inventory files are located in the **Ansible Management Node**.
 
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/47757441/220987896-ddf29e6a-08a9-4bb3-95b1-4fc0d96bfce1.png" width="350">
+  <img src="https://user-images.githubusercontent.com/47757441/223193218-00638914-67e7-4e62-85f9-41f3e96ca484.png" width="350">
 </p>
 
-#### Ansible Vs Puppet Vs Chef Vs Salt
-- Ansible in agentless, uses SSH
-- Uses YAML instead of Ruby to define the state of the systems (more difficult to learn)
+#### Ansible Tower
+It is a web-based solution that allows use for several different kinds of IT teams. Ansible Tower is the enterprise version of Ansible. It allows sysadmins to deploy all of the benefits of Ansible at scale. And, like Ansible, it integrates with a broad base of your existing technology infrastructure: networking, security, application deployment, storage, software development lifecycle processes, etc.
 
-#### Ansible components
+#### Ansible Vs Puppet Vs Chef Vs Salt
+- Ansible in agentless, it only requires SSH installed. Salt, for instance, needs Python
+- Uses YAML instead of Ruby to define the state of the systems. Ruby is harder to interpret when compared to YAML.
+
+#### Components
 - Roles:
   - are 'reusable subsets of a play', mainly they group tasks and resources to accomplish a certain goal
   - self-contained portable units of ansible
@@ -35,59 +38,73 @@ Hosts of Inventory file is located in the **Management Node** as well as the pla
 - Plugins:
   - extend Ansible's core functionality
   - offer options and extensions for the core features of Ansible: transforming data, logging output, connecting to inventory, and more.
+- Collections:
+  - We can add modules and plugins by creating a collection
 
 If you are looking to add functionality to Ansible, you might wonder whether you need a module or a plugin. Here is a quick overview to help you understand what you need:
 - Plugins extend Ansible's core functionality. Most plugin types execute on the control node within the `/usr/bin/ansible` process. Plugins offer options and extensions for the core features of Ansible: transforming data, logging output, connecting to inventory, and more.
 - Modules are a type of plugin that execute automation tasks on a 'target' (usually a remote system). Modules work as standalone scripts that Ansible executes in their own process outside of the controller. Modules interface with Ansible mostly via JSON, accepting arguments and returning information by printing a JSON string to stdout before exiting. Unlike the other plugins (which must be written in Python), modules can be written in any language; although Ansible provides modules in Python and Powershell only.
 
-#### Ansible inventory Vs hosts file
-Your inventory defines the managed nodes you automate, with groups so you can run automation tasks on multiple hosts at the same time. Once your inventory is defined, you use patterns to select the hosts or groups you want Ansible to run against.
+#### Inventory
+Inventory files define the managed nodes you automate with groups so you can run automation tasks on multiple hosts at the same time. Once your inventory is defined, you use patterns to select the hosts or groups you want Ansible to run against.
 
-The default INI format hosts file:
+The default location for this file is `/etc/ansible/hosts`. You can specify a different inventory file at the command line using the `-i <path>` option or in configuration using `inventory`.
+
+Hosts can be defined either by **IP address** or **DNS name** or if DNS is not resolvable using the `ansible_host` command syntax.
+
+We can specify the SSH credentials using `ansible_ssh_user` and `ansible_ssh_private_key_file` variables.
+
+_Inventory file using INI format_
 ```ini
-mail.example.com
+# Ungrouped hosts with and without DNS resolution respectively
+example.com
+web_server ansible_host=192.168.20.170
 
-[web_servers]
-foo.example.com
-bar.example.com
+# Grouped hosts
+[routers]
+router_1 ansible_host=192.168.1.210
+router_2 ansible_host=192.168.1.211
 
-[db_servers]
-one.example.com
-two.example.com
-three.example.com
+# Variables used by Ansible to connect via SSH
+[routers:vars]
+ansible_ssh_user=a_user
+ansible_ssh_private_key_file=~/.ssh/mykey
 ```
-
-Ansible YAML Inventory using YAML:
+_Inventory file using YAML format_
 ```yaml
 all:
   hosts:
-    mail.example.com:
-  children:
-    web_servers:
+    example.com:
+    web_server:
+      ansible_host: 192.168.20.170
+    routers:
       hosts:
-        foo.example.com:
-        bar.example.com:
-    db_servers:
-      hosts:
-        one.example.com:
-        two.example.com:
-        three.example.com:
+        router_1:
+          ansible_host: 192.168.20.170
+        router_2:
+          ansible_host: 192.168.1.211
+      vars:
+        ansible_ssh_user: a_user
+        ansible_ssh_private_key_file: ~/.ssh/mykey
 ```
+We can also create parent/child relationships among groups. Parent groups are also known as nested groups or groups of groups. For example, if all the production hosts are already in groups such as `atlanta_prod` and `denver_prod`, we can create a `production` group that includes those smaller groups. This approach reduces maintenance because we can add or remove hosts from the parent group by editing the child groups.
 
-#### Ansible playbooks
-Run a playbook:
-`$ ansible-playbook <playbook_file>`
+To create parent/child relationships for groups:
+- in INI format, use the `:children` suffix.
+- in YAML format, use the `children:` entry.
 
-Each Play can define:
+#### Playbooks
+We can have multiple Plays in the same Playbook. Each Play can define:
 _hosts_: used to identify what machines should run the tasks of a Play.
 _remote_user_: for instance `root`.
 
-We can have multiple Plays in the same Playbook.
-
+_Playbook file with a single Play, three tasks and one special task (handler)_
 ```yaml
 ---
 - name: install and start nginx server  # The play name
-  hosts: web_servers  # Host group name
+  hosts: web_server  # Host name or group
+  remote_user: a_username
+
   tasks:
   - name: create directory for nginx
     file:
@@ -107,6 +124,16 @@ We can have multiple Plays in the same Playbook.
       name=nginx
       state=restarted
 ```
+Handlers are usually used to start, restart, reload and stop services on target nodes only when there is a change in the state of the task, and not when no change is made.
 
-#### Ansible Tower
-It is a web-based solution that allows use for several different kinds of IT teams. Ansible Tower is the enterprise version of Ansible. It allows sysadmins to deploy all of the benefits of Ansible at scale. And, like Ansible, it integrates with a broad base of your existing technology infrastructure: networking, security, application deployment, storage, software development lifecycle processes, etc.
+#### Configuring SSH communication between Ansible hosts
+1. Install SSH server using `apt-get install openssh-server` or client using `apt-get install openssh-client`.
+2. Generate SSH key pair using `ssh-keygen`.
+3. Copy public key to the host and add it to the `authorized_keys` file using `ssh-copy-id -i ~/.ssh/id_rsa.pub USERNAME@IP_ADDRESS`.
+4. Check SSH connection and provide private key using `ssh USERNAME@IP_ADDRESS -i ~/.ssh/id_rsa`.
+
+#### Ansible CLI cheatsheet
+```sh
+# Run a playbook
+$ ansible-playbook -i INVENTORY_FILE PLAYBOOK_FILE
+```

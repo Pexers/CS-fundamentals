@@ -38,7 +38,7 @@ Who can we set the permissions for:
 - **Others (o)**: the people not governed by the `u` and `g` permissions.
 - **All (a)**: all of the above.
 
-### Linux CLI cheat sheet
+### Linux CLI cheatsheet
 _Directory Operations_
 ```sh
 # Make directory
@@ -91,12 +91,13 @@ $ cat FILE
 # Join FILE1 and FILE2 and store the output in FILE3
 $ cat FILE1 FILE2 > FILE3
 ```
-_File permissions_ TODO:
+_File permissions_
 ```sh
-# Allows to change the permission of a file (Read, Write, Execute)
+# Allows to change the permissions of a file: Read, Write, Execute. Stands for Change Mode
 $ chmod
 
-$ chown
+# Allows to change the owner of a given file. Stands for Change Ownership
+$ chown USER FILE
 ```
 _User management_
 ```sh
@@ -116,8 +117,13 @@ $ curl -H 'Content-Type: application/json' \
     DOMAIN
 $ wget FILE_DOMAIN  # Retrieve files
 
-# Login into a remote Linux machine using SSH
-$ ssh USERNAME@IP_ADDRESS
+# Open SSH commands 
+$ ssh USERNAME@IP_ADDRESS  # Login into a remote Linux machine using SSH
+$ ssh USERNAME@IP_ADDRESS -i ~/.ssh/id_rsa  # Provide an SSH private key
+$ ssh-keygen  # Generates public/private RSA key pair (~/.ssh/id_rsa=>private; ~/.ssh/id_rsa.pub=>public)
+$ ssh-copy-id -i ~/.ssh/id_rsa.pub USERNAME@IP_ADDRESS  # Logs into the server host, copies the public key, and grants access by adding it to the authorized_keys file
+$ apt-get install openssh-server  # Listens for incoming connection requests (usually on TCP port 22 on the host system) and responds to them
+$ apt-get install openssh-client  # Establishes secure and authenticated SSH connections to SSH servers
 
 # Used to display the route and the network interface
 $ ifconfig
@@ -127,7 +133,7 @@ $ ping DESTINATION
 
 # Check open ports. The '-tulpn' flags instruct netstat to display all the listening ports (0:::port)
 $ netstat -tulpn
-$ apt-get install -y net-tools  # Install net-tools
+$ apt-get install net-tools  # Install net-tools
 
 # Used in DNS lookup to query the DNS name server. It is also used to troubleshoot DNS related issues. Stands for Domain Information Groper
 $ dig DOMAIN

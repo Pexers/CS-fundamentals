@@ -45,7 +45,7 @@ During the development cycle, a variety of supporting branches are used:
 - Commit naming conventions
 - Version/Tag naming conventions
 
-### Git CLI cheat sheet
+### Git CLI cheatsheet
 Some definitions:
 - The `origin` is an alias on your system for a particular remote repository. It's not actually a property of that repository.
 - A _Upstream Branch_ is a remote branch.
