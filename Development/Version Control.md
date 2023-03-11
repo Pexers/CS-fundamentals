@@ -78,7 +78,7 @@ $ git reset DIR
 # Used to record the current state of the working directory and the index, but want to go back to a clean working directory
 $ git stash DIR
 
-# Commit the staged snapshot, but instead of launching a text editor, use MESSAGE as the commit message (-m)
+# Commit the staged snapshot, but instead of launching a text editor, use MESSAGE as the commit message [-m]
 $ git commit -m "MESSAGE"
 $ git commit --amend -m "NEW MESSAGE"  # Amend local commit message
 

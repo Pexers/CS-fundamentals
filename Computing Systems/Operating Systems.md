@@ -22,11 +22,14 @@ File permissions:
 On each line, the first character identifies the type of entry that is being listed. If it is a dash (`-`) it is a file. If it is the letter `d`, it is a directory. The next nine characters represent the settings for the three sets of permissions.
 ```sh
 $ ls -l
-total 8
--rw-r--r-- 1 pedro 197613 163 Feb 10 18:47  Dockerfile
--rw-r--r-- 1 pedro 197613 999 Feb 10 18:38  lenpaste.js
--rw-r--r-- 1 pedro 197613 214 Feb 10 19:03  pipeline.sh
-drwxr-xr-x 1 pedro 197613   0 Feb 10 17:24  pods/
+drwxrwxr-x  29  root  admin  928 Mar 10 17:09 Applications
+drwxr-xr-x  69  root  wheel 2208 Mar 10 12:20 Library
+drwxr-xr-x@ 10  root  wheel  320 Oct 18 13:36 System
+drwxr-xr-x  5   root  admin  160 Mar 3  10:08 Users
+drwxr-xr-x  3   root  wheel   96 Mar 10 23:57 Volumes
+drwxr-xr-x@ 39  root  wheel 1248 Oct 18 13:36 bin
+dr-xr-xr-x  4   root  wheel 4661 Mar 10 23:57 dev
+lrwxr-xr-x@ 1   root  wheel   11 Oct 18 13:36 etc -> private/etc
 ```
 - _First three characters_: show the permissions for the user who owns the file (user permissions). In line 1, these are the `rw-`.
 - _Middle three characters_: show the permissions for members of the file's group (group permissions). In line 1, these are the `r--`.
@@ -51,18 +54,20 @@ $ rmdir DIR
 $ mv DIR DIR_NEW_NAME
 
 # Change directory to home directory
-$ cd 
+$ cd
+$ cd ~  # Does the same
 
 # Change directory to DIR
-$ cd DIR
+$ cd DIR  # Current path
+$ cd /DIR1/DIR2  # Change to any other path
 
 # Go up a directory
 $ cd ..
 
-# List all files. Include hidden: -a | Include sub-directories (recursively): -R | Include permission details: -l
+# List all files. Include hidden: [-a]. Include sub-directories (recursively): [-R]. Include permission details: [-l]
 $ ls -a -l -R
 
-# Show current directory
+# Show path of current directory
 $ pwd
 ```
 _File Operations_
@@ -90,8 +95,18 @@ $ cat FILE
 
 # Join FILE1 and FILE2 and store the output in FILE3
 $ cat FILE1 FILE2 > FILE3
+
+# Edit a file using VIM
+# Enter letter [i] to switch from Command Mode to Insert Mode
+# Enter letter [v] to switch from Command Mode to Visual Mode
+# Enter [ESC] to switch back to Command Mode
+# Copy/Paste: copy text using cursor selection / paste text by clicking on the mouse wheel 
+$ vim FILE
+:wq  # Write (save) and Quit
+:q!  # Quit without saving
 ```
 _File permissions_
+TODO:
 ```sh
 # Allows to change the permissions of a file: Read, Write, Execute. Stands for Change Mode
 $ chmod
@@ -110,7 +125,7 @@ $ sudo passwd USERNAME
 _Networking_
 ```sh
 # Used to transfer data to or from a server, using any of the supported protocols 
-$ curl -O DOMAIN  # -O is used to write output to a local file named like the remote file
+$ curl -O DOMAIN  # Use [-O] to write output to a local file named like the remote file
 $ curl -H 'Content-Type: application/json' \
     -d  '{"fruit" : "apple"}' \
     -X POST \
@@ -131,7 +146,7 @@ $ ifconfig
 # Send ICMP echo requests to check the network connectivity. Stands for Packet INternet Groper
 $ ping DESTINATION
 
-# Check open ports. The '-tulpn' flags instruct netstat to display all the listening ports (0:::port)
+# Check open ports. The [-tulpn] flags instruct netstat to display all the listening ports (0:::port)
 $ netstat -tulpn
 $ apt-get install net-tools  # Install net-tools
 
@@ -143,7 +158,7 @@ $ nslookup DOMAIN  # Used for DNS related queries. It is the older version of di
 $ traceroute DESTINATION
 $ tracepath DESTINATION  # Similar to traceroute, however, it doesn't require root privileges
 
-# Is the replacement for netstat command. Gives information about all TCP (-t), UDP (-u), and UNIX (-x) socket connections
+# Is the replacement for netstat command. Gives information about all TCP [-t], UDP [-u], and UNIX [-x] socket connections
 $ ss -a
 
 # Displays the domain name for a given IP address and IP address for a given hostname
@@ -184,6 +199,31 @@ $ unset VARIABLE
 
 # List all alises. Aliases are like custom shortcuts used to represent a command
 $ alias
+```
+
+#### Linux `$PATH` environmental variable
+The `$PATH` environmental variable is a colon-delimited list of directories that tells the shell which directories to search for executable files.
+
+```sh
+# Check what directories are in $PATH
+$ echo $PATH
+
+# Adding a directory to $PATH. WARNING: only valid in the current shell session
+$ export PATH="$HOME/bin:$PATH"
+
+# Adding a directory executable permanently
+$ vim /.profile
+$ vim /.bashrc
+$ vim /etc/environment  # Ubuntu
+$ vim /etc/paths.d  # Mac. Will never be affected by system upgrades
+$ vim /etc/paths    # Mac. Will be modified and/or replaced by system upgrades (use paths.d instead)
+$ vim /etc/profile  # Add 'export PATH="$HOME/bin:$PATH"' to be executed every time the shell runs (not the best solution)
+
+# Makes changes effective (or restart shell)
+$ source FILE
+
+# Show executable path of a command
+$ which COMMAND
 ```
 
 #### Bash Vs Shell

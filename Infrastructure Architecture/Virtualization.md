@@ -240,10 +240,10 @@ $ docker load -i TAR_FILE
 ```
 _Manage containers_
 ```sh
-# Start a new container in interactive mode (-it)
+# Start a new container in interactive mode [-it]
 $ docker run -it IMAGE EXECUTABLE
 
-# Start a new container in the background (-d) with no input or output (detached mode)
+# Start a new container in the background [-d] with no input or output (detached mode)
 $ docker run -d IMAGE
 
 # Run and map a port on the Docker host
@@ -252,7 +252,7 @@ $ docker run -d -p [exposed_port]:[container_port] [image]
 # Run and add a DNS entry. Useful when a service within the container needs to connect to an external host
 $ docker run --add-host HOSTNAME:IP IMAGE
 
-# List running containers or all containers (-a)
+# List running containers or all containers [-a]
 $ docker ps [-a]
 
 # Start a shell inside a running container. For instance EXECUTABLE=/bin/sh
