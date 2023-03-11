@@ -11,7 +11,7 @@ Linux is not Unix, but it is a Unix-like operating system. Linux system is deriv
 
 ### Linux privileges and permissions
 TODO:
-Using `sudo` allows regular users to run programs with the security privileges of the superuser or root. This list can be displayed using ...
+Using `sudo`, which stands for "super user do", allows regular users to run programs with the security privileges of the superuser or root. This list can be displayed using ...
 
 File permissions:
 - **r**: the read permission.
@@ -31,9 +31,9 @@ drwxr-xr-x@ 39  root  wheel 1248 Oct 18 13:36 bin
 dr-xr-xr-x  4   root  wheel 4661 Mar 10 23:57 dev
 lrwxr-xr-x@ 1   root  wheel   11 Oct 18 13:36 etc -> private/etc
 ```
-- _First three characters_: show the permissions for the user who owns the file (user permissions). In line 1, these are the `rw-`.
-- _Middle three characters_: show the permissions for members of the file's group (group permissions). In line 1, these are the `r--`.
-- _Last three characters_: show the permissions for anyone not in the first two categories (other permissions). In line 1, these are the `r--`.
+- _First three characters_: show the permissions for the user who owns the file (user permissions).
+- _Middle three characters_: show the permissions for members of the file's group (group permissions).
+- _Last three characters_: show the permissions for anyone not in the first two categories (other permissions).
 
 Who can we set the permissions for:
 - **User (u)**: the owner of the file.
@@ -42,30 +42,88 @@ Who can we set the permissions for:
 - **All (a)**: all of the above.
 
 ### Linux CLI cheatsheet
+
+#### OpenSSH
+- Generated key pairs should be placed inside the `~/.ssh` directory.
+- The host machine should be configured with public key inside the `~/.ssh/authorized_keys` file.
+
+```sh
+# Log in to a remote machine using SSH
+$ ssh USERNAME@HOSTNAME  
+$ ssh USERNAME@HOSTNAME -i PRIVATE_KEY_FILE  # Provide an SSH private key
+
+# Set one of the following permissions to the private key file
+$ chmod 0400 PRIVATE_KEY_FILE  # Read permission
+$ chmod 0600 PRIVATE_KEY_FILE  # Read-Write permission
+
+# Generate SSH key pair. Place them inside the '~/.ssh/' directory
+$ ssh-keygen  # Defaults to RSA
+$ ssh-keygen -t ed25519 -C "your_email@example.com"  # Uses EdDSA digital signature algorithm
+$ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"  # Uses RSA algorithm
+
+# SSH agent
+$ eval "$(ssh-agent -s)"  # Start the SSH agent
+$ ssh-add PRIVATE_KEY_FILE  # Add SSH private key to agent. Avoids having to specify the key file every time
+$ ssh-add -l  # List private keys associated with the SSH agent
+$ ssh-copy-id -i PUBLIC_KEY_FILE USERNAME@HOSTNAME  # Log in to the host, copy a new public key, and grant access by adding it to the 'authorized_keys' file. Note: requires to run 'ssh-add' first
+
+# Copy files using SCP (Secure File Copy)
+$ scp LOCAL_FILE USERNAME@HOSTNAME:~/REMOTE/FOLDER  # From local to remote
+$ scp USERNAME@HOSTNAME:~/REMOTE/FILE LOCAL_FILE  # From remote to local
+
+# Close the SSH connection
+$ exit
+
+# Install OpenSSH
+$ apt-get install openssh-server  # Listens for incoming connection requests (usually on TCP port 22 on the host system) and responds to them
+$ apt-get install openssh-client  # Establishes secure and authenticated SSH connections to SSH servers
+```
+#### `$PATH` environment variable
+The `$PATH` environment variable is a colon-delimited list of directories that tells the shell which directories to search for executable files.
+
+```sh
+# Check what directories are in $PATH
+$ echo $PATH
+
+# Adding a directory to $PATH. WARNING: only valid in the current shell session
+$ export PATH="$HOME/bin:$PATH"
+
+# Adding a directory executable permanently
+$ vim /.profile
+$ vim /.bashrc
+$ vim /etc/environment  # Ubuntu
+$ vim /etc/paths.d  # Mac. Will never be affected by system upgrades
+$ vim /etc/paths    # Mac. Will be modified and/or replaced by system upgrades (use paths.d instead)
+$ vim /etc/profile  # Add 'export PATH="$HOME/bin:$PATH"' to be executed every time the shell runs (not the best solution)
+
+# Makes changes effective (or restart shell)
+$ source FILE
+
+# Show executable path of a command
+$ which COMMAND
+```
+#### Other
 _Directory Operations_
 ```sh
 # Make directory
 $ mkdir DIR
 
 # Remove directory
-$ rmdir DIR
+$ rm DIR  # Only works for empty directories
+$ rm -rf DIR  # Remove contents recursively [-r] with force [-f] (never prompts questions)
 
 # Rename directory
 $ mv DIR DIR_NEW_NAME
 
-# Change directory to home directory
-$ cd
-$ cd ~  # Does the same
-
-# Change directory to DIR
-$ cd DIR  # Current path
+# Change directory
+$ cd  # Navigate to home directory
+$ cd ~  # The same as the previous one
+$ cd ..  # Go up a directory
+$ cd DIR  # Change directory
 $ cd /DIR1/DIR2  # Change to any other path
 
-# Go up a directory
-$ cd ..
-
-# List all files. Include hidden: [-a]. Include sub-directories (recursively): [-R]. Include permission details: [-l]
-$ ls -a -l -R
+# List all files, include hidden [-a], permission details [-l], and sub-directories recursively [-R]
+$ ls -alR
 
 # Show path of current directory
 $ pwd
@@ -132,14 +190,6 @@ $ curl -H 'Content-Type: application/json' \
     DOMAIN
 $ wget FILE_DOMAIN  # Retrieve files
 
-# Open SSH commands 
-$ ssh USERNAME@IP_ADDRESS  # Login into a remote Linux machine using SSH
-$ ssh USERNAME@IP_ADDRESS -i ~/.ssh/id_rsa  # Provide an SSH private key
-$ ssh-keygen  # Generates public/private RSA key pair (~/.ssh/id_rsa=>private; ~/.ssh/id_rsa.pub=>public)
-$ ssh-copy-id -i ~/.ssh/id_rsa.pub USERNAME@IP_ADDRESS  # Logs into the server host, copies the public key, and grants access by adding it to the authorized_keys file
-$ apt-get install openssh-server  # Listens for incoming connection requests (usually on TCP port 22 on the host system) and responds to them
-$ apt-get install openssh-client  # Establishes secure and authenticated SSH connections to SSH servers
-
 # Used to display the route and the network interface
 $ ifconfig
 
@@ -161,7 +211,7 @@ $ tracepath DESTINATION  # Similar to traceroute, however, it doesn't require ro
 # Is the replacement for netstat command. Gives information about all TCP [-t], UDP [-u], and UNIX [-x] socket connections
 $ ss -a
 
-# Displays the domain name for a given IP address and IP address for a given hostname
+# Displays the hostname for a given (public) IP address and an IP address for a given hostname
 $ host HOSTNAME
 $ host IP_ADDRESS
 
@@ -199,31 +249,6 @@ $ unset VARIABLE
 
 # List all alises. Aliases are like custom shortcuts used to represent a command
 $ alias
-```
-
-#### Linux `$PATH` environmental variable
-The `$PATH` environmental variable is a colon-delimited list of directories that tells the shell which directories to search for executable files.
-
-```sh
-# Check what directories are in $PATH
-$ echo $PATH
-
-# Adding a directory to $PATH. WARNING: only valid in the current shell session
-$ export PATH="$HOME/bin:$PATH"
-
-# Adding a directory executable permanently
-$ vim /.profile
-$ vim /.bashrc
-$ vim /etc/environment  # Ubuntu
-$ vim /etc/paths.d  # Mac. Will never be affected by system upgrades
-$ vim /etc/paths    # Mac. Will be modified and/or replaced by system upgrades (use paths.d instead)
-$ vim /etc/profile  # Add 'export PATH="$HOME/bin:$PATH"' to be executed every time the shell runs (not the best solution)
-
-# Makes changes effective (or restart shell)
-$ source FILE
-
-# Show executable path of a command
-$ which COMMAND
 ```
 
 #### Bash Vs Shell

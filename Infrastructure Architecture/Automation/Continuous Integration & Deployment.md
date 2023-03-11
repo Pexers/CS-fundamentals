@@ -92,7 +92,7 @@ pipeline {
                 '''
             }
         }
-        stage('Package') {  // Login & Push image to Docker Hub
+        stage('Package') {  // Log in & Push image to Docker Hub
             steps {
                 // DOCKERHUB_CREDENTIALS => DOCKERHUB_CREDENTIALS_PSW=password; DOCKERHUB_CREDENTIALS_USR=user
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
