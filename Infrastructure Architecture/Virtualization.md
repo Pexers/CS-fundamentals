@@ -99,7 +99,7 @@ COPY main.go .
 RUN go build -o webserver .
 
 # Starts a new container
-FROM alpine  
+FROM alpine
 WORKDIR /app
 # Copy binaries form previous container stage
 COPY --from=builder /go/src/app /app
@@ -250,7 +250,7 @@ $ docker run -d IMAGE
 $ docker run -d -p [exposed_port]:[container_port] [image]
 
 # Run and add a DNS entry. Useful when a service within the container needs to connect to an external host
-$ docker run --add-host HOSTNAME:IP IMAGE
+$ docker run --add-host HOSTNAME:IP_ADDRESS IMAGE
 
 # List running containers or all containers [-a]
 $ docker ps [-a]
