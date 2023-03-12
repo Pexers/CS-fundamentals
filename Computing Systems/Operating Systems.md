@@ -46,7 +46,6 @@ Who can we set the permissions for:
 #### OpenSSH
 - Generated key pairs should be placed inside the `~/.ssh` directory.
 - The host machine should be configured with public key inside the `~/.ssh/authorized_keys` file.
-
 ```sh
 # Log in to a remote machine using SSH
 $ ssh USERNAME@HOSTNAME  
@@ -80,7 +79,6 @@ $ apt-get install openssh-client  # Establishes secure and authenticated SSH con
 ```
 #### `$PATH` environment variable
 The `$PATH` environment variable is a colon-delimited list of directories that tells the shell which directories to search for executable files.
-
 ```sh
 # Check what directories are in $PATH
 $ echo $PATH
@@ -145,15 +143,6 @@ $ mv FILE PATH
 # Copy file
 $ cp FILE1 FILE2
 
-# Get type of file
-$ file FILE
-
-# Display file content
-$ cat FILE
-
-# Join FILE1 and FILE2 and store the output in FILE3
-$ cat FILE1 FILE2 > FILE3
-
 # Edit a file using VIM
 # Enter letter [i] to switch from Command Mode to Insert Mode
 # Enter letter [v] to switch from Command Mode to Visual Mode
@@ -162,23 +151,24 @@ $ cat FILE1 FILE2 > FILE3
 $ vim FILE
 :wq  # Write (save) and Quit
 :q!  # Quit without saving
+
+# Display file content
+$ cat FILE
+
+# Join FILE1 and FILE2 and store the output in FILE3
+$ cat FILE1 FILE2 > FILE3
+
+# Get type of file
+$ file FILE
 ```
 _File permissions_
 TODO:
 ```sh
 # Allows to change the permissions of a file: Read, Write, Execute. Stands for Change Mode
-$ chmod
+$ chmod CODE FILE
 
 # Allows to change the owner of a given file. Stands for Change Ownership
 $ chown USER FILE
-```
-_User management_
-```sh
-# Add a new user
-$ sudo adduser USERNAME
-
-# Change password of user
-$ sudo passwd USERNAME
 ```
 _Networking_
 ```sh
@@ -218,6 +208,27 @@ $ host IP_ADDRESS
 # Used to view and add content to the kernel's Address Resolution Protocol (ARP) table
 $ arp -n
 ```
+_Package manager_
+```sh
+# APT (Advanced Package Tool) 
+
+# Update package index. Holds records of available packages from the repositories enabled in the system
+$ apt update
+
+# Install package
+$ apt install PACKAGE
+
+# Uninstall package
+$ apt remove PACKAGE  # Uninstalls the package, but it may leave some configuration files behind
+$ apt purge PACKAGE  # Remove the package including all configuration files
+
+# Upgrade installed package
+$ apt upgrade
+
+# List packages
+$ apt list --installed  # List installed packages
+$ apt list --upgradeable  # List upgradeable packages
+```
 _System operations_
 ```sh
 # Clears the terminal
@@ -250,7 +261,14 @@ $ unset VARIABLE
 # List all alises. Aliases are like custom shortcuts used to represent a command
 $ alias
 ```
+_User management_
+```sh
+# Add a new user
+$ sudo adduser USERNAME
 
+# Change password of user
+$ sudo passwd USERNAME
+```
 #### Bash Vs Shell
 Bash (Bourne Again SHell) vs Shell
 `#!/bin/bash`
