@@ -127,7 +127,7 @@ _Playbook file with a single Play, three tasks and one special task (handler)_
 Handlers are usually used to start, restart, reload and stop services on target nodes only when there is a change in the state of the task, and not when no change is made.
 
 #### Configuring SSH communication between Ansible hosts
-1. Install SSH server using `apt-get install openssh-server` or client using `apt-get install openssh-client`.
+1. Install SSH server using `apt install openssh-server` or client using `apt install openssh-client`.
 2. Generate SSH key pair using `ssh-keygen`.
 3. Copy public key to the host and add it to the `authorized_keys` file using `ssh-copy-id -i ~/.ssh/id_rsa.pub USERNAME@IP_ADDRESS`.
 4. Check SSH connection and provide private key using `ssh USERNAME@IP_ADDRESS -i ~/.ssh/id_rsa`.

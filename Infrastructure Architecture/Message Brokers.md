@@ -7,9 +7,9 @@ Message broker models:
 
 
 Popular tools:
-RabbitMQ: message broker which allows you finer-grained control of message trajectories via routing rules and other easily configurable settings. Can be called a smart broker, as it has a lot of logic in it and tightly keeps track of messages that pass through it. Provides settings for both AP and CP from CAP. Uses a push model for notifying the consumers.
-Apache Kafka - usa pub/sub
-IBM MQ
-Amazon SQS
-Red Hat AMQ
-Google Cloud Pub/Sub
+- Apache Kafka - usa pub/sub
+- RabbitMQ: message broker which allows you finer-grained control of message trajectories via routing rules and other easily configurable settings. Can be called a smart broker, as it has a lot of logic in it and tightly keeps track of messages that pass through it. Provides settings for both AP and CP from CAP. Uses a push model for notifying the consumers.
+- IBM MQ
+- Amazon SQS
+- Red Hat AMQ
+- Google Cloud Pub/Sub

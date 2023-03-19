@@ -98,10 +98,10 @@ WORKDIR /go/src/app
 COPY main.go .
 RUN go build -o webserver .
 
-# Starts a new container
+# Starts a new stage build
 FROM alpine
 WORKDIR /app
-# Copy binaries form previous container stage
+# Copy binaries from the previous stage
 COPY --from=builder /go/src/app /app
 CMD ["./webserver"]
 ```
@@ -127,6 +127,7 @@ RUN command
 RUN ["executable", "param1", "param2"]
 
 # Used to configure the executables that will always run after the container is initiated, for instance, a script
+# Unlike RUN, CMD and ENTRYPOINT only execute when the container is started
 # Unlike CMD, the ENTRYPOINT is not overridden by default, extra arguments are used as parameters 
 ENTRYPOINT ["executable"]
 
@@ -240,23 +241,26 @@ $ docker load -i TAR_FILE
 ```
 _Manage containers_
 ```sh
+# Start a shell inside a running container
+$ docker exec -it CONTAINER EXECUTABLE  # Use '/bin/bash' or '/bin/sh'
+
 # Start a new container in interactive mode [-it]
-$ docker run -it IMAGE EXECUTABLE
+$ docker run --name CONTAINER -it IMAGE EXECUTABLE  # Use '/bin/bash' or '/bin/sh'
 
 # Start a new container in the background [-d] with no input or output (detached mode)
-$ docker run -d IMAGE
+$ docker run --name CONTAINER -d IMAGE
 
 # Run and map a port on the Docker host
-$ docker run -d -p [exposed_port]:[container_port] [image]
+$ docker run --name CONTAINER -d -p EXPOSED_PORT:CONTAINER_PORT IMAGE
+
+# Start a new container with environment variables
+$ docker run --name CONTAINER IMAGE -e ENV_VAR_NAME=ENV_VAR_VALUE
 
 # Run and add a DNS entry. Useful when a service within the container needs to connect to an external host
 $ docker run --add-host HOSTNAME:IP_ADDRESS IMAGE
 
 # List running containers or all containers [-a]
 $ docker ps [-a]
-
-# Start a shell inside a running container. For instance EXECUTABLE=/bin/sh
-$ docker exec -it CONTAINER EXECUTABLE
 
 # Copy a file from a container to the host
 $ docker cp CONTAINER:SOURCE TARGET
@@ -288,6 +292,12 @@ $ docker commit CONTAINER
 # Show mapped ports of a container
 $ docker port CONTAINER
 ```
+_Other_
+```sh
+# Remove build cache
+$ docker builder prune
+```
+### Docker Compose CLI cheatsheet
 _Manage Docker Compose containers_
 ```sh
 # Build docker images defined in docker-compose.yaml
@@ -297,12 +307,14 @@ $ docker compose build
 $ docker compose up -d
 
 # Remove application stack defined in docker-compose.yaml
-$ docker compose down
+$ docker compose down [-v]  # [-v] includes volumes
 
 # Force recreation of containers images
 $ docker compose up --force-recreate --build
 
 # Push images defined in docker-compose.yaml quietly
 $ docker compose push --quiet
-```
 
+# Start a shell inside a running container (run in the same location of docker-compose file)
+$ docker compose exec -it CONTAINER EXECUTABLE  # Use '/bin/bash' or '/bin/sh'
+```

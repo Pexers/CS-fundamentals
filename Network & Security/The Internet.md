@@ -1,7 +1,7 @@
 > **Note**  
 > Work in progress.
 
-Before we cover what the Internet is, we must define what a "network" is. A network is a group of connected computers that are able to send data to each other. The Internet is a vast, sprawling collection of networks that connect to each other. In fact, the word "Internet" could be said to come from this concept: interconnected networks.
+The Internet is a vast, sprawling collection of networks that connect to each other. In fact, the word "Internet" could be said to come from this concept: interconnected networks.
 
 Since computers connect to each other within networks and these networks also all connect with each other, one computer can talk to another computer in a faraway network thanks to the Internet. This makes it possible to rapidly exchange information between computers across the world.
 

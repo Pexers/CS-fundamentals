@@ -80,7 +80,7 @@ $ git stash DIR
 
 # Commit the staged snapshot, but instead of launching a text editor, use MESSAGE as the commit message [-m]
 $ git commit -m "MESSAGE"
-$ git commit --amend -m "NEW MESSAGE"  # Amend local commit message
+$ git commit --amend -m "NEW MESSAGE"  # Amend local commit message. Use forced push afterwards?
 
 # Delete the FILE from project and stage the removal for commit
 $ git rm FILE
@@ -172,8 +172,7 @@ $ git push --force
 Used for larger projects
 
 ---
-TODO list:
-
+TODO:
 Git Pull Rebase vs Git Pull Merge:
 While both of these options will combine the changes fetched from your remote, the outcome will look very different in your Git history.
 Git pull merge is the default method for combining changes in Git, and will merge the unpublished changes with the published changes, resulting in a merge commit.

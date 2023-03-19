@@ -1,15 +1,19 @@
 > **Note**  
 > Work in progress.
 
-### Linux distributions
-
-Given that Linux is open-source, that are many Linux Distributions (distros):
-Ubuntu, Debian, Alpine, Fedora, CentOS, etc.
+## Linux
 
 #### Linux Vs Unix
 Linux is not Unix, but it is a Unix-like operating system. Linux system is derived from Unix and it is a continuation of the basis of Unix design. Linux distributions are the most famous and healthiest example of direct Unix derivatives.
 
-### Linux privileges and permissions
+### Distributions
+
+Given that Linux is open-source, that are many Linux Distributions (distros):
+Ubuntu, Debian, Alpine, Fedora, CentOS, etc.
+
+TODO: Pros & Cons of each, when to use them?
+
+### Privileges and permissions
 TODO:
 Using `sudo`, which stands for "super user do", allows regular users to run programs with the security privileges of the superuser or root. This list can be displayed using ...
 
@@ -42,69 +46,11 @@ Who can we set the permissions for:
 - **All (a)**: all of the above.
 
 ### Linux CLI cheatsheet
-
-#### OpenSSH
-- Generated key pairs should be placed inside the `~/.ssh` directory.
-- The host machine should be configured with public key inside the `~/.ssh/authorized_keys` file.
-```sh
-# Log in to a remote machine using SSH
-$ ssh USERNAME@HOSTNAME  
-$ ssh USERNAME@HOSTNAME -i PRIVATE_KEY_FILE  # Provide an SSH private key
-
-# Set one of the following permissions to the private key file
-$ chmod 0400 PRIVATE_KEY_FILE  # Read permission
-$ chmod 0600 PRIVATE_KEY_FILE  # Read-Write permission
-
-# Generate SSH key pair. Place them inside the '~/.ssh/' directory
-$ ssh-keygen  # Defaults to RSA
-$ ssh-keygen -t ed25519 -C "your_email@example.com"  # Uses EdDSA digital signature algorithm
-$ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"  # Uses RSA algorithm
-
-# SSH agent
-$ eval "$(ssh-agent -s)"  # Start the SSH agent
-$ ssh-add PRIVATE_KEY_FILE  # Add SSH private key to agent. Avoids having to specify the key file every time
-$ ssh-add -l  # List private keys associated with the SSH agent
-$ ssh-copy-id -i PUBLIC_KEY_FILE USERNAME@HOSTNAME  # Log in to the host, copy a new public key, and grant access by adding it to the 'authorized_keys' file. Note: requires to run 'ssh-add' first
-
-# Copy files using SCP (Secure File Copy)
-$ scp LOCAL_FILE USERNAME@HOSTNAME:~/REMOTE/FOLDER  # From local to remote
-$ scp USERNAME@HOSTNAME:~/REMOTE/FILE LOCAL_FILE  # From remote to local
-
-# Close the SSH connection
-$ exit
-
-# Install OpenSSH
-$ apt-get install openssh-server  # Listens for incoming connection requests (usually on TCP port 22 on the host system) and responds to them
-$ apt-get install openssh-client  # Establishes secure and authenticated SSH connections to SSH servers
-```
-#### `$PATH` environment variable
-The `$PATH` environment variable is a colon-delimited list of directories that tells the shell which directories to search for executable files.
-```sh
-# Check what directories are in $PATH
-$ echo $PATH
-
-# Adding a directory to $PATH. WARNING: only valid in the current shell session
-$ export PATH="$HOME/bin:$PATH"
-
-# Adding a directory executable permanently
-$ vim /.profile
-$ vim /.bashrc
-$ vim /etc/environment  # Ubuntu
-$ vim /etc/paths.d  # Mac. Will never be affected by system upgrades
-$ vim /etc/paths    # Mac. Will be modified and/or replaced by system upgrades (use paths.d instead)
-$ vim /etc/profile  # Add 'export PATH="$HOME/bin:$PATH"' to be executed every time the shell runs (not the best solution)
-
-# Makes changes effective (or restart shell)
-$ source FILE
-
-# Show executable path of a command
-$ which COMMAND
-```
-#### Other
 _Directory Operations_
 ```sh
 # Make directory
 $ mkdir DIR
+$ mkdir -p PATH/TO/DIR  # Make all missing directories of path
 
 # Remove directory
 $ rm DIR  # Only works for empty directories
@@ -161,8 +107,7 @@ $ cat FILE1 FILE2 > FILE3
 # Get type of file
 $ file FILE
 ```
-_File permissions_
-TODO:
+TODO: _File permissions_
 ```sh
 # Allows to change the permissions of a file: Read, Write, Execute. Stands for Change Mode
 $ chmod CODE FILE
@@ -188,7 +133,7 @@ $ ping DESTINATION
 
 # Check open ports. The [-tulpn] flags instruct netstat to display all the listening ports (0:::port)
 $ netstat -tulpn
-$ apt-get install net-tools  # Install net-tools
+$ apt install net-tools  # Install net-tools
 
 # Used in DNS lookup to query the DNS name server. It is also used to troubleshoot DNS related issues. Stands for Domain Information Groper
 $ dig DOMAIN
@@ -207,27 +152,6 @@ $ host IP_ADDRESS
 
 # Used to view and add content to the kernel's Address Resolution Protocol (ARP) table
 $ arp -n
-```
-_Package manager_
-```sh
-# APT (Advanced Package Tool) 
-
-# Update package index. Holds records of available packages from the repositories enabled in the system
-$ apt update
-
-# Install package
-$ apt install PACKAGE
-
-# Uninstall package
-$ apt remove PACKAGE  # Uninstalls the package, but it may leave some configuration files behind
-$ apt purge PACKAGE  # Remove the package including all configuration files
-
-# Upgrade installed package
-$ apt upgrade
-
-# List packages
-$ apt list --installed  # List installed packages
-$ apt list --upgradeable  # List upgradeable packages
 ```
 _System operations_
 ```sh
@@ -269,6 +193,115 @@ $ sudo adduser USERNAME
 # Change password of user
 $ sudo passwd USERNAME
 ```
+#### OpenSSH
+- Generated key pairs should be placed inside the `~/.ssh` directory.
+- The host machine should be configured with public key inside the `~/.ssh/authorized_keys` file.
+```sh
+# Log in to a remote machine using SSH
+$ ssh USERNAME@HOSTNAME  
+$ ssh USERNAME@HOSTNAME -i PRIVATE_KEY_FILE  # Provide an SSH private key
+
+# Set one of the following permissions to the private key file
+$ chmod 0400 PRIVATE_KEY_FILE  # Read permission
+$ chmod 0600 PRIVATE_KEY_FILE  # Read-Write permission
+
+# Generate SSH key pair. Place them inside the '~/.ssh/' directory
+$ ssh-keygen  # Defaults to RSA
+$ ssh-keygen -t ed25519 -C "your_email@example.com"  # Uses EdDSA digital signature algorithm
+$ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"  # Uses RSA algorithm
+
+# SSH agent
+$ eval "$(ssh-agent -s)"  # Start the SSH agent
+$ ssh-add PRIVATE_KEY_FILE  # Add SSH private key to agent. Avoids having to specify the key file every time
+$ ssh-add -l  # List private keys associated with the SSH agent
+$ ssh-copy-id -i PUBLIC_KEY_FILE USERNAME@HOSTNAME  # Log in to the host, copy a new public key, and grant access by adding it to the 'authorized_keys' file. Note: requires to run 'ssh-add' first
+
+# Copy files using SCP (Secure File Copy)
+$ scp LOCAL_FILE USERNAME@HOSTNAME:~/REMOTE/FOLDER  # From local to remote
+$ scp USERNAME@HOSTNAME:~/REMOTE/FILE LOCAL_FILE  # From remote to local
+
+# Close the SSH connection
+$ exit
+
+# Install OpenSSH
+$ apt install openssh-server  # Listens for incoming connection requests (usually on TCP port 22 on the host system) and responds to them
+$ apt install openssh-client  # Establishes secure and authenticated SSH connections to SSH servers
+```
+#### `$PATH` environment variable
+The `$PATH` environment variable is a colon-delimited list of directories that tells the shell which directories to search for executable files.
+```sh
+# Check what directories are in $PATH
+$ echo $PATH
+
+# Adding a directory to $PATH. WARNING: only valid in the current shell session
+$ export PATH="$HOME/bin:$PATH"
+
+# Adding a directory executable permanently
+$ vim /.profile
+$ vim /.bashrc
+$ vim /etc/environment  # Ubuntu
+$ vim ~/.zshrc      # Mac.
+$ vim /etc/paths.d  # Mac. Will never be affected by system upgrades
+$ vim /etc/paths    # Mac. Will be modified and/or replaced by system upgrades (use paths.d instead)
+$ vim /etc/profile  # Add 'export PATH="$HOME/bin:$PATH"' to be executed every time the shell runs (not the best solution)
+
+# Makes changes effective (or restart shell)
+$ source FILE
+
+# Show executable path of a command
+$ which COMMAND
+```
+#### APT Package manager
+Alternatives to APT (Advanced Package Tool): YUM, Pacman, DNF.
+```sh
+# Update package index. Holds records of available packages from the repositories enabled in the system
+$ apt update
+
+# Install package
+$ apt install PACKAGE
+
+# Uninstall package
+$ apt remove PACKAGE  # Uninstalls the package, but it may leave some configuration files behind
+$ apt purge PACKAGE  # Remove the package including all configuration files
+
+# Upgrade installed package
+$ apt upgrade
+
+# List packages
+$ apt list --installed  # List installed packages
+$ apt list --upgradeable  # List upgradeable packages
+```
+#### systemd
+_Manage serices_
+```sh
+# Manage services using systemctl
+$ systemctl start SERVICE  # Start
+$ systemctl stop SERVICE  # Stop
+$ systemctl restart SERVICE  # Restart
+$ systemctl reload SERVICE  # Reload all config files in a service
+$ systemctl --type=service --state=running  # List running services
+$ systemctl status SERVICE  # See status
+$ systemctl show SERVICE  # Show properties of a service
+```
+_System information_
+```sh
+$ systemctl list-dependencies  # Show a unit's dependencies
+$ systemctl list-sockets  # List sockets
+$ systemctl list-jobs  # View active systemd jobs
+```
+_System information_
+```sh
+systemctl reboot  # Reboot the system
+systemctl poweroff  # Power off the system
+```
+_Logging_
+```sh
+$ journalctl  # Show all collected log messages
+$ journalctl -u network.service  # See network service messages
+$ journalctl -k  # Show kernel messages
+$ journalctl --list-boots  # See system boots
+```
+
 #### Bash Vs Shell
 Bash (Bourne Again SHell) vs Shell
 `#!/bin/bash`
@@ -282,3 +315,13 @@ Prefer sh for the following reasons:
 - it is portable across POSIX systems — even if they happen not to have bash, they are required to have sh.
 
 There are advantages to using bash as well. Its features make programming more convenient and similar to programming in other modern programming languages. These include things like scoped local variables and arrays. Plain sh is a very minimalistic programming language.
+
+#### Exit status
+- `0`: an exit status of 0 is the best possible scenario, generally speaking. It tells you that your latest command or script executed successfully.
+- `1`: catchall for general errors.
+- `2`: misuse of shell built-ins (according to Bash documentation).
+- `126`: permission problem or command is not an executable.
+- `127`: command not found, possible problem with `$PATH` or a typo.
+- `128`: invalid argument to exit. `exit` only takes integer args in the range 0 - 255 (no decimals allowed).
+- `130`: script terminated by Control-C.
+- `255`: exit status out of range, for instance `-1`.
