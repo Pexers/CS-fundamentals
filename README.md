@@ -5,6 +5,7 @@ A sum up of fundamental concepts in the fields of **Computer Science**.
 > - Code snippets are written in **Java** programming language.
 
 ## Table of Contents
+- [****](/.gitignore)
 - ### Computing Systems
 	- [**Hardware Components**](/Computing%20Systems/Hardware%20Components.md)
 	- [**Memory Management**](/Computing%20Systems/Memory%20Management.md)
@@ -33,6 +34,7 @@ A sum up of fundamental concepts in the fields of **Computer Science**.
 	- [**Monitoring**](/Infrastructure%20Architecture/Monitoring.md)
 	- [**Virtualization**](/Infrastructure%20Architecture/Virtualization.md)
 - ### Network & Security
+	- [**Area Networks**](/Network%20&%20Security/Area%20Networks.md)
 	- [**Cryptography**](/Network%20&%20Security/Cryptography.md)
 	- [**Cyber Attacks**](/Network%20&%20Security/Cyber%20Attacks.md)
 	- [**OSI Model**](/Network%20&%20Security/OSI%20Model.md)
