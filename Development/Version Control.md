@@ -160,7 +160,7 @@ $ git remote add ALIAS URL
 ```
 _Git hacks_
 ```sh
-# Delete most local commit without losing progress
+# Delete most recent local commit without losing changes
 $ git reset --soft HEAD~1
 
 # Delete last N pushed commits

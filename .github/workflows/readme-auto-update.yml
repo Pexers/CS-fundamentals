@@ -1,4 +1,4 @@
-name: README.md Self Update
+name: README.md Auto Update
 
 # Controls when the workflow will run
 on:

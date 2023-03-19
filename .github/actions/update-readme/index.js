@@ -3,7 +3,7 @@ const path = require('path')
 
 const root = process.env.REPO_WORKSPACE
 const readMeFilePath = path.join(root, 'README.md')
-const indexToIgnore = ['.git', '.github', '.gitkeep', 'LICENSE', 'README.md']
+const indexToIgnore = ['.git', '.github', '.gitignore', '.gitkeep', 'LICENSE', 'README.md']
 const indexQueue = []
 
 readDirectory(root, 0)
