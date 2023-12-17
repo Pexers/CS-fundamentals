@@ -33,8 +33,8 @@ During the development cycle, a variety of supporting branches are used:
 3. Create a new branch for the feature using `git checkout -b BRANCH`.
 4. Develop feature.
 5. Stage and Commit changes without pushing.
-6. Pull from master branch into feature branch and Rebase feature branch using `git pull --rebase ALIAS MASTER`.
-7. Push to feature branch using `git push`.
+6. Pull from master branch into feature branch and Rebase feature branch using `git pull --git  ALIAS MASTER`.
+7. Push force to feature branch using `git push ALIAS BRANCH -f`.
 8.  - _option 1_:
         - Pull from feature branch into master branch and Rebase master branch using `git pull --rebase ALIAS BRANCH`.
         - Push to master branch using `git push`.
@@ -59,12 +59,21 @@ $ git config --get init.defaultbranch  # Get specific configuration
 # Configure user information used across all local repositories
 $ git config --global user.name USERNAME
 $ git config --global user.email EMAIL
+$ git config --global core.editor EDITOR  # E.g.: "code --wait"
 
 # Initialize a directory as a Git repository
 $ git init DIR
 
 # Clone an entire repository from a hosted location via URL
 $ git clone URL [DIR]
+
+# Add SSH key as signing key to have commits verified
+$ git config --global gpg.format ssh
+$ git config --global user.signingkey /PATH/TO/.SSH/KEY.PUB
+$ git config --global commit.gpgsign true
+
+# Add a Git URL as an alias
+$ git remote add ALIAS URL
 ```
 
 _Stage & Snapshot_
@@ -74,6 +83,9 @@ $ git add DIR
 
 # Unstage changes while retaining them in working directory
 $ git reset DIR
+
+# Undo changes
+$ git restore DIR
 
 # Used to record the current state of the working directory and the index, but want to go back to a clean working directory
 $ git stash DIR
@@ -121,9 +133,6 @@ $ git checkout -b BRANCH  # Creates a new branch and checkouts to it
 
 # Delete local branch
 $ git branch -d BRANCH
-
-# Merge the specified branch's history into the current one
-$ git merge BRANCH
 ```
 _Share & Update_
 ```sh
@@ -135,6 +144,9 @@ $ git fetch ALIAS BRANCH  # Fetch down specific BRANCH
 $ git merge ALIAS/BRANCH
 $ git merge  # Merges with tracked remote branch. Only one branch is merged
 
+# Apply the changes introduced by some existing commits between branches
+$ git cherry-pick COMMIT_SHA
+
 # Fetch and merge any commits from the tracking remote branch. Essentially: git_pull = git_fetch + git_merge
 $ git pull
 $ git pull --rebase  # Pull and Rebase on tracked branch
@@ -144,6 +156,7 @@ $ git pull --rebase ALIAS BRANCH  # Pull from BRANCH and Rebase on tracked branc
 # Rebasing requires to fetch, stash and commit changes first
 $ git rebase BRANCH  # Rebase BRANCH
 $ git rebase  # Rebase tracked branch
+$ git rebase -i --root  # Rebase all commits in interactive mode
 
 # Push local branch commits to the remote repository branch
 $ git push  # Push to tracked branch
@@ -152,20 +165,25 @@ $ git push ALIAS BRANCH  # Push to BRANCH (also used to transform local branch i
 # Delete remote branch
 $ git push -d ALIAS BRANCH
 
+# Delete most recent local commit without losing changes
+$ git reset --soft HEAD~1
 # Reset staging area and working directory to match most recent commit and overwrite all changes in the working directory
 $ git reset --hard ALIAS/BRANCH
 
-# Add a Git URL as an alias
-$ git remote add ALIAS URL
+# Add new submodule from another repo
+$ git submodule add URL
+
+# Update submodule
+$ git submodule update --remote --recursive
 ```
 _Git hacks_
 ```sh
-# Delete most recent local commit without losing changes
-$ git reset --soft HEAD~1
-
 # Delete last N pushed commits
 $ git reset --hard LAST_GOOD_COMMIT_SHA
 $ git push --force
+
+# Allow for empty commits
+$ git commit --allow-empty -m "Empty commit"
 ```
 
 ## Git flow

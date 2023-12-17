@@ -128,7 +128,7 @@ Scrum incorporates the structure and discipline of more traditional software dev
 - Difficult to estimate the resources, it lacks the end-to-end visibility of the software development process.
 
 ## 5. DevOps
-With DevOps, the developers (Dev), who are experts in coding, and the operations engineers (Ops), who are experts in monitoring, management, and control of your IT infrastructure to ensure that services are delivered according to organizational policies, requirements, and performance standards. Operation teams comprise of a range of cross-functional experts, including security, systems, and network engineers. This is what DevOps intends to do, taking the best parts of both disciplines.
+DevOps makes the developers (Dev) - experts in coding - and the operations engineers (Ops) - experts in monitoring, management, and control of the IT infrastructure - work together to ensure that services are delivered according to organizational policies, requirements, and performance standards. Operation teams comprise of a range of cross-functional experts, including security, systems, and network engineers. This is what DevOps intends to do, taking the best parts of both disciplines.
 
 A DevOps engineer introduces processes, tools, and methodologies to balance needs throughout the software development life cycle, from coding and deployment, to maintenance and updates. This role should not be confused with an Site Reliability Engineer (SRE), whose work has historically been done by an Operations team, but using engineers with software expertise, and banking on the fact that these engineers are inherently both predisposed to, and have the ability to, substitute automation for human labor. 
 

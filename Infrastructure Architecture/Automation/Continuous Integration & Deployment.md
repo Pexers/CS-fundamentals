@@ -9,7 +9,7 @@ Jenkins provides a web GUI where we can create jobs and customize all the functi
 #### Running Jenkins system
 Jenkins' source code is mostly Java, with a few Groovy, Ruby, and Antlr files. We  can run the Jenkins WAR standalone or as a servlet in a Java application server such as Tomcat. In either case, it produces a web user interface and accepts calls to its REST API. 
 
-The recommended way to install Jenkins is though Docker. The Docker image to use is the official `jenkins/jenkins` image from the Docker Hub repository. This image contains the current Long-Term Support (LTS) release of Jenkins (which is production-ready). However this image doesn’t have docker CLI inside it and is not bundled with frequently used Blue Ocean plugins and features. 
+The recommended way to install Jenkins is though Docker. The Docker image to use is the official `jenkins/jenkins` image from the Docker Hub repository. This image contains the current Long-Term Support (LTS) release of Jenkins (which is production-ready). However this image doesn't have docker CLI inside it and is not bundled with frequently used Blue Ocean plugins and features. 
 
 Blue Ocean as it stands provides easy-to-use Pipeline visualization. It was intended to be a rethink of the Jenkins user experience, designed from the ground up for Jenkins Pipeline. Blue Ocean was intended to reduce clutter and increases clarity for all users.
 
@@ -44,7 +44,7 @@ Specifications to consider when setting up Jenkins Slaves Cloud Agents:
 A Pipeline can be created in one of the following ways:
 - Through Blue Ocean: after setting up a Pipeline project in Blue Ocean, the Blue Ocean UI helps you write the Pipeline's Jenkinsfile and commit it to source control.
 - Through the classic UI: you can enter a basic Pipeline directly in Jenkins through the classic UI.
-- In Source Code Management (SCM): you can write a Jenkinsfile manually, which you can commit to your project’s source control repository.
+- In Source Code Management (SCM): you can write a Jenkinsfile manually, which you can commit to your project's source control repository.
 
 The syntax for defining a Pipeline with either approach is the same, but while Jenkins supports entering Pipeline directly into the classic UI, it is generally considered best practice to define the Pipeline in a Jenkinsfile which Jenkins will then load directly from source control.
 
@@ -126,7 +126,7 @@ Groovy string interpolation **should never** be used with credentials. This is b
 
 Jenkins, GitLab CI/CD, GitHub Actions, Azure DevOps, Circle CI
 
-- Blue/Green Deployment (zero downtime): A blue/green deployment process is a common technique for organizations practicing continuous deployment, as it makes it easier to roll back a release in the event of a problem by keeping the old code online until you’re confident that the changes are working as expected. If required, you can follow an initial canary deployment with a blue/green rollout.
+- Blue/Green Deployment (zero downtime): A blue/green deployment process is a common technique for organizations practicing continuous deployment, as it makes it easier to roll back a release in the event of a problem by keeping the old code online until you're confident that the changes are working as expected. If required, you can follow an initial canary deployment with a blue/green rollout.
 - Hot Deployment
 - Canary Deployment
 
@@ -137,7 +137,7 @@ Pipeline performance metrics:
 - **Code coverage**: automated tests should provide the majority of your test coverage, freeing up your QA engineers to focus on exploratory testing and defining new test cases.
 - **Build duration**: build duration or build time measures the time taken to complete the various stages of the automated pipeline.
 - **Test pass rate**: the percentage of test cases that passed successfully for a given build.
-- **Time to fix tests**: time to fix tests is the time between a build reporting a failed test and the same test passing on a subsequent build. This metric gives you an indication of how quickly you’re able to respond to issues identified in the pipeline.
+- **Time to fix tests**: time to fix tests is the time between a build reporting a failed test and the same test passing on a subsequent build. This metric gives you an indication of how quickly you're able to respond to issues identified in the pipeline.
 
 CI/CD Pipelines:
 Push event	A push is made to the repository.

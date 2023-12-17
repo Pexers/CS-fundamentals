@@ -16,7 +16,7 @@ For the purposes of this document, we're going focus more on computer system's v
 ## Virtual Machines Vs Containers
 A **virtual machine** (VM) is a computer file, typically called an image, that behaves like another computer within a host computer. The mechanism behind it is capable of emulating system software (with its own guest OS, kernel, etc.), but also physical computer hardware (CPU cores, memory, disk space), and divide it into multiple separate computers (VMs). Therefore, it is considered a **hardware-level** virtualization.
 
-A **container** is defined as a standard unit of software that packages up code and all its dependencies so that the application can run quickly and reliably from one computing environment to another. However, containers do not come with a full operating system image, but instead a very small subset of it. The mechanism behind it is called _Containerization_, and it is defined as a form of **OS-level** virtualization through which applications are packaged in isolated environments (containers). Unlike VMs, containers share the **host's OS kernel**, usually a Linux kernel, but at the same time isolate the application processes from the rest of the system. This enables multiple workloads to run on a single OS kernel instance. Since they share the same kernel, they do not need to boot an entire new OS every time they start.
+A **container** is defined as a standard unit of software that packages up code and all its dependencies so that the application can run quickly and reliably from one computing environment to another. However, containers do not come with a full operating system image, but instead with a very small subset of it. This mechanism is called _Containerization_, and it is defined as a form of **OS-level** virtualization through which applications are packaged in isolated environments (containers). Unlike VMs, containers share the **host's OS kernel**, usually a Linux kernel, but at the same time isolate the application processes from the rest of the system. This enables multiple workloads to run on a single OS kernel instance. Since they share the same kernel, they do not need to boot an entire new OS every startup.
 <p align="center">
   <img src="https://user-images.githubusercontent.com/47757441/213234299-3f515b43-eca0-4a40-8531-4ac9b27f3515.png" width="700">
 </p>
@@ -39,7 +39,7 @@ A **container** is defined as a standard unit of software that packages up code 
 
 - **Performance**
   - Virtual machines are ideal for supporting applications that require an operating system's full functionality. This can happen when there is a need to manage a wide variety of operating systems. However, VMs are time consuming to build and regenerate because they encompass a full stack system. Any modifications to a virtual machine snapshot can take significant time to regenerate and validate they behave as expected.
-  - Containers enable greater server-efficiency, cost-effectiveness, and reduced-overhead over VMs. A container doesn't require its own operating system which corresponds to faster boot times, smaller memory footprints, and generally better performance. Containers also help trim hardware, storage, operating system, and server costs as they reduce the need for using VMs.
+  - Containers enable greater server efficiency, cost-effectiveness, and reduced overhead over VMs. A container doesn't require its own operating system which corresponds to faster boot times, smaller memory footprints, and generally better performance. Containers also help trim hardware, storage, operating system, and server costs as they reduce the need for using VMs.
 
 - **Maintainability**
   - Each OS in every VM instance needs to be maintained and updated separately. This is a time consuming and exhausting task, especially if we have multiple VMs.
@@ -58,7 +58,7 @@ _In summary:_
 Both containers and virtual machines will continue to have new use cases as enterprises seek to leverage the power of their infrastructure – or the cloud – in new ways to support heavy-duty application and networking workloads. Containers are an excellent choice for tasks with a short lifecycle and for deployment of microservices. Virtual machines have a longer lifecycle than containers, and are best used for longer periods of time. In short, containers are lighter weight, more rapid, and more maintainable than VMs. 
 
 ## Docker Engine
-The Docker Engine is an open source containerization technology for building and containerizing applications. Before Docker, an application was entirely tied to the machine/server it was running on. With Docker, we can now take this application and _contain it_ in a **docker image**, and redeployed it later on in any other server to duplicate its functionality. Therefore, Docker's container-based platform allows for highly portable workloads.
+The Docker Engine is an open source containerization technology for building and containerizing applications. Before Docker, an application was entirely tied to the machine/server it was running on. With Docker, we can now take this application and _contain it_ in a **docker image**, and redeployed it later in any other server to duplicate its functionality. Therefore, Docker's container-based platform allows for highly portable workloads.
 
 Docker also promotes the usage of microservices. Microservices decentralize packages and divide tasks into separate, stand-alone integrations that collaborate with each other. These are much easier to scale when compared to monoliths. Organizations can deploy multiple services or applications on a machine through containers while maintaining a degree of isolation between them.
 
@@ -113,8 +113,9 @@ FROM image
 FROM image[:tag]
 FROM image[@digest]
 
-# Allows you to set the Author field of the generated images
-MAINTAINER name
+# Allows you to set the Author field of the generated images. MAINTAINER is deprecated
+MAINTAINER company <admin@company.com>
+LABEL org.opencontainers.image.authors="company <admin@company.com>"
 
 # Sets the user name or UID to use when running the image and for any RUN, CMD and ENTRYPOINT instructions that follow it in the Dockerfile
 USER username
@@ -130,6 +131,8 @@ RUN ["executable", "param1", "param2"]
 # Unlike RUN, CMD and ENTRYPOINT only execute when the container is started
 # Unlike CMD, the ENTRYPOINT is not overridden by default, extra arguments are used as parameters 
 ENTRYPOINT ["executable"]
+# Use [-c] flag to pass a String of commands
+ENTRYPOINT ['/bin/sh', '-c', 'COMMAND_1 && COMMAND_2']
 
 # CMD parameters can be overridden when running the Docker image, unlike ENTRYPOINT. When something can be parameterized we should use CMD
 CMD ["executable", "param1", "param2"]
@@ -227,12 +230,6 @@ $ docker images
 # Delete an image
 $ docker rmi IMAGE
 
-# Delete dangling images. These are untagged and unnamed (<none>)
-$ docker image prune
-
-# Delete all unused images. These have not been assigned or used in a container
-$ docker image prune -a
-
 # Save an image to a .tar file
 $ docker save IMAGE > TAR_FILE
 
@@ -241,14 +238,14 @@ $ docker load -i TAR_FILE
 ```
 _Manage containers_
 ```sh
-# Start a shell inside a running container
-$ docker exec -it CONTAINER EXECUTABLE  # Use '/bin/bash' or '/bin/sh'
+# Start a new container in the background [-d] with no input or output (detached mode)
+$ docker run --name CONTAINER -d IMAGE
 
 # Start a new container in interactive mode [-it]
 $ docker run --name CONTAINER -it IMAGE EXECUTABLE  # Use '/bin/bash' or '/bin/sh'
 
-# Start a new container in the background [-d] with no input or output (detached mode)
-$ docker run --name CONTAINER -d IMAGE
+# Start a new container in interactive mode with custom entry point
+$ docker run -it --entrypoint=/bin/bash IMAGE
 
 # Run and map a port on the Docker host
 $ docker run --name CONTAINER -d -p EXPOSED_PORT:CONTAINER_PORT IMAGE
@@ -258,6 +255,11 @@ $ docker run --name CONTAINER IMAGE -e ENV_VAR_NAME=ENV_VAR_VALUE
 
 # Run and add a DNS entry. Useful when a service within the container needs to connect to an external host
 $ docker run --add-host HOSTNAME:IP_ADDRESS IMAGE
+$ docker run --network=host IMAGE  # Shares the host's networking namespace
+
+# Start a shell inside a running container
+$ docker exec -it CONTAINER EXECUTABLE  # Use '/bin/bash' or '/bin/sh'
+$ docker exec -it --user root CONTAINER EXECUTABLE  # Root access
 
 # List running containers or all containers [-a]
 $ docker ps [-a]
@@ -266,10 +268,13 @@ $ docker ps [-a]
 $ docker cp CONTAINER:SOURCE TARGET
 
 # Copy a file from the host to a container
-$ docker cp TARGET CONTAINER:SOURCE
+$ docker cp SOURCE CONTAINER:TARGET
 
 # Show logs of a container
 $ docker logs CONTAINER
+
+# Access files of stopped container
+$ docker commit CONTAINER IMAGE
 
 # Stop/Start a container
 $ docker stop/start CONTAINER
@@ -280,22 +285,31 @@ $ docker rm CONTAINER
 # Force delete a running container
 $ docker rm -f CONTAINER
 
-# Delete stopped containers
-$ docker container prune
-
 # Rename a container
 $ docker rename OLD_NAME NEW_NAME
-
-# Create an image out of a container
-$ docker commit CONTAINER
 
 # Show mapped ports of a container
 $ docker port CONTAINER
 ```
 _Other_
 ```sh
-# Remove build cache
-$ docker builder prune
+# Display information regarding the amount of disk space used by the docker daemon
+$ docker system df
+
+# Delete all running containers and attached volumes:
+$ docker rm -f $(docker ps -a -q); docker volume rm $(docker volume ls -q)
+
+# Docker remove resources with prune
+$ docker system prune --all --force # Removes everything basically
+$ docker builder prune --all --force  # Remove all cache
+$ docker volume prune --all --force  # Remove all volumes
+$ docker image prune --all --force  # Remove all images
+$ docker container prune --all --force  # Remove all containers
+
+# Running containers indefinitely
+sleep infinity
+tail -f /dev/null
+while true; do sleep 1; done
 ```
 ### Docker Compose CLI cheatsheet
 _Manage Docker Compose containers_
@@ -314,7 +328,18 @@ $ docker compose up --force-recreate --build
 
 # Push images defined in docker-compose.yaml quietly
 $ docker compose push --quiet
+```
+### Docker Buildx CLI cheatsheet
+```sh
+# Create buildx driver
+$ docker buildx create --name multi-arch-builder --platform linux/amd64,linux/arm64
 
-# Start a shell inside a running container (run in the same location of docker-compose file)
-$ docker compose exec -it CONTAINER EXECUTABLE  # Use '/bin/bash' or '/bin/sh'
+# List created drivers
+$ docker buildx ls
+
+# Use driver
+$ docker buildx use multi-arch-builder
+
+# Build, Tag and Push a Docker image for different platforms
+$ docker buildx build --tag IMAGE --push ./ --platform linux/amd64,linux/arm64
 ```

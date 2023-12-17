@@ -66,8 +66,8 @@ $ cd ..  # Go up a directory
 $ cd DIR  # Change directory
 $ cd /DIR1/DIR2  # Change to any other path
 
-# List all files, include hidden [-a], permission details [-l], and sub-directories recursively [-R]
-$ ls -alR
+# Listing files
+$ ls -lsht  # Listing format [-l], print file size [-s], human-readable [-h], sort by modification time [-t]
 
 # Show path of current directory
 $ pwd
@@ -106,6 +106,10 @@ $ cat FILE1 FILE2 > FILE3
 
 # Get type of file
 $ file FILE
+
+# Zip operations
+$ zip -R ZIP_NAME.zip FILE1 DIR1 FILE2 DIR2
+$ unzip ZIP_NAME.zip -d PATH
 ```
 TODO: _File permissions_
 ```sh
@@ -118,17 +122,20 @@ $ chown USER FILE
 _Networking_
 ```sh
 # Used to transfer data to or from a server, using any of the supported protocols 
-$ curl -O DOMAIN  # Use [-O] to write output to a local file named like the remote file
-$ curl -H 'Content-Type: application/json' \
-    -d  '{"fruit" : "apple"}' \
-    -X POST \
-    DOMAIN
+$ curl -O URL  # Use [-O] to write output to a local file named like the remote file
+# POST request with basic authentication
+$ curl -X POST \
+    -u USER:TOKEN \
+    -H 'Content-Type: application/json' \
+    -d '{"fruit": "apple"}' \
+    URL
+
 $ wget FILE_DOMAIN  # Retrieve files
 
 # Used to display the route and the network interface
 $ ifconfig
 
-# Send ICMP echo requests to check the network connectivity. Stands for Packet INternet Groper
+# Send ICMP echo requests to check the network connectivity. PING stands for Packet INternet Groper
 $ ping DESTINATION
 
 # Check open ports. The [-tulpn] flags instruct netstat to display all the listening ports (0:::port)
@@ -161,6 +168,11 @@ $ clear
 # Gives a list of all past commands typed in the current terminal session
 $ history
 
+# Disk usage analysis
+$ du -s -h PATH  # Summarize [-s] human readable [-h] disk usage
+$ df -H # See system usage distribution
+$ ncdu  # See what directories are using disk space
+
 # Display hostname of the system
 $ hostname
 
@@ -184,6 +196,9 @@ $ unset VARIABLE
 
 # List all alises. Aliases are like custom shortcuts used to represent a command
 $ alias
+
+# List users
+$ cat /etc/passwd
 ```
 _User management_
 ```sh
@@ -192,23 +207,28 @@ $ sudo adduser USERNAME
 
 # Change password of user
 $ sudo passwd USERNAME
+
+# Enable the usage of sudo for a specific user
+$ usermod -a -G sudo USERNAME  # Append [-a] non-root user to sudoers group [-G]
+$ echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers  # Disable password request for sudoers group
 ```
 #### OpenSSH
 - Generated key pairs should be placed inside the `~/.ssh` directory.
 - The host machine should be configured with public key inside the `~/.ssh/authorized_keys` file.
 ```sh
 # Log in to a remote machine using SSH
-$ ssh USERNAME@HOSTNAME  
+$ ssh USERNAME@HOSTNAME
 $ ssh USERNAME@HOSTNAME -i PRIVATE_KEY_FILE  # Provide an SSH private key
+$ sshpass -p PASSWORD ssh USERNAME@HOSTNAME  # Use SSH Pass to authenticate using a password (not the best option)
 
 # Set one of the following permissions to the private key file
-$ chmod 0400 PRIVATE_KEY_FILE  # Read permission
-$ chmod 0600 PRIVATE_KEY_FILE  # Read-Write permission
+$ chmod 400 PRIVATE_KEY_FILE  # Read permission
+$ chmod 600 PRIVATE_KEY_FILE  # Read-Write permission
 
 # Generate SSH key pair. Place them inside the '~/.ssh/' directory
 $ ssh-keygen  # Defaults to RSA
-$ ssh-keygen -t ed25519 -C "your_email@example.com"  # Uses EdDSA digital signature algorithm
-$ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"  # Uses RSA algorithm
+$ ssh-keygen -t ed25519 -C "YOUR_EMAIL"  # Uses EdDSA digital signature algorithm
+$ ssh-keygen -t rsa -b 4096 -C "YOUR_EMAIL"  # Uses RSA algorithm
 
 # SSH agent
 $ eval "$(ssh-agent -s)"  # Start the SSH agent
@@ -216,9 +236,10 @@ $ ssh-add PRIVATE_KEY_FILE  # Add SSH private key to agent. Avoids having to spe
 $ ssh-add -l  # List private keys associated with the SSH agent
 $ ssh-copy-id -i PUBLIC_KEY_FILE USERNAME@HOSTNAME  # Log in to the host, copy a new public key, and grant access by adding it to the 'authorized_keys' file. Note: requires to run 'ssh-add' first
 
-# Copy files using SCP (Secure File Copy)
-$ scp LOCAL_FILE USERNAME@HOSTNAME:~/REMOTE/FOLDER  # From local to remote
-$ scp USERNAME@HOSTNAME:~/REMOTE/FILE LOCAL_FILE  # From remote to local
+# Copy files and directories using SCP (Secure File Copy)
+$ scp USERNAME@HOSTNAME:~/REMOTE/FILE LOCAL_FILE  # Copy file from remote to local
+$ scp LOCAL_FILE USERNAME@HOSTNAME:~/REMOTE/DIR  # Copy file from local to remote
+$ scp -r LOCAL_DIR USERNAME@HOSTNAME:~/REMOTE/DIR  # Copy directory from local to remote
 
 # Close the SSH connection
 $ exit
@@ -272,7 +293,7 @@ $ apt list --installed  # List installed packages
 $ apt list --upgradeable  # List upgradeable packages
 ```
 #### systemd
-_Manage serices_
+_Manage services_
 ```sh
 # Manage services using systemctl
 $ systemctl start SERVICE  # Start
@@ -282,17 +303,27 @@ $ systemctl reload SERVICE  # Reload all config files in a service
 $ systemctl --type=service --state=running  # List running services
 $ systemctl status SERVICE  # See status
 $ systemctl show SERVICE  # Show properties of a service
+$ systemctl disable SERVICE.service  # Disable service from starting-up on system boot
+$ systemctl list-unit-files  # List services that start-up on system boot
+$ systemctl list-timers  # List scheduled timers
+$ systemctl daemon-reload  # Reload systemctl daemon
+
+# Update hostname
+$ hostnamectl set-hostname NAME
 ```
 _System information_
 ```sh
 $ systemctl list-dependencies  # Show a unit's dependencies
 $ systemctl list-sockets  # List sockets
 $ systemctl list-jobs  # View active systemd jobs
+
+# See history of cronjobs
+$ grep CRON /var/log/syslog
 ```
-_System information_
+_System management_
 ```sh
-systemctl reboot  # Reboot the system
-systemctl poweroff  # Power off the system
+$ systemctl reboot  # Reboot the system
+$ systemctl poweroff  # Power off the system
 ```
 _Logging_
 ```sh
@@ -300,6 +331,16 @@ $ journalctl  # Show all collected log messages
 $ journalctl -u network.service  # See network service messages
 $ journalctl -k  # Show kernel messages
 $ journalctl --list-boots  # See system boots
+```
+_Encryption_
+```sh
+# GPG (GNU Privacy Guard)
+$ gpg --list-keys  # List all keys
+$ gpg --generate-key --batch <(echo 'Key-Type: 1'; echo 'Name-Real: REAL_NAME'; echo 'Name-Email: RECIPIENT'; echo '%no-protection')  # Generate passwordless key pair
+$ gpg --encrypt --output ENCRYPTED_FILE.gpg --batch --yes --recipient RECIPIENT FILE  # Encrypt file using key
+$ gpg --decrypt --yes --output destroy-demo-server.env  destroy-demo-server.gpg  # Decrypt GPG file
+$ gpg --delete-secret-key RECIPIENT  # Delete private key
+$ gpg --delete-key RECIPIENT  # Delete public key
 ```
 
 #### Bash Vs Shell
@@ -316,6 +357,8 @@ Prefer sh for the following reasons:
 
 There are advantages to using bash as well. Its features make programming more convenient and similar to programming in other modern programming languages. These include things like scoped local variables and arrays. Plain sh is a very minimalistic programming language.
 
+TODO: follow this guide by Google https://google.github.io/styleguide/shellguide.html
+
 #### Exit status
 - `0`: an exit status of 0 is the best possible scenario, generally speaking. It tells you that your latest command or script executed successfully.
 - `1`: catchall for general errors.
@@ -325,3 +368,36 @@ There are advantages to using bash as well. Its features make programming more c
 - `128`: invalid argument to exit. `exit` only takes integer args in the range 0 - 255 (no decimals allowed).
 - `130`: script terminated by Control-C.
 - `255`: exit status out of range, for instance `-1`.
+
+#### Output redirection
+```sh
+# The standard output stream will be redirected to the file only, it will not be visible in the terminal. If the file already exists, it gets overwritten
+$ COMMAND > output.txt
+
+# The standard output stream will be redirected to the file only, it will not be visible in the terminal. If the file already exists, the new data will get appended to the end of the file
+$ COMMAND >> output.txt
+
+# The standard error stream will be redirected to the file only, it will not be visible in the terminal. If the file already exists, it gets overwritten
+$ COMMAND 2> output.txt
+
+# The standard error stream will be redirected to the file only, it will not be visible in the terminal. If the file already exists, the new data will get appended to the end of the file
+$ COMMAND 2>> output.txt
+
+# Both the standard output and standard error stream will be redirected to the file only, nothing will be visible in the terminal. If the file already exists, it gets overwritten
+$ COMMAND &> output.txt
+
+# Both the standard output and standard error stream will be redirected to the file only, nothing will be visible in the terminal. If the file already exists, the new data will get appended to the end of the file
+$ COMMAND &>> output.txt
+
+# The standard output stream will be copied to the file, it will still be visible in the terminal. If the file already exists, it gets overwritten
+$ COMMAND | tee output.txt
+
+# The standard output stream will be copied to the file, it will still be visible in the terminal. If the file already exists, the new data will get appended to the end of the file
+$ COMMAND | tee --append output.txt
+
+# Both the standard output and standard error streams will be copied to the file while still being visible in the terminal. If the file already exists, it gets overwritten
+$ COMMAND |& tee output.txt
+
+# Both the standard output and standard error streams will be copied to the file while still being visible in the terminal. If the file already exists, the new data will get appended to the end of the file
+$ COMMAND |& tee --append output.txt
+```

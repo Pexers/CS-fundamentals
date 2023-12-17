@@ -20,7 +20,7 @@ Consider this document. In order for you to see it, it was sent over the Interne
 5. _HTTP response_: A server transmitted the content in the form of HTML, CSS, and JavaScript code, broken up into a series of data packets. Once your device received the packets and verified it had received all of them, your browser interpreted the HTML, CSS, and JavaScript code contained in the packets to render this document.
 
 #### Public Vs Private IP Addresses
-The main difference between public and private IP addresses is how far they reach, and what they're connected to. A public IP address identifies you to the wider internet so that all the information you’re searching for can find you. A private IP address is used within a private network to connect securely to other devices within that same network.
+The main difference between public and private IP addresses is how far they reach, and what they're connected to. A public IP address identifies you to the wider internet so that all the information you're searching for can find you. A private IP address is used within a private network to connect securely to other devices within that same network.
 <p align="center">
   <img src="https://user-images.githubusercontent.com/47757441/222959414-c82ad031-6768-4665-aa87-17617ea7f84f.png" width="400">
 </p>
