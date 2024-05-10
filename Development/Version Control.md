@@ -74,6 +74,10 @@ $ git config --global commit.gpgsign true
 
 # Add a Git URL as an alias
 $ git remote add ALIAS URL
+
+# Update a target repository based on mirroring another one
+$ git clone --bare BASE_URL
+$ git push --mirror TARGET_URL
 ```
 
 _Stage & Snapshot_
@@ -157,6 +161,7 @@ $ git pull --rebase ALIAS BRANCH  # Pull from BRANCH and Rebase on tracked branc
 $ git rebase BRANCH  # Rebase BRANCH
 $ git rebase  # Rebase tracked branch
 $ git rebase -i --root  # Rebase all commits in interactive mode
+$ git rebase -i HEAD~N # Used when squashing
 
 # Push local branch commits to the remote repository branch
 $ git push  # Push to tracked branch

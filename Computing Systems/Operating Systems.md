@@ -170,11 +170,14 @@ $ history
 
 # Disk usage analysis
 $ du -s -h PATH  # Summarize [-s] human readable [-h] disk usage
-$ df -H # See system usage distribution
+$ df -h # See system usage distribution
 $ ncdu  # See what directories are using disk space
 
 # Display hostname of the system
 $ hostname
+
+# Check NTP server clock time synchronization
+$ timedatectl
 
 # Shows information of all logged in users
 $ finger [USERNAME]
@@ -300,12 +303,13 @@ $ systemctl start SERVICE  # Start
 $ systemctl stop SERVICE  # Stop
 $ systemctl restart SERVICE  # Restart
 $ systemctl reload SERVICE  # Reload all config files in a service
+$ systemctl list-units --type=service  # List services
 $ systemctl --type=service --state=running  # List running services
+$ systemctl list-unit-files  # List services that start-up on system boot
+$ systemctl list-timers  # List scheduled timers
 $ systemctl status SERVICE  # See status
 $ systemctl show SERVICE  # Show properties of a service
 $ systemctl disable SERVICE.service  # Disable service from starting-up on system boot
-$ systemctl list-unit-files  # List services that start-up on system boot
-$ systemctl list-timers  # List scheduled timers
 $ systemctl daemon-reload  # Reload systemctl daemon
 
 # Update hostname
@@ -331,6 +335,11 @@ $ journalctl  # Show all collected log messages
 $ journalctl -u network.service  # See network service messages
 $ journalctl -k  # Show kernel messages
 $ journalctl --list-boots  # See system boots
+
+# Using logrotate
+$ logrotate -dv /etc/logrotate.conf # Dry-run logrotate in verbose
+$ logrotate -fv /etc/logrotate.conf # Force logrotate in verbose
+$ cat /var/lib/logrotate/status # See last log rotations
 ```
 _Encryption_
 ```sh

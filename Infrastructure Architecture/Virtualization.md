@@ -174,7 +174,6 @@ STOPSIGNAL signal
 ```
 _A docker-compose YAML file_
 ```yaml
-version: "3.9"
 services:
   calculator:
     container_name: calculator
@@ -208,6 +207,23 @@ services:
 ```
 - _links_: instructs Docker to link containers over a network. Docker creates environment variables and adds containers to the known hosts list so that they can discover each other.
 - _depends_on_: sets the order in which services must start and stop.
+
+### Configuring a static IPv4 for containers
+Do not forget to *prune* any existing networks before creating the new one.
+```yaml
+calculator:
+    ...
+    networks:
+      app-network:
+        ipv4_address: 172.19.0.3
+
+networks:
+  app-network:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.19.0.0/16
+```
 
 ### Docker CLI cheatsheet
 _Manage images_
