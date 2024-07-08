@@ -176,7 +176,7 @@ $ ncdu  # See what directories are using disk space
 # Display hostname of the system
 $ hostname
 
-# Check NTP server clock time synchronization
+# Check NTP (Network Time Protocol) server clock time synchronization
 $ timedatectl
 
 # Shows information of all logged in users

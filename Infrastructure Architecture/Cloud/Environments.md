@@ -1,13 +1,25 @@
 > **Note**  
 > Work in progress.
 
+### Cloud environments (IaaS Vs PaaS Vs FaaS Vs SaaS)
+- **IaaS**: Infrastructure as a service, or IaaS, delivers on-demand infrastructure resources to organizations via the cloud, such as compute, storage, networking, and virtualization. Customers don’t have to manage, maintain, or update their own data center infrastructure, but are responsible for the operating system, middleware, virtual machines, and any apps or data.
+    - Some examples of IaaS are: AWS, Microsoft Azure, GCE (Google Compute Engine).
+- **PaaS**: Platform as a service, or PaaS, delivers and manages all the hardware and software resources to develop applications through the cloud. Developers and IT operations teams can use PaaS to develop, run, and manage applications without having to build and maintain the infrastructure or platform on their own. Customers still have to write the code and manage their data and applications, but the environment to build and deploy apps is managed and maintained by the cloud service provider.
+    - Some examples of PaaS are: Heroku, Red Hat OpenShift, Google App Engine.
+- **FaaS**: Function as a Service, or FaaS, allows you to build and deploy a small piece of code, or a function, that performs a specific task. The cloud provider adds scale if needed when a function executes.
+    - Some examples of FaaS are: Cloud Functions, AWS Lambda, Azure Functions.
+- **SaaS**: Software as a Service, or SaaS, provides the entire application stack, delivering an entire cloud-based application that customers can access and use. SaaS products are completely managed by the service provider and come ready to use, including all updates, bug fixes, and overall maintenance. Most SaaS applications are accessed directly through a web browser, which means customers don’t have to download or install anything on their devices. 
+    - Some examples of SaaS are: Google Workspace apps (Gmail, GDrive, etc.), Netflix, Slack, and many others.
 
-Cloud environments:
-IaaS Vs PaaS Vs FaaS Vs SaaS
+<p align="center">
+  <img src="https://github.com/Pexers/CS-fundamentals/assets/47757441/8e56eb85-cd50-4b60-80bb-972616b48869" width="500">
+</p>
 
-Public cloud is cloud computing that's delivered via the internet and shared across organizations.
-Private cloud is cloud computing that is dedicated solely to your organization.
-Hybrid cloud is any environment that uses both public and private clouds.
+
+### Cloud computing types
+- Public cloud: delivered via the internet and shared across organizations.
+- Private cloud: dedicated solely to your organization.
+- Hybrid cloud: any environment that uses both public and private clouds.
 
 ---
 

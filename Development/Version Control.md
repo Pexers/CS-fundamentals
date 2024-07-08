@@ -76,8 +76,8 @@ $ git config --global commit.gpgsign true
 $ git remote add ALIAS URL
 
 # Update a target repository based on mirroring another one
-$ git clone --bare BASE_URL
-$ git push --mirror TARGET_URL
+$ git clone --bare REPO_TO_UPDATE_URL
+$ git push --mirror REPO_TO_MIRROR_URL
 ```
 
 _Stage & Snapshot_
