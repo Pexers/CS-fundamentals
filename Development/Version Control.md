@@ -91,8 +91,11 @@ $ git reset DIR
 # Undo changes
 $ git restore DIR
 
-# Used to record the current state of the working directory and the index, but want to go back to a clean working directory
-$ git stash DIR
+# Record the current state of the directory and the index before switching branches
+$ git stash push DIR
+
+# Pop stashed changes (recover saved changes)
+$ git stash pop
 
 # Commit the staged snapshot, but instead of launching a text editor, use MESSAGE as the commit message [-m]
 $ git commit -m "MESSAGE"
@@ -100,6 +103,9 @@ $ git commit --amend -m "NEW MESSAGE"  # Amend local commit message. Use forced 
 
 # Delete the FILE from project and stage the removal for commit
 $ git rm FILE
+
+# Untrack changes
+$ git rm -r --cached DIR
 ```
 _Inspect & Compare_
 ```sh
@@ -177,7 +183,6 @@ $ git reset --hard ALIAS/BRANCH
 
 # Add new submodule from another repo
 $ git submodule add URL
-
 # Update submodule
 $ git submodule update --remote --recursive
 ```

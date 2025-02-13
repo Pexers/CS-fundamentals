@@ -1,27 +1,24 @@
-Prometheus collects rich metrics and provides a powerful querying language; 
-Grafana transforms metrics into meaningful visualizations
+<h1 align='center'>Monitoring</h1>
 
---------
+Copyright &copy; 2025, Pexers (https://github.com/Pexers)
 
-Prometheus
-Pull system Vs Push system
-- Pull system
-    - multiple Prometheus instances can pull metrics data
-    - better detection/insight if service is up and running
-- Push system: Applications/Servers push to a centralized collection platform
-    - high load of network traffic
-    - monitoring can become your bottleneck
-    - install additional software or tool to push metrics
+## LGTM stack
+- Loki: it's the service responsible for aggregating logs from applications. We usually go for a push-based model where applications push their logs using an agent like Promtail.
+- Grafana: where we visualize all of our beautiful dashboards to centralize data.
+- Tempo: it's a similar tool to Loki, but for traces, so applications use an agent to push traces to Tempo's scalable database.
+- Mimir: it's sort of an extension to Prometheus, since it allows us to have a scalable database for metrics, which is something we cannot achieve with Prometheus alone, since we mostly scale it vertically. However, this doesn't mean Mimir replaces Prometheus completely, we still need it to obtain these metrics from the systems and provide them to Mimir.
 
-Prometheus Metrics
-- Format: Human-readable text-based
-- Metrics entries: TYPE and HELP attributes
-HELP - description of what the metrics is
-TYPE - 3 metrics types
-1) Counter: how many times x happened
-2) Gauge: what is the current value of x now?
-3) Histogram: how long or how big?
-
-Grafana
-- Grafana Loki
-    - Promtail is an agent which ships the contents of local logs to a private Grafana Loki instance or Grafana Cloud. It is usually deployed to every machine that runs applications which need to be monitored.
+## Pull Vs Push based monitoring systems
+- Push
+    - Use-cases:
+        - Appropriate for logs since applications may not be producing them at all times, so there's no need to constantly be doing requests for logs when they don't exist.
+        - Solves issues such as Firewall blocking from VPNs
+    - Problems:
+        - The system doesn't know what it should be monitoring, so how would it be able to differentiate when an instance doesn't report status because it's down due to an outage, or it's no longer meant to exist?
+        - Install additional software or tool to push metrics
+        - High load of network traffic
+- Pull
+    - Better detection/insight if service is up and running
+    - Problem: Is Prometheus able to scale?
+        - The database is able to scale using tools such as Mimir and Tempo.
+        - In terms of performance, the last time I searched about this concern, I came to the conclusion that Prometheus is mostly scaled vertically. The community has made some heavy testing to ensure it can handle thousands of machines being scrapped every 15 seconds or so, using a single Prometheus instance.

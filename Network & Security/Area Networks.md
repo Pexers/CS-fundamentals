@@ -39,7 +39,6 @@ These types of networks are built and owned by businesses that want to securely 
 By extending a private network across the Internet, a VPN lets its users send and receive data as if their devices were connected to the private network – even if they're not. Through a virtual point-to-point connection, users can access a private network remotely.
 If you have questions about which type of network is right for your organization, or want to learn more about Belden's network solutions that improve uptime, maintain security, and help improve user access, click here.
 
-
 ----
 
 ### PON Network Structure
@@ -48,3 +47,26 @@ TODO:
 Optical Line Terminal (OLT) - where fiber comes from (MEO)
 Optical Network Terminal (ONT) or Optional Network Unit (ONU) - device that receives the fiber (UFiber NanoG).
 Optical Network Router (ONR) - MEO Router
+
+## Forward Proxy vs. Reverse Proxy
+A forward proxy, often simply called a proxy, proxy server, or web proxy, is a server that sits in front of a group of client machines. When those computers make requests to sites and services on the Internet, the proxy server intercepts those requests and communicates with web servers on behalf of those clients, like a middleman.
+- Protect identity online: in some cases, regular Internet users simply desire increased anonymity online, but in other cases, Internet users live in places where the government can impose serious consequences to political dissidents. Criticizing the government in a web forum or on social media can lead to fines or imprisonment for these users. If one of these dissidents uses a forward proxy to connect to a website where they post politically sensitive comments, the IP address used to post the comments will be harder to trace back to the dissident. Only the IP address of the proxy server will be visible.
+- Avoid institutional browsing restrictions: some governments, schools, and other organizations use firewalls to give their users access to a limited version of the Internet. A forward proxy can be used to get around these restrictions, as they let the user connect to the proxy rather than directly to the sites they are visiting.
+- Block access to certain content:  proxies can also be set up to block a group of users from accessing certain sites. For example, a school network might be configured to connect to the web through a proxy which enables content filtering rules, refusing to forward responses from Facebook and other social media sites.
+
+A reverse proxy is a server that sits in front of web servers and forwards client (e.g. web browser) requests to those web servers. Reverse proxies are typically implemented to help increase security, performance, and reliability.
+- Load balancing - A popular website that gets millions of users every day may not be able to handle all of its incoming site traffic with a single origin server. Instead, the site can be distributed among a pool of different servers, all handling requests for the same site. In this case, a reverse proxy can provide a load balancing solution which will distribute the incoming traffic evenly among the different servers to prevent any single server from becoming overloaded. In the event that a server fails completely, other servers can step up to handle the traffic.
+- Protection from attacks - With a reverse proxy in place, a web site or service never needs to reveal the IP address of their origin server(s). This makes it much harder for attackers to leverage a targeted attack against them, such as a DDoS attack. Instead the attackers will only be able to target the reverse proxy, which will have tighter security and more resources to fend off a cyber attack.
+- Global Server Load Balancing (GSLB) - In this form of load balancing, a website can be distributed on several servers around the globe and the reverse proxy will send clients to the server that's geographically closest to them. This decreases the distances that requests and responses need to travel, minimizing load times.
+- Caching - A reverse proxy can also cache content, resulting in faster performance. For example, if a user in Paris visits a reverse-proxied website with web servers in Los Angeles, the user might actually connect to a local reverse proxy server in Paris, which will then have to communicate with an origin server in L.A. The proxy server can then cache (or temporarily save) the response data. Subsequent Parisian users who browse the site will then get the locally cached version from the Parisian reverse proxy server, resulting in much faster performance.
+- SSL encryption - Encrypting and decrypting SSL (or TLS) communications for each client can be computationally expensive for an origin server. A reverse proxy can be configured to decrypt all incoming requests and encrypt all outgoing responses, freeing up valuable resources on the origin server.
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/47757441/226172537-9465e191-ac6a-4ba0-a3cb-b85986527234.jpg" width="570">
+</p>
+
+### Why is it called 'reversed' proxy?
+While a forward proxy proxies on **behalf of clients** (or requesting hosts), a reverse proxy proxies **on behalf of servers**. In forward we protect the clients, while in reverse, we're protecting the servers.
+
+### Forward Proxy vs VPN
+A VPN and proxy server both mask the IP address. But a VPN will also encrypt the data you send and receive, something that a proxy server doesn't do. If you are already using a VPN, then, connecting to a website or app through a proxy server would be an unnecessary step.

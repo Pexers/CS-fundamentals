@@ -84,6 +84,8 @@ COPY ./ /usr/src/app
 ENTRYPOINT ["node", "server.js"]
 ```
 
+Take a look at the official [docs](https://github.com/docker-library/official-images) to find out about the best practices when writing a Dockerfile.
+
 #### Multi-stage builds
 One of the most challenging things about building images is keeping the image size down. Each `RUN`, `COPY`, and `ADD` instruction in the Dockerfile adds a layer to the image, and you need to remember to clean up any artifacts you don't need before moving on to the next layer.
 

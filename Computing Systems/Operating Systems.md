@@ -13,38 +13,6 @@ Ubuntu, Debian, Alpine, Fedora, CentOS, etc.
 
 TODO: Pros & Cons of each, when to use them?
 
-### Privileges and permissions
-TODO:
-Using `sudo`, which stands for "super user do", allows regular users to run programs with the security privileges of the superuser or root. This list can be displayed using ...
-
-File permissions:
-- **r**: the read permission.
-- **w**: the write permission.
-- **x**: the execute permission.
-- ``---``: means no permissions have been granted at all.
-
-On each line, the first character identifies the type of entry that is being listed. If it is a dash (`-`) it is a file. If it is the letter `d`, it is a directory. The next nine characters represent the settings for the three sets of permissions.
-```sh
-$ ls -l
-drwxrwxr-x  29  root  admin  928 Mar 10 17:09 Applications
-drwxr-xr-x  69  root  wheel 2208 Mar 10 12:20 Library
-drwxr-xr-x@ 10  root  wheel  320 Oct 18 13:36 System
-drwxr-xr-x  5   root  admin  160 Mar 3  10:08 Users
-drwxr-xr-x  3   root  wheel   96 Mar 10 23:57 Volumes
-drwxr-xr-x@ 39  root  wheel 1248 Oct 18 13:36 bin
-dr-xr-xr-x  4   root  wheel 4661 Mar 10 23:57 dev
-lrwxr-xr-x@ 1   root  wheel   11 Oct 18 13:36 etc -> private/etc
-```
-- _First three characters_: show the permissions for the user who owns the file (user permissions).
-- _Middle three characters_: show the permissions for members of the file's group (group permissions).
-- _Last three characters_: show the permissions for anyone not in the first two categories (other permissions).
-
-Who can we set the permissions for:
-- **User (u)**: the owner of the file.
-- **Group (g)**: the members of the group the file belongs to.
-- **Others (o)**: the people not governed by the `u` and `g` permissions.
-- **All (a)**: all of the above.
-
 ### Linux CLI cheatsheet
 _Directory Operations_
 ```sh
@@ -56,68 +24,42 @@ $ mkdir -p PATH/TO/DIR  # Make all missing directories of path
 $ rm DIR  # Only works for empty directories
 $ rm -rf DIR  # Remove contents recursively [-r] with force [-f] (never prompts questions)
 
-# Rename directory
-$ mv DIR DIR_NEW_NAME
-
-# Change directory
-$ cd  # Navigate to home directory
-$ cd ~  # The same as the previous one
-$ cd ..  # Go up a directory
-$ cd DIR  # Change directory
-$ cd /DIR1/DIR2  # Change to any other path
-
 # Listing files
-$ ls -lsht  # Listing format [-l], print file size [-s], human-readable [-h], sort by modification time [-t]
+$ ls -lasth  # Listing format [-l], all files [-a], print file size [-s], sort by modification time [-t], human-readable sizes [-h]
 
 # Show path of current directory
 $ pwd
 ```
-_File Operations_
+_System operations_
 ```sh
-# Create empty file
-$ touch FILE
+# Gives a list of all past commands typed in the current terminal session
+$ history
 
-# Delete file
-$ rm FILE
+# Disk usage analysis
+$ du -s -h PATH  # Summarize [-s] human readable [-h] disk usage
+$ df -h # See system usage distribution
+$ ncdu  # See what directories are using disk space
 
-# Rename file
-$ mv FILE FILE_NEW_NAME
+# Display hostname of the system
+$ hostname
 
-# Move file to a new location
-$ mv FILE PATH
+# Check NTP (Network Time Protocol) server clock time synchronization
+$ timedatectl
 
-# Copy file
-$ cp FILE1 FILE2
+# Shows information of all logged in users
+$ finger [USERNAME]
 
-# Edit a file using VIM
-# Enter letter [i] to switch from Command Mode to Insert Mode
-# Enter letter [v] to switch from Command Mode to Visual Mode
-# Enter [ESC] to switch back to Command Mode
-# Copy/Paste: copy text using cursor selection / paste text by clicking on the mouse wheel 
-$ vim FILE
-:wq  # Write (save) and Quit
-:q!  # Quit without saving
+# List all environment variables
+$ env
 
-# Display file content
-$ cat FILE
+# Remove environment variable
+$ unset VARIABLE
 
-# Join FILE1 and FILE2 and store the output in FILE3
-$ cat FILE1 FILE2 > FILE3
+# List all alises. Aliases are like custom shortcuts used to represent a command
+$ alias
 
-# Get type of file
-$ file FILE
-
-# Zip operations
-$ zip -R ZIP_NAME.zip FILE1 DIR1 FILE2 DIR2
-$ unzip ZIP_NAME.zip -d PATH
-```
-TODO: _File permissions_
-```sh
-# Allows to change the permissions of a file: Read, Write, Execute. Stands for Change Mode
-$ chmod CODE FILE
-
-# Allows to change the owner of a given file. Stands for Change Ownership
-$ chown USER FILE
+# List users
+$ cat /etc/passwd
 ```
 _Networking_
 ```sh
@@ -160,49 +102,6 @@ $ host IP_ADDRESS
 # Used to view and add content to the kernel's Address Resolution Protocol (ARP) table
 $ arp -n
 ```
-_System operations_
-```sh
-# Clears the terminal
-$ clear
-
-# Gives a list of all past commands typed in the current terminal session
-$ history
-
-# Disk usage analysis
-$ du -s -h PATH  # Summarize [-s] human readable [-h] disk usage
-$ df -h # See system usage distribution
-$ ncdu  # See what directories are using disk space
-
-# Display hostname of the system
-$ hostname
-
-# Check NTP (Network Time Protocol) server clock time synchronization
-$ timedatectl
-
-# Shows information of all logged in users
-$ finger [USERNAME]
-
-# List all environment variables
-$ env
-
-# Display value of environment variable
-$ echo $VARIABLE
-
-# Set value of environment variable
-$ export VARIABLE=VALUE
-
-# Create a new environment variable
-$ VARIABLE=VALUE
-
-# Remove environment variable
-$ unset VARIABLE
-
-# List all alises. Aliases are like custom shortcuts used to represent a command
-$ alias
-
-# List users
-$ cat /etc/passwd
-```
 _User management_
 ```sh
 # Add a new user
@@ -215,6 +114,24 @@ $ sudo passwd USERNAME
 $ usermod -a -G sudo USERNAME  # Append [-a] non-root user to sudoers group [-G]
 $ echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers  # Disable password request for sudoers group
 ```
+#### APT Package manager
+Alternatives to APT (Advanced Package Tool): YUM, Pacman, DNF.
+```sh
+# Managing system packages
+# update: updates the package index that holds records of available packages from the repositories enabled in the system
+# upgrade: upgrades the actual packages installed on the system
+# autoclean: clear out the local repository of retrieved package files
+# autoremove: remove packages that were automatically installed to satisfy dependencies for some other package and that are no longer needed
+$ apt-get update; apt-get upgrade -y; apt-get autoclean; apt-get autoremove -y
+
+$ apt install PACKAGE # Install package
+$ apt remove PACKAGE  # Uninstall package, but it may leave some configuration files behind
+$ apt purge PACKAGE   # Remove the package including all configuration files
+
+# List packages
+$ apt list --installed  # List installed packages
+$ apt list --upgradeable  # List upgradeable packages
+```
 #### OpenSSH
 - Generated key pairs should be placed inside the `~/.ssh` directory.
 - The host machine should be configured with public key inside the `~/.ssh/authorized_keys` file.
@@ -223,10 +140,6 @@ $ echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers  # Disable password reques
 $ ssh USERNAME@HOSTNAME
 $ ssh USERNAME@HOSTNAME -i PRIVATE_KEY_FILE  # Provide an SSH private key
 $ sshpass -p PASSWORD ssh USERNAME@HOSTNAME  # Use SSH Pass to authenticate using a password (not the best option)
-
-# Set one of the following permissions to the private key file
-$ chmod 400 PRIVATE_KEY_FILE  # Read permission
-$ chmod 600 PRIVATE_KEY_FILE  # Read-Write permission
 
 # Generate SSH key pair. Place them inside the '~/.ssh/' directory
 $ ssh-keygen  # Defaults to RSA
@@ -243,9 +156,6 @@ $ ssh-copy-id -i PUBLIC_KEY_FILE USERNAME@HOSTNAME  # Log in to the host, copy a
 $ scp USERNAME@HOSTNAME:~/REMOTE/FILE LOCAL_FILE  # Copy file from remote to local
 $ scp LOCAL_FILE USERNAME@HOSTNAME:~/REMOTE/DIR  # Copy file from local to remote
 $ scp -r LOCAL_DIR USERNAME@HOSTNAME:~/REMOTE/DIR  # Copy directory from local to remote
-
-# Close the SSH connection
-$ exit
 
 # Install OpenSSH
 $ apt install openssh-server  # Listens for incoming connection requests (usually on TCP port 22 on the host system) and responds to them
@@ -274,26 +184,6 @@ $ source FILE
 
 # Show executable path of a command
 $ which COMMAND
-```
-#### APT Package manager
-Alternatives to APT (Advanced Package Tool): YUM, Pacman, DNF.
-```sh
-# Update package index. Holds records of available packages from the repositories enabled in the system
-$ apt update
-
-# Install package
-$ apt install PACKAGE
-
-# Uninstall package
-$ apt remove PACKAGE  # Uninstalls the package, but it may leave some configuration files behind
-$ apt purge PACKAGE  # Remove the package including all configuration files
-
-# Upgrade installed package
-$ apt upgrade
-
-# List packages
-$ apt list --installed  # List installed packages
-$ apt list --upgradeable  # List upgradeable packages
 ```
 #### systemd
 _Manage services_
@@ -366,7 +256,7 @@ Prefer sh for the following reasons:
 
 There are advantages to using bash as well. Its features make programming more convenient and similar to programming in other modern programming languages. These include things like scoped local variables and arrays. Plain sh is a very minimalistic programming language.
 
-TODO: follow this guide by Google https://google.github.io/styleguide/shellguide.html
+Follow this guide by Google https://google.github.io/styleguide/shellguide.html
 
 #### Exit status
 - `0`: an exit status of 0 is the best possible scenario, generally speaking. It tells you that your latest command or script executed successfully.

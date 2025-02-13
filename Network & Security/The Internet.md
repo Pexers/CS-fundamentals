@@ -35,3 +35,34 @@ The main difference between public and private IP addresses is how far they reac
 |Not free.|Free.|
 |Any number not included in the reserved private IP address range.</br>Example: 8.8.8.8|Class A: 10.0.0.0 — 10.255.255.255</br>Class B: 172.16.0.0 — 172.31.255.255</br>Class C: 192.168.0.0 — 192.168.255.255</br>Example: 10.11.12.13|
 
+## URI vs URL vs Domain
+- **URI** (Uniform Resource Identifier): any identifier of a specific resource of the internet. Like a page, or book, or a document.
+- **URL** (Uniform Resource Locator): a type of URI, that not only identifies a resource but also provides a way to access it through a scheme (protocol).
+- **Domain**: the core part of a web address that identifies the website. It serves as an easy-to-remember alias for an IP address.
+
+_Example_
+```sh
+# URI
+mailto:someone@example.com
+
+# URL
+https://www.example.com.pt
+sftp://username@hostname:/path/to/file
+file://C:/Users/Username/Documents/file.txt # Local file address
+
+# Domain
+www.example.com.pt
+```
+```sh
+# URL 
+{scheme}://{sub-domain}.{second-level-domain}.{top-level-domain}.{country-code-top-level-domain}:{port}/{path}
+```
+
+1. Scheme/Protocol/Method: `HTTPS`, `SFTP`, `MTQP`, etc.
+2. [optional] Sub-domain: `www`
+3. Second-level domain (SLD): `example`, `google`
+4. Top-level domain (TLD): `.com`, `.dev`
+5. [optional] Country code top-level domain: `.pt`, `.de`
+    - Some countries have multiple TLDs for different purposes: `gov.pt` (government), `edu.pt` (educational institutions)
+6. Port: can be any port, but most commons are `80` for HTTP, `443` for HTTPS
+7. Path: path to the web resource
