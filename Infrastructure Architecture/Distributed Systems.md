@@ -1,4 +1,4 @@
-> **Note**  
+> [!NOTE]  
 > Work in progress.
 
 Fault Tolerance — a cluster of ten machines across two data centers is inherently more fault-tolerant than a single machine. Even if one data center catches on fire, your application would still work.

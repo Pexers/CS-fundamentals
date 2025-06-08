@@ -1,2 +1,2 @@
-> **Note**  
+> [!NOTE]  
 > Work in progress.

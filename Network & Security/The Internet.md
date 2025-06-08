@@ -1,4 +1,4 @@
-> **Note**  
+> [!NOTE]  
 > Work in progress.
 
 The Internet is a vast, sprawling collection of networks that connect to each other. In fact, the word "Internet" could be said to come from this concept: interconnected networks.
@@ -25,15 +25,15 @@ The main difference between public and private IP addresses is how far they reac
   <img src="https://user-images.githubusercontent.com/47757441/222959414-c82ad031-6768-4665-aa87-17617ea7f84f.png" width="400">
 </p>
 
-|Public IP address|Private IP address|
-|---|---|
-|External (global) reach.|Internal (local) reach.|
-|Used for communicating outside your private network, over the internet.|Used for communicating within your private network, with other devices in your home or office.|
-|A unique numeric code never reused by other devices.|A non-unique numeric code that may be reused by other devices in other private networks.|
-|Found by Googling: "What is my IP address?".|Found via your device's internal settings.|
-|Assigned and controlled by your internet service provider.|Assigned to your specific device within a private network.|
-|Not free.|Free.|
-|Any number not included in the reserved private IP address range.</br>Example: 8.8.8.8|Class A: 10.0.0.0 — 10.255.255.255</br>Class B: 172.16.0.0 — 172.31.255.255</br>Class C: 192.168.0.0 — 192.168.255.255</br>Example: 10.11.12.13|
+| Public IP address                                                                      | Private IP address                                                                                                                              |
+| -------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| External (global) reach.                                                               | Internal (local) reach.                                                                                                                         |
+| Used for communicating outside your private network, over the internet.                | Used for communicating within your private network, with other devices in your home or office.                                                  |
+| A unique numeric code never reused by other devices.                                   | A non-unique numeric code that may be reused by other devices in other private networks.                                                        |
+| Found by Googling: "What is my IP address?".                                           | Found via your device's internal settings.                                                                                                      |
+| Assigned and controlled by your internet service provider.                             | Assigned to your specific device within a private network.                                                                                      |
+| Not free.                                                                              | Free.                                                                                                                                           |
+| Any number not included in the reserved private IP address range.</br>Example: 8.8.8.8 | Class A: 10.0.0.0 — 10.255.255.255</br>Class B: 172.16.0.0 — 172.31.255.255</br>Class C: 192.168.0.0 — 192.168.255.255</br>Example: 10.11.12.13 |
 
 ## URI vs URL vs Domain
 - **URI** (Uniform Resource Identifier): any identifier of a specific resource of the internet. Like a page, or book, or a document.

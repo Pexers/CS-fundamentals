@@ -1,4 +1,4 @@
-> **Note**  
+> [!NOTE]  
 > Work in progress.
 
 CPU (Central Processing Unit)

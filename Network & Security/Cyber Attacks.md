@@ -1,4 +1,4 @@
-> **Note**  
+> [!NOTE]  
 > Work in progress.
 
 A cyberattack is any offensive maneuver that targets computer information systems, computer networks, infrastructures, personal computer devices, or smartphones.

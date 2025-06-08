@@ -1,4 +1,4 @@
-> **Note**  
+> [!NOTE]  
 > Work in progress.
 
 XML , JSON , BSON, YAML , MessagePack, protobuf, .conf?
