@@ -178,6 +178,9 @@ _Manage Pods and Services_
 # Get the documentation for pod manifests
 $ kubectl explain TYPE NAME
 
+# List all namespaces
+$ kubectl get namespaces
+
 # List all pods in the namespace
 $ kubectl get pods
 

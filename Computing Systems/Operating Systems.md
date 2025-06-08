@@ -7,11 +7,12 @@
 Linux is not Unix, but it is a Unix-like operating system. Linux system is derived from Unix and it is a continuation of the basis of Unix design. Linux distributions are the most famous and healthiest example of direct Unix derivatives.
 
 ### Distributions
-
-Given that Linux is open-source, that are many Linux Distributions (distros):
-Ubuntu, Debian, Alpine, Fedora, CentOS, etc.
-
-TODO: Pros & Cons of each, when to use them?
+Linux is open-source, so there are many different Linux distributions ("distros"), each tailored for specific use cases, preferences, or hardware. Some of the most popular distributions include:
+- Ubuntu: User-friendly, great community support, widely used for desktops and servers.
+- Debian: Known for stability and reliability; the base for many other distros (including Ubuntu).
+- Alpine: Lightweight and security-focused, commonly used in containers and minimal environments.
+- Fedora: Features the latest open-source technologies, upstream for Red Hat Enterprise Linux.
+- CentOS: Previously a free, enterprise-class distro based on Red Hat; now replaced by CentOS Stream.
 
 ### Linux CLI cheatsheet
 _Directory Operations_
@@ -115,7 +116,7 @@ $ usermod -a -G sudo USERNAME  # Append [-a] non-root user to sudoers group [-G]
 $ echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers  # Disable password request for sudoers group
 ```
 #### APT Package manager
-Alternatives to APT (Advanced Package Tool): YUM, Pacman, DNF.
+Some alternatives to APT (Advanced Package Tool) include: YUM, Pacman, DNF.
 ```sh
 # Managing system packages
 # update: updates the package index that holds records of available packages from the repositories enabled in the system
@@ -132,6 +133,26 @@ $ apt purge PACKAGE   # Remove the package including all configuration files
 $ apt list --installed  # List installed packages
 $ apt list --upgradeable  # List upgradeable packages
 ```
+
+**UnattendedUpgrades** is enabled by default in Ubuntu systems for security updates, starting from 16.0 LTS and later.
+- Checking if UnattendedUpgrades is enabled on your system.
+    1. Check the service status.
+        ```sh
+        $ systemctl status unattended-upgrades
+        ```
+    2. Check the `/etc/apt/apt.conf.d/20auto-upgrades` configuration file.
+        ```conf
+        APT::Periodic::Update-Package-Lists "1";
+        APT::Periodic::Unattended-Upgrade "1";
+        ```
+- Useful options from the `/etc/apt/apt.conf.d/50unattended-upgrades` configuration file that can be enabled.
+    ```conf
+    Unattended-Upgrade::Remove-Unused-Kernel-Packages "true";
+    Unattended-Upgrade::Remove-Unused-Dependencies "true";
+    Unattended-Upgrade::Automatic-Reboot "true";
+    Unattended-Upgrade::Automatic-Reboot-Time "00:00";
+    ```
+
 #### OpenSSH
 - Generated key pairs should be placed inside the `~/.ssh` directory.
 - The host machine should be configured with public key inside the `~/.ssh/authorized_keys` file.
@@ -162,25 +183,19 @@ $ apt install openssh-server  # Listens for incoming connection requests (usuall
 $ apt install openssh-client  # Establishes secure and authenticated SSH connections to SSH servers
 ```
 #### `$PATH` environment variable
-The `$PATH` environment variable is a colon-delimited list of directories that tells the shell which directories to search for executable files.
-```sh
-# Check what directories are in $PATH
-$ echo $PATH
+The `$PATH` environment variable contains a colon-delimited list of directories that tells the shell which directories to search for executable files when you enter a command. The shell checks directories in order from left to right.
 
+```sh
 # Adding a directory to $PATH. WARNING: only valid in the current shell session
 $ export PATH="$HOME/bin:$PATH"
 
 # Adding a directory executable permanently
-$ vim /.profile
-$ vim /.bashrc
-$ vim /etc/environment  # Ubuntu
-$ vim ~/.zshrc      # Mac.
-$ vim /etc/paths.d  # Mac. Will never be affected by system upgrades
-$ vim /etc/paths    # Mac. Will be modified and/or replaced by system upgrades (use paths.d instead)
-$ vim /etc/profile  # Add 'export PATH="$HOME/bin:$PATH"' to be executed every time the shell runs (not the best solution)
-
-# Makes changes effective (or restart shell)
-$ source FILE
+$ vim ~/.profile         # User-specific, works for most shells
+$ vim ~/.bashrc          # For bash users
+$ vim ~/.zshrc           # For zsh users (macOS default)
+$ sudo vim /etc/environment   # System-wide (Ubuntu)
+$ sudo vim /etc/paths.d/my_custom_path  # macOS, safest for system-wide changes
+$ sudo vim /etc/paths         # macOS, but may be overwritten by system updates
 
 # Show executable path of a command
 $ which COMMAND

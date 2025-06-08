@@ -1,7 +1,7 @@
 # Computer Science Fundamentals 📖💻
 A sum up of fundamental concepts in the fields of **Computer Science**.
 
-> **Note**  
+> [!NOTE]
 > - Code snippets are written in **Java** programming language.
 
 ## Table of Contents

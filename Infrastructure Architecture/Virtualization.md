@@ -231,10 +231,11 @@ networks:
 _Manage images_
 ```sh
 # Build and tag an image from a Dockerfile
+# --progress=plain
 $ docker build -t IMAGE[:TAG] DIRECTORY
 
-# Associate image with Docker Hub repository
-$ docker image tag IMAGE[:TAG] USERNAME/REPOSITORY
+# Tag existing images
+$ docker image tag IMAGE[:TAG] NEW_IMAGE[:TAG]
 
 # Push an image to a repository on DockerHub
 $ docker push USERNAME/REPOSITORY
@@ -361,3 +362,18 @@ $ docker buildx use multi-arch-builder
 # Build, Tag and Push a Docker image for different platforms
 $ docker buildx build --tag IMAGE --push ./ --platform linux/amd64,linux/arm64
 ```
+
+## Python Virtual Environment
+1. Install required packages
+    ```sh
+    $ brew install virtualenv virtualenvwrapper
+    ```
+2. Add the following to your `~/zshrc` or `~/bash_profile` file.
+   ```
+   source virtualenvwrapper.sh
+   ```
+3. Create and activate the virtual environment
+    ```sh
+    $ mkvirtualenv venv
+    $ workon venv
+    ```

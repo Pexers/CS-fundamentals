@@ -6,8 +6,6 @@ The application's success is inevitably dependent on the software engineers' wil
 
 There are many different software development principles that can help in creating an application by maintaining the code clean. These principles should be constantly implied by software developers from time to time for the seamless evolvement of projects.
 
-TODO: Separation of Concerns (SoC)
-
 ## 1. SOLID
 The broad goal of the SOLID principles is to reduce dependencies so that engineers can change one area of software without impacting others. Additionally, they're intended to make designs easier to understand, maintain, and extend. Ultimately, using these design principles makes it easier for software engineers to avoid issues and to build adaptive, effective, and agile software.
 
@@ -21,9 +19,15 @@ It is as simple as it sounds, meaning that every class or module should come wit
 5. **Dependency Inversion**. States that classes should depend upon interfaces or abstract classes, instead of concrete classes and functions. In other words,high level modules should not depend upon low level modules, both should depend on abstractions. If you consequently apply the Open-Closed Principle and the LSP to your code, it will also follow the DIP.
 
 ## 2. DRY - Don't Repeat Yourself
-Popularized by the book "_The Pragmatic Programmer_", the DRY principle states that "_every piece of knowledge must have a single, unambiguous, authoritative representation within a system_." 
+Popularized by the book "_The Pragmatic Programmer_", the DRY principle states that "_every piece of knowledge must have a single, unambiguous, authoritative representation within a system_."
 
-The goal of the DRY principle is to lower technical debt by eliminating redundancies in process and logic whenever possible.
+The main goal of DRY is to reduce repetition of code, logic, and data, thereby lowering technical debt and making systems easier to maintain. When code is duplicated, bugs and inconsistencies are more likely to occur, and changes become harder to manage.
+
+**How to apply DRY:**
+- Extract repeated code into functions, classes, or modules.
+- Use configuration files or constants for repeated values.
+- Leverage frameworks and libraries to avoid reinventing the wheel.
+- Refactor similar logic into reusable components.
 
 ## 3. KISS - Keep It Simple, Stupid
 The KISS principle is about striving for simplicity. Modern programming languages, frameworks and APIs have powerful means to create sophisticated solutions for various kinds of problems. Sometimes developers might feel tempted to write "clever" solutions that use all these complex features. The KISS principle states that a solution is better when it uses less inheritance, less polymorphism, fewer classes, etc.
@@ -40,3 +44,10 @@ This is a very general principle, so there is a large variety of possible strate
 The YAGNI principle states that features should only be added when required. It helps developers avoid wasted effort on features that are assumed to be needed at some point in the future.
 
 The main difference compared to KISS is that YAGNI focuses on removing unnecessary functionality and logic, while KISS focuses on avoiding complexity for simplicity reasons.
+
+## 5. SoC - Separation of Concerns
+Separation of Concerns (SoC) is a fundamental design principle that advocates for organizing a software system so that each part addresses a distinct concern or responsibility. A "concern" is any piece of interest or focus in a program—such as data storage, user interface, business logic, or security.
+
+By separating concerns, you make your codebase easier to understand, maintain, and extend. Changes in one part of the system are less likely to impact others, reducing the risk of bugs and making collaboration easier. For example, in a web application, keeping the logic for handling HTTP requests separate from database access logic is an application of SoC.
+
+Common ways to implement SoC include using layers (such as presentation, business, and data layers), modules, or services that each handle a specific aspect of the application.

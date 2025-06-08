@@ -14,36 +14,55 @@ In Git, the workflow is mainly divided into three areas:
 - **Staging Area or Index**: where the files from the working area are staged and snapshots are added. It's how Git knows what change are going to be made between the current commit and the new one (a commit is a snapshot in time).
 - **Git Repository**: It is basically where you perform all the changes that need to be made i.e. perform commits to branch, checkout branch, make changes etc.
 
-#### Gitflow
-TODO:
-The Git Flow is the most known workflow on this list. It was created by Vincent Driessen in 2010 and it is based in two main branches with infinite lifetime:
+## Commit message convention
+Following the Conventional Commits Specification (https://www.conventionalcommits.org/)
+The commit message should be structured as follows:
+```sh
+———————————————————————————————————————
+<type>[optional scope]: <description>
+<BLANK_LINE>
+[optional body]
+<BLANK_LINE>
+[optional footer(s)]
+———————————————————————————————————————
+```
 
-- `master`: this branch contains production code. All development code is merged into master in sometime.
-- `develop`: this branch contains pre-production code. When the features are finished then they are merged into develop.
+Find an example below:
+```sh
+———————————————————————————————————————
+feat[auth]: Add JWT token expiration handling
+Ensure that tokens expire after 1 hour and implement auto-refresh.
+Fixes: #123
+Signed-off-by: Random Guy <random@example.com>
+———————————————————————————————————————
+```
 
-During the development cycle, a variety of supporting branches are used:
+Types (based on the Angular convention)
+- `feat`: A new feature
+- `fix`: A bug fix/hotfix
+- `build`: Changes that affect the build system or external dependencies (e.g., upgrading dependencies, modifying build scripts)
+- `chore`: Routine changes that don’t affect the codebase directly (e.g., updating dependencies, maintenance tasks)
+- `ci`: Changes to CI/CD configuration files or scripts (e.g., GitHub Actions, Jenkins, Travis, CircleCI)
+- `docs`: Documentation updates (e.g., README, comments, inline documentation)
+- `style`: Code style changes (e.g., formatting, missing semicolons, white-space fixes) that do not affect functionality
+- `refactor`: Code refactoring without changing functionality (e.g., improving code structure, renaming variables)
+- `perf`: Performance improvements (e.g., optimizing loops, reducing memory usage)
+- `test`: Adding or modifying tests (e.g., unit tests, integration tests)
 
-- `feature-*`: feature branches are used to develop new features for the upcoming releases. May branch off from develop and must merge into develop.
-- `hotfix-*`: hotfix branches are necessary to act immediately upon an undesired status of master. May branch off from master and must merge into master and develop.
-- `release-*`: release branches support preparation of a new production release. They allow many minor bug to be fixed and preparation of meta-data for a release. May branch off from develop and must merge into master and develop.
 
 #### Daily Git Workflow
-1. Pull changes from master branch before start working on a new feature using `git pull`.
+1. Pull changes from main branch before start working on a new feature using `git pull`.
 2. See what changes were made using `git log` or `git show COMMIT_SHA` to see the details.
 3. Create a new branch for the feature using `git checkout -b BRANCH`.
 4. Develop feature.
 5. Stage and Commit changes without pushing.
-6. Pull from master branch into feature branch and Rebase feature branch using `git pull --git  ALIAS MASTER`.
+6. Pull from main branch into feature branch and Rebase feature branch using `git pull --git  ALIAS MAIN`.
 7. Push force to feature branch using `git push ALIAS BRANCH -f`.
 8.  - _option 1_:
-        - Pull from feature branch into master branch and Rebase master branch using `git pull --rebase ALIAS BRANCH`.
-        - Push to master branch using `git push`.
+        - Pull from feature branch into main branch and Rebase main branch using `git pull --rebase ALIAS BRANCH`.
+        - Push to main branch using `git push`.
     - _option 2_:
         - Create a Pull Request on a management tool, such as GitHub, so that it can be validated and merged into the code base.
-
-#### Best practices
-- Commit naming conventions
-- Version/Tag naming conventions
 
 ### Git CLI cheatsheet
 Some definitions:
@@ -59,7 +78,8 @@ $ git config --get init.defaultbranch  # Get specific configuration
 # Configure user information used across all local repositories
 $ git config --global user.name USERNAME
 $ git config --global user.email EMAIL
-$ git config --global core.editor EDITOR  # E.g.: "code --wait"
+$ git config --global core.editor EDITOR
+$ git config --global core.editor "code --wait" # Example for VS Code
 
 # Initialize a directory as a Git repository
 $ git init DIR
@@ -167,7 +187,8 @@ $ git pull --rebase ALIAS BRANCH  # Pull from BRANCH and Rebase on tracked branc
 $ git rebase BRANCH  # Rebase BRANCH
 $ git rebase  # Rebase tracked branch
 $ git rebase -i --root  # Rebase all commits in interactive mode
-$ git rebase -i HEAD~N # Used when squashing
+$ git rebase -i HEAD~N  # Used when squashing
+$ git rebase --abort  # Abort rebase process
 
 # Push local branch commits to the remote repository branch
 $ git push  # Push to tracked branch
@@ -195,17 +216,3 @@ $ git push --force
 # Allow for empty commits
 $ git commit --allow-empty -m "Empty commit"
 ```
-
-## Git flow
-Used for larger projects
-
----
-TODO:
-Git Pull Rebase vs Git Pull Merge:
-While both of these options will combine the changes fetched from your remote, the outcome will look very different in your Git history.
-Git pull merge is the default method for combining changes in Git, and will merge the unpublished changes with the published changes, resulting in a merge commit.
-With Git pull rebase, on the other hand, the unpublished changes will be reapplied on top of the published changes and no new commit will be added to your history.
-With this in mind, you can see that Git pull rebase will result in a linear and cleaner project history by removing the unneeded merge commit.
-We're going to walk you through how to perform a Git pull rebase using the CLI and the legendary cross-platform GitKraken Client.
-
-GitHub, GitLab
