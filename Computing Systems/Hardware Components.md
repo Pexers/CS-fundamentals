@@ -2,13 +2,7 @@
 
 Copyright &copy; 2025, Pexers (https://github.com/Pexers)
 
-> [!NOTE]
-> Work in progress.
-
 # Computer Hardware Components
-
-> **Note**  
-> This document provides an overview of essential computer hardware components and their functions.
 
 ## CPU (Central Processing Unit)
 The CPU is the primary component of a computer that performs most of the processing. Often referred to as the "brain" of the computer.
