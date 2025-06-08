@@ -2,8 +2,6 @@
 
 Copyright &copy; 2025, Pexers (https://github.com/Pexers)
 
-# Computer Hardware Components
-
 ## CPU (Central Processing Unit)
 The CPU is the primary component of a computer that performs most of the processing. Often referred to as the "brain" of the computer.
 
