@@ -1,6 +1,6 @@
 <h1 align='center'>Algorithms</h1>
 
-Copyright &copy; 2023, Pexers (https://github.com/Pexers)
+Copyright &copy; 2025, Pexers (https://github.com/Pexers)
 
 Algorithms are widely used throughout all areas of mathematics and computer science. An algorithm is a set of well-defined instructions to solve a particular problem. They are also used as specifications for performing data processing and play a major role in automated systems.
 
@@ -12,14 +12,14 @@ We can express it as the _best_, _average_, and _worst-case_ complexity of an al
 ### Time complexity
 It's hard to pin down the exact runtime of an algorithm. It depends on the speed of the processor, what else the computer is running, etc. So instead of talking about the runtime directly, we use the Big-O notation to talk about _how quickly the runtime grows_.
 
-|Notation<br><sup>:arrow_down:+Time</sup></br>|Meaning|Description|
-|:---:|:---:|---|
-|_O(1)_|Constant Time|The runtime is constant, regardless of the size of the input.<br/><sub>E.g. indexing an array, fetching from hash map given a key, returning a value from a function, etc.</sub>|
-|_O(log&nbsp;n)_&nbsp;[^1]|Logarithmic Time|The running time grows in proportion to the logarithm of the input size, meaning that the time barely increases as you exponentially increase the input. The time increases approximately by a constant amount when the number of input elements doubles.<br/><sub>E.g. binary search, finding largest/smallest number in a binary search tree, etc. |
-|_O(n)_|Linear Time|The time grows linearly with the number of input elements _n_. If _n_ doubles, the time approximately doubles too. "Approximately" because the time may also include components with lower complexity classes that are omitted in the notation.<br/><sub>E.g. forEach / map / reduce run through the entire collection, comparing two strings, checking for palindrome, etc.</sub>|
-|_O(n&nbsp;log&nbsp;n)_|Log-linear Time|A combination of linear and logarithmic complexity. Sorting algorithms that utilize a _divide-and-conquer_ strategy are _linearithmic_.<br/><sub>E.g. merge sort, heap sort, etc. |
-|_O(n<sup>2</sup>)_|Quadratic Time|The time grows linearly to the square of the number of input elements.<br/><sub>E.g. selection sort, bubble sort, insertion sort, {1.._n_} nested loops, etc.|
-|_O(n!)_|Factorial Time|Any time _n_ increases by 1, the running time increases by a factor of _n_.<br/><sub>E.g. solving the traveling salesman problem via brute-force, generating all unrestricted permutations of a partially ordered set, etc.|
+| Notation<br><sup>:arrow_down:+Time</sup></br> |     Meaning      | Description                                                                                                                                                                                                                                                                                                                                                                        |
+| :-------------------------------------------: | :--------------: | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|                    _O(1)_                     |  Constant Time   | The runtime is constant, regardless of the size of the input.<br/><sub>E.g. indexing an array, fetching from hash map given a key, returning a value from a function, etc.</sub>                                                                                                                                                                                                   |
+|           _O(log&nbsp;n)_&nbsp;[^1]           | Logarithmic Time | The running time grows in proportion to the logarithm of the input size, meaning that the time barely increases as you exponentially increase the input. The time increases approximately by a constant amount when the number of input elements doubles.<br/><sub>E.g. binary search, finding largest/smallest number in a binary search tree, etc.                               |
+|                    _O(n)_                     |   Linear Time    | The time grows linearly with the number of input elements _n_. If _n_ doubles, the time approximately doubles too. "Approximately" because the time may also include components with lower complexity classes that are omitted in the notation.<br/><sub>E.g. forEach / map / reduce run through the entire collection, comparing two strings, checking for palindrome, etc.</sub> |
+|            _O(n&nbsp;log&nbsp;n)_             | Log-linear Time  | A combination of linear and logarithmic complexity. Sorting algorithms that utilize a _divide-and-conquer_ strategy are _linearithmic_.<br/><sub>E.g. merge sort, heap sort, etc.                                                                                                                                                                                                  |
+|              _O(n<sup>2</sup>)_               |  Quadratic Time  | The time grows linearly to the square of the number of input elements.<br/><sub>E.g. selection sort, bubble sort, insertion sort, {1.._n_} nested loops, etc.                                                                                                                                                                                                                      |
+|                    _O(n!)_                    |  Factorial Time  | Any time _n_ increases by 1, the running time increases by a factor of _n_.<br/><sub>E.g. solving the traveling salesman problem via brute-force, generating all unrestricted permutations of a partially ordered set, etc.                                                                                                                                                        |
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/47757441/209826182-d619af3d-45ec-477b-87a5-a4e157d215e6.png" width="500">
@@ -75,16 +75,16 @@ public static void printTwoArrays(int[] arr1, int[] arr2) {
 Sometimes we want to optimize code for using less memory, in addition to using less runtime. Talking about space complexity, or memory cost, is very similar to talking about time cost. We simply look at the total size of any new variables we're allocating with respect to the size of the input.
 
 #### _Calculation_
-|Data&nbsp;type<br><sup>:arrow_down:+Size</sup></br>|Size|Description|
-|:---:|---|---|
-|`boolean`|1 bit|Stores true or false values.|
-|`byte`|1 byte|Stores whole numbers from -128 to 127.|
-|`char`|2 bytes|Stores a single character/letter or ASCII values.|
-|`short`|2 bytes|Stores whole numbers from `-32,768` to `32,767`.|
-|`int`|4 bytes|Stores whole numbers from `-2,147,483,648` to `2,147,483,647`.|
-|`float`|4 bytes|Stores fractional numbers. Sufficient for storing 6 to 7 decimal digits.|
-|`long`|8 bytes|Stores whole numbers from `-9,223,372,036,854,775,808` to `9,223,372,036,854,775,807`.|
-|`double`|8 bytes|Stores fractional numbers. Sufficient for storing 15 decimal digits.|
+| Data&nbsp;type<br><sup>:arrow_down:+Size</sup></br> | Size    | Description                                                                            |
+| :-------------------------------------------------: | ------- | -------------------------------------------------------------------------------------- |
+|                      `boolean`                      | 1 bit   | Stores true or false values.                                                           |
+|                       `byte`                        | 1 byte  | Stores whole numbers from -128 to 127.                                                 |
+|                       `char`                        | 2 bytes | Stores a single character/letter or ASCII values.                                      |
+|                       `short`                       | 2 bytes | Stores whole numbers from `-32,768` to `32,767`.                                       |
+|                        `int`                        | 4 bytes | Stores whole numbers from `-2,147,483,648` to `2,147,483,647`.                         |
+|                       `float`                       | 4 bytes | Stores fractional numbers. Sufficient for storing 6 to 7 decimal digits.               |
+|                       `long`                        | 8 bytes | Stores whole numbers from `-9,223,372,036,854,775,808` to `9,223,372,036,854,775,807`. |
+|                      `double`                       | 8 bytes | Stores fractional numbers. Sufficient for storing 15 decimal digits.                   |
 - **Dropping constants**. The below code snippet has a total memory usage of _O(4*n + 4 + 4 + 4)_, but we simplify it to _O(n)_.
 ```java
 public static int sumArray(int[] array) {  // 4B*n
@@ -183,9 +183,9 @@ BFS uses _Queue_ data structure for finding the shortest path, so it works on th
 
 The worst-case time complexity can happen when we have an unbalanced tree, where we start from the root node and may end up searching the tree until the farthest leaf node.
 
-|(1)|(2)|(3)|(4)|
-|:---:|:---:|:---:|:---:|
-|<img src="https://user-images.githubusercontent.com/47757441/210258444-7ad2bb4f-2c1b-4ba1-ba67-36df5682b72c.png" width="200">|<img src="https://user-images.githubusercontent.com/47757441/210258446-14278afb-1b46-44b5-847c-ec13f38f8ae4.png" width="200">|<img src="https://user-images.githubusercontent.com/47757441/210258449-f3339634-bdd3-48bb-9c35-708a8eb5bf41.png" width="200">|<img src="https://user-images.githubusercontent.com/47757441/210258440-00be8878-4789-40b4-b758-d2ebcc7d8953.png" width="200">|
+|                                                              (1)                                                              |                                                              (2)                                                              |                                                              (3)                                                              |                                                              (4)                                                              |
+| :---------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------: |
+| <img src="https://user-images.githubusercontent.com/47757441/210258444-7ad2bb4f-2c1b-4ba1-ba67-36df5682b72c.png" width="200"> | <img src="https://user-images.githubusercontent.com/47757441/210258446-14278afb-1b46-44b5-847c-ec13f38f8ae4.png" width="200"> | <img src="https://user-images.githubusercontent.com/47757441/210258449-f3339634-bdd3-48bb-9c35-708a8eb5bf41.png" width="200"> | <img src="https://user-images.githubusercontent.com/47757441/210258440-00be8878-4789-40b4-b758-d2ebcc7d8953.png" width="200"> |
 
 _Node class_
 ```java
@@ -229,9 +229,9 @@ DFS uses _Stack_ data structure, so it works on the concept of LIFO. When the ta
 
 The worst-case time complexity can happen when we have an unbalanced tree, where we start from the root node and may end up searching the tree until the farthest leaf node.
 
-|(1)|(2)|(3)|(4)|(5)|
-|:---:|:---:|:---:|:---:|:---:|
-|<img src="https://user-images.githubusercontent.com/47757441/210252635-650140ea-1aef-4229-b62e-2597f43fe86c.png" width="200">|<img src="https://user-images.githubusercontent.com/47757441/210252637-f59b3ea1-a753-4a7b-9550-dc2609dd64e2.png" width="200">|<img src="https://user-images.githubusercontent.com/47757441/210252638-0265bbf8-98e4-4f15-a7a4-5efdd07ed8eb.png" width="200">|<img src="https://user-images.githubusercontent.com/47757441/210252641-f885806b-0b14-4c18-9bac-ac74cd2a1d52.png" width="200">|<img src="https://user-images.githubusercontent.com/47757441/210252629-e6d976b6-0b6f-4ed6-9e92-b6483ba126f3.png" width="200">|
+|                                                              (1)                                                              |                                                              (2)                                                              |                                                              (3)                                                              |                                                              (4)                                                              |                                                              (5)                                                              |
+| :---------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------: |
+| <img src="https://user-images.githubusercontent.com/47757441/210252635-650140ea-1aef-4229-b62e-2597f43fe86c.png" width="200"> | <img src="https://user-images.githubusercontent.com/47757441/210252637-f59b3ea1-a753-4a7b-9550-dc2609dd64e2.png" width="200"> | <img src="https://user-images.githubusercontent.com/47757441/210252638-0265bbf8-98e4-4f15-a7a4-5efdd07ed8eb.png" width="200"> | <img src="https://user-images.githubusercontent.com/47757441/210252641-f885806b-0b14-4c18-9bac-ac74cd2a1d52.png" width="200"> | <img src="https://user-images.githubusercontent.com/47757441/210252629-e6d976b6-0b6f-4ed6-9e92-b6483ba126f3.png" width="200"> |
 
 _Node class_
 ```java
@@ -287,14 +287,14 @@ In-order, Pre-order, and Post-order transversal algorithms for the iterative app
 ## Sorting Algorithms
 A sorting algorithm is used to arrange elements of an array/list in a specific order.
 
-||Best|Average|Worst-case|
-|:---:|:---:|:---:|:---:|
-|Selection Sort|_O(n<sup>2</sup>)_|_O(n<sup>2</sup>)_|_O(n<sup>2</sup>)_|
-|Bubble Sort|_O(n)_|_O(n<sup>2</sup>)_|_O(n<sup>2</sup>)_|
-|Insertion Sort|_O(n)_|_O(n<sup>2</sup>)_|_O(n<sup>2</sup>)_|
-|Heap Sort|_O(n)_|_O(n&nbsp;log&nbsp;n)_|_O(n&nbsp;log&nbsp;n)_|
-|Merge Sort|_O(n&nbsp;log&nbsp;n)_|_O(n&nbsp;log&nbsp;n)_|_O(n&nbsp;log&nbsp;n)_|
-|Quick Sort|_O(n&nbsp;log&nbsp;n)_|_O(n&nbsp;log&nbsp;n)_|_O(n<sup>2</sup>)_|  
+|                |          Best          |        Average         |       Worst-case       |
+| :------------: | :--------------------: | :--------------------: | :--------------------: |
+| Selection Sort |   _O(n<sup>2</sup>)_   |   _O(n<sup>2</sup>)_   |   _O(n<sup>2</sup>)_   |
+|  Bubble Sort   |         _O(n)_         |   _O(n<sup>2</sup>)_   |   _O(n<sup>2</sup>)_   |
+| Insertion Sort |         _O(n)_         |   _O(n<sup>2</sup>)_   |   _O(n<sup>2</sup>)_   |
+|   Heap Sort    |         _O(n)_         | _O(n&nbsp;log&nbsp;n)_ | _O(n&nbsp;log&nbsp;n)_ |
+|   Merge Sort   | _O(n&nbsp;log&nbsp;n)_ | _O(n&nbsp;log&nbsp;n)_ | _O(n&nbsp;log&nbsp;n)_ |
+|   Quick Sort   | _O(n&nbsp;log&nbsp;n)_ | _O(n&nbsp;log&nbsp;n)_ |   _O(n<sup>2</sup>)_   |
 
 <sup>_Quick Sort tends to be the fastest in most cases, explained below*_</sup>
 

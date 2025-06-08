@@ -1,4 +1,8 @@
-> [!NOTE]  
+<h1 align='center'>Area Networks</h1>
+
+Copyright &copy; 2025, Pexers (https://github.com/Pexers)
+
+> [!NOTE]
 > Work in progress.
 
 A network is a group of connected computers that are able to send data to each other.
@@ -67,6 +71,11 @@ A reverse proxy is a server that sits in front of web servers and forwards clien
 
 ### Why is it called 'reversed' proxy?
 While a forward proxy proxies on **behalf of clients** (or requesting hosts), a reverse proxy proxies **on behalf of servers**. In forward we protect the clients, while in reverse, we're protecting the servers.
+
+**NGINX cheatsheet**
+```sh
+$ nginx -t && nginx -s reload
+```
 
 ### Forward Proxy vs VPN
 A VPN and proxy server both mask the IP address. But a VPN will also encrypt the data you send and receive, something that a proxy server doesn't do. If you are already using a VPN, then, connecting to a website or app through a proxy server would be an unnecessary step.

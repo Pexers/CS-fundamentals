@@ -1,6 +1,6 @@
 <h1 align='center'>Methodologies</h1>
 
-Copyright &copy; 2023, Pexers (https://github.com/Pexers)
+Copyright &copy; 2025, Pexers (https://github.com/Pexers)
 
 Software development methodologies (SDMs) can help a team to complete a project seamlessly. Selecting the right development methodology for a product organization depends largely on the team size, goals, and other factors. 
 

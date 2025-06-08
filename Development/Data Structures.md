@@ -1,6 +1,6 @@
 <h1 align='center'>Data Structures</h1>
 
-Copyright &copy; 2023, Pexers (https://github.com/Pexers)
+Copyright &copy; 2025, Pexers (https://github.com/Pexers)
 
 Data structures are used to store and organize data. We can use algorithms to manipulate and use our data structures. Different types of data are organized more efficiently by using different data structures.
 
@@ -8,13 +8,13 @@ Data structures are used to store and organize data. We can use algorithms to ma
 <sup>Also called: static array</sup>  
 An array organizes items sequentially, one after another in memory. Each position in the array has an index, starting at 0.
 
-||Worst-case|
-|---|:---:|
-|space|_O(n)_|
-|lookup|_O(1)_|
-|append|_O(1)_|
-|insert|_O(n)_|
-|delete|_O(n)_|
+|        | Worst-case |
+| ------ | :--------: |
+| space  |   _O(n)_   |
+| lookup |   _O(1)_   |
+| append |   _O(1)_   |
+| insert |   _O(n)_   |
+| delete |   _O(n)_   |
 
 #### _Usage_
 ```java
@@ -61,13 +61,13 @@ An array list expands as we add more items, so we don't need to determine the si
 
 Although this array looks like a dynamically growing collection, internally it does an array copy when it needs to expand.
 
-||Average|Worst-case|
-|---|:---:|:---:|
-|space|_O(n)_|_O(n)_|
-|lookup|_O(1)_|_O(1)_|
-|append|_O(1)_|_O(n)_|
-|insert|_O(n)_|_O(n)_|
-|delete|_O(n)_|_O(n)_|
+|        | Average | Worst-case |
+| ------ | :-----: | :--------: |
+| space  | _O(n)_  |   _O(n)_   |
+| lookup | _O(1)_  |   _O(1)_   |
+| append | _O(1)_  |   _O(n)_   |
+| insert | _O(n)_  |   _O(n)_   |
+| delete | _O(n)_  |   _O(n)_   |
 
 #### _Usage_
 ```java
@@ -99,14 +99,14 @@ A linked list organizes items sequentially, with each item storing a pointer to 
   <img src="https://user-images.githubusercontent.com/47757441/209192116-fc771a7a-ba6e-404e-9e3c-02bb805378d3.png" width="400">
 </p>
 
-||Worst-case|
-|---|:---:|
-|space|_O(n)_|
-|lookup|_O(n)_|
-|append|_O(1)_|
-|prepend|_O(1)_|
-|insert|_O(n)_|
-|delete|_O(n)_|
+|         | Worst-case |
+| ------- | :--------: |
+| space   |   _O(n)_   |
+| lookup  |   _O(n)_   |
+| append  |   _O(1)_   |
+| prepend |   _O(1)_   |
+| insert  |   _O(n)_   |
+| delete  |   _O(n)_   |
 
 #### _Usage_
 ```java
@@ -139,12 +139,12 @@ A queue stores items in a first-in, first-out (FIFO) order. Popular use-cases fo
   <img src="https://user-images.githubusercontent.com/47757441/209433555-c0ac93c8-2213-4794-b2ec-625d5cdcae48.png" width="400">
 </p>
 
-||Worst-case|
-|---|:---:|
-|space|_O(n)_|
-|peek|_O(1)_|
-|enqueue|_O(1)_|
-|dequeue|_O(1)_|
+|         | Worst-case |
+| ------- | :--------: |
+| space   |   _O(n)_   |
+| peek    |   _O(1)_   |
+| enqueue |   _O(1)_   |
+| dequeue |   _O(1)_   |
 
 #### _Usage_
 ```java
@@ -170,12 +170,12 @@ A stack stores items in a last-in, first-out (LIFO) order. Popular use-cases for
   <img src="https://user-images.githubusercontent.com/47757441/209434267-e1b5f7f8-3e12-4f52-b7f8-636d447831cf.png" width="400">
 </p>
 
-||Worst-case|
-|---|:---:|
-|space|_O(n)_|
-|peek|_O(1)_|
-|push|_O(1)_|
-|pop|_O(1)_|
+|       | Worst-case |
+| ----- | :--------: |
+| space |   _O(n)_   |
+| peek  |   _O(1)_   |
+| push  |   _O(1)_   |
+| pop   |   _O(1)_   |
 
 #### _Usage_
 ```java
@@ -198,12 +198,12 @@ Stack<String> stack = new Stack<>();
 - `HashTable<k,v>`. Every method is synchronized. Only one thread is allowed to operate the hash table's object at a time. Hence it is thread-safe. Null is not allowed for both key and value, otherwise, a null pointer exception will be thrown.
 - `HashSet<E>`. Stores only objects, no such key-value pairs are maintained. Allows only one null value in its collection, after which no null value is allowed to be added.
 
-||Average|Worst-case|
-|---|:---:|:---:|
-|space|_O(n)_|_O(n)_|
-|lookup|_O(1)_|_O(n)_|
-|insert|_O(1)_|_O(n)_|
-|delete|_O(1)_|_O(n)_|
+|        | Average | Worst-case |
+| ------ | :-----: | :--------: |
+| space  | _O(n)_  |   _O(n)_   |
+| lookup | _O(1)_  |   _O(n)_   |
+| insert | _O(1)_  |   _O(n)_   |
+| delete | _O(1)_  |   _O(n)_   |
 
 #### _Usage_
 ```java

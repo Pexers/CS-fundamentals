@@ -1,4 +1,8 @@
-> [!NOTE]  
+<h1 align='center'>Memory Management</h1>
+
+Copyright &copy; 2025, Pexers (https://github.com/Pexers)
+
+> [!NOTE]
 > Work in progress.
 
 Virtual Memory

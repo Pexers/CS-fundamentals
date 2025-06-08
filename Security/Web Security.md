@@ -1,4 +1,8 @@
-> [!NOTE]  
+<h1 align='center'>Web Security</h1>
+
+Copyright &copy; 2025, Pexers (https://github.com/Pexers)
+
+> [!NOTE]
 > Work in progress.
 
 ## HTTPS
@@ -21,11 +25,6 @@ $ certbot certonly --manual --preferred-challenges dns --keep-until-expiring --a
 
 # Delete certificate from system
 $ certbot delete --cert-name DOMAIN
-```
-
-### NGINX cheatsheet
-```sh
-$ nginx -t && nginx -s reload
 ```
 
 ## Sub-domain discovery

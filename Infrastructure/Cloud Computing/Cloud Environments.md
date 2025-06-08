@@ -1,7 +1,11 @@
-> [!NOTE]  
+<h1 align='center'>Cloud Environments</h1>
+
+Copyright &copy; 2025, Pexers (https://github.com/Pexers)
+
+> [!NOTE]
 > Work in progress.
 
-### Cloud environments (IaaS Vs PaaS Vs FaaS Vs SaaS)
+### IaaS Vs PaaS Vs FaaS Vs SaaS
 - **IaaS**: Infrastructure as a service, or IaaS, delivers on-demand infrastructure resources to organizations via the cloud, such as compute, storage, networking, and virtualization. Customers don’t have to manage, maintain, or update their own data center infrastructure, but are responsible for the operating system, middleware, virtual machines, and any apps or data.
     - Some examples of IaaS are: AWS, Microsoft Azure, GCE (Google Compute Engine).
 - **PaaS**: Platform as a service, or PaaS, delivers and manages all the hardware and software resources to develop applications through the cloud. Developers and IT operations teams can use PaaS to develop, run, and manage applications without having to build and maintain the infrastructure or platform on their own. Customers still have to write the code and manage their data and applications, but the environment to build and deploy apps is managed and maintained by the cloud service provider.

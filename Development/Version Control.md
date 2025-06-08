@@ -1,6 +1,6 @@
 <h1 align='center'>Version Control</h1>
 
-Copyright &copy; 2023, Pexers (https://github.com/Pexers)
+Copyright &copy; 2025, Pexers (https://github.com/Pexers)
 
 Version control, also known as source control, is the practice of tracking and managing changes to software code. Using version control software is a best practice for high performing software and DevOps teams. Version control also helps developers move faster and allows software teams to preserve efficiency and agility as the team scales to include more developers.
 

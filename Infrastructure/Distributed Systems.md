@@ -1,4 +1,8 @@
-> [!NOTE]  
+<h1 align='center'>Distributed Systems</h1>
+
+Copyright &copy; 2025, Pexers (https://github.com/Pexers)
+
+> [!NOTE]
 > Work in progress.
 
 Fault Tolerance — a cluster of ten machines across two data centers is inherently more fault-tolerant than a single machine. Even if one data center catches on fire, your application would still work.

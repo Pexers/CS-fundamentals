@@ -1,6 +1,6 @@
 <h1 align='center'>Design Principles</h1>
 
-Copyright &copy; 2023, Pexers (https://github.com/Pexers)
+Copyright &copy; 2025, Pexers (https://github.com/Pexers)
 
 The application's success is inevitably dependent on the software engineers' willingness to use these best practices for software development introduced by some of the well-known and experienced industry experts.
 

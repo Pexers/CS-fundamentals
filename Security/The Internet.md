@@ -1,4 +1,8 @@
-> [!NOTE]  
+<h1 align='center'>The Internet</h1>
+
+Copyright &copy; 2025, Pexers (https://github.com/Pexers)
+
+> [!NOTE]
 > Work in progress.
 
 The Internet is a vast, sprawling collection of networks that connect to each other. In fact, the word "Internet" could be said to come from this concept: interconnected networks.

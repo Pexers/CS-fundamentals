@@ -1,4 +1,8 @@
-> [!NOTE]  
+<h1 align='center'>OSI Model</h1>
+
+Copyright &copy; 2025, Pexers (https://github.com/Pexers)
+
+> [!NOTE]
 > Work in progress.
 
 "The Internet is a vast network that connects computers all over the world. Through the Internet, people can share information and communicate from anywhere with an Internet connection. An Internet service provider (ISP) is an organization that provides services for accessing, using, managing, or participating in the Internet. It uses standard internet protocols, such as TCP/IP, HTTP, etc."

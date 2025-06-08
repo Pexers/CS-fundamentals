@@ -1,6 +1,6 @@
 <h1 align='center'>Virtualization</h1>
 
-Copyright &copy; 2023, Pexers (https://github.com/Pexers)
+Copyright &copy; 2025, Pexers (https://github.com/Pexers)
 
 Virtualization is the creation of a virtual (rather than actual) version of something, such as a server, a desktop, a storage device, an operating system or network resources.
 
@@ -50,10 +50,10 @@ A **container** is defined as a standard unit of software that packages up code 
   - Given that all containers share the same underlying hardware system below the OS layer, it is possible that an _exploit_ in one container could break out of the container and affect the shared hardware. Moreover, popular container engines have public repositories of pre-built container images. There is a security risk in using one of these public images as they may contain exploits or may be vulnerable to being hijacked by malicious attackers.
   
 _In summary:_
-||Storage space|Portability|Scalability|Performance|Maintainability|Security|
-|---|:---:|:---:|:---:|:---:|:---:|:---:|
-|_Virtual&nbsp;machines_|⭐|⭐⭐|⭐|⭐⭐|⭐|⭐⭐⭐|
-|_Containers_|⭐⭐⭐|⭐⭐|⭐⭐⭐|⭐⭐⭐|⭐⭐⭐|⭐⭐|
+|                         | Storage space | Portability | Scalability | Performance | Maintainability | Security |
+| ----------------------- | :-----------: | :---------: | :---------: | :---------: | :-------------: | :------: |
+| _Virtual&nbsp;machines_ |       ⭐       |     ⭐⭐      |      ⭐      |     ⭐⭐      |        ⭐        |   ⭐⭐⭐    |
+| _Containers_            |      ⭐⭐⭐      |     ⭐⭐      |     ⭐⭐⭐     |     ⭐⭐⭐     |       ⭐⭐⭐       |    ⭐⭐    |
 
 Both containers and virtual machines will continue to have new use cases as enterprises seek to leverage the power of their infrastructure – or the cloud – in new ways to support heavy-duty application and networking workloads. Containers are an excellent choice for tasks with a short lifecycle and for deployment of microservices. Virtual machines have a longer lifecycle than containers, and are best used for longer periods of time. In short, containers are lighter weight, more rapid, and more maintainable than VMs. 
 
