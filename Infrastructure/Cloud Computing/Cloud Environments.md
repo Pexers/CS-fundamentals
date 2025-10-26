@@ -19,28 +19,29 @@ Copyright &copy; 2025, Pexers (https://github.com/Pexers)
   <img src="https://github.com/Pexers/CS-fundamentals/assets/47757441/8e56eb85-cd50-4b60-80bb-972616b48869" width="500">
 </p>
 
-
 ### Cloud computing types
 - Public cloud: delivered via the internet and shared across organizations.
 - Private cloud: dedicated solely to your organization.
 - Hybrid cloud: any environment that uses both public and private clouds.
 
----
+### Virtual Private Cloud (VPC)
+A **Virtual Private Cloud (VPC)** is a secure, isolated environment within a public cloud, allowing organizations to run code, store data, and host applications with the privacy and control of a private cloud, but with the scalability and flexibility of public cloud infrastructure. VPCs are widely used to balance security requirements with the benefits of cloud computing.
 
-VPC - Virtual Private Cloud
-A virtual private cloud (VPC) is a secure, isolated private cloud hosted within a public cloud.
-VPC customers can run code, store data, host websites, and do anything else they could do in an ordinary private cloud, but the private cloud is hosted remotely by a public cloud provider. VPCs combine the scalability and convenience of public cloud computing with the data isolation of private cloud computing.
+#### Key Features of a VPC
+- **Isolation:** VPC resources are logically separated from other tenants in the public cloud.
+- **Customizable Networking:** Users can define their own IP address ranges, subnets, route tables, and network gateways.
+- **Security Controls:** Integration with firewalls, security groups, and access control lists to restrict inbound and outbound traffic.
+- **Hybrid Connectivity:** Ability to connect on-premises infrastructure securely to the VPC via VPN or dedicated connections.
 
-How is a VPC isolated within a public cloud?
-A VPC isolates computing resources from the other computing resources available in the public cloud. The key technologies for isolating a VPC from the rest of the public cloud are:
+#### How Is a VPC Isolated Within a Public Cloud?
+A VPC uses several networking technologies to ensure isolation and security:
 
-Subnets: A subnet is a range of IP addresses within a network that are reserved so that they're not available to everyone within the network, essentially dividing part of the network for private use. In a VPC these are private IP addresses that are not accessible via the public Internet, unlike typical IP addresses, which are publicly visible.
+- **Subnets:** Subnets divide the VPC’s IP address range into smaller segments. Private subnets are not accessible from the public internet, while public subnets can be reached externally.
+- **VLAN (Virtual LAN):** VLANs segment the network at Layer 2 of the OSI model, providing further isolation between resources.
+- **VPN (Virtual Private Network):** VPNs encrypt traffic between the VPC and external networks, ensuring secure communication over public infrastructure.
 
-VLAN: A LAN is a local area network, or a group of computing devices that are all connected to each other without the use of the Internet. A VLAN is a virtual LAN. Like a subnet, a VLAN is a way of partitioning a network, but the partitioning takes place at a different layer within the OSI model (layer 2 instead of layer 3).
+A typical VPC setup includes dedicated subnets and VLANs accessible only by the VPC owner. The customer connects to their VPC via VPN, so data in transit remains private and protected from other public cloud users.
 
-VPN: A virtual private network (VPN) uses encryption to create a private network over the top of a public network. VPN traffic passes through publicly shared Internet infrastructure – routers, switches, etc. – but the traffic is scrambled and not visible to anyone.
-
-A VPC will have a dedicated subnet and VLAN that are only accessible by the VPC customer. This prevents anyone else within the public cloud from accessing computing resources within the VPC – effectively placing the "Reserved" sign on the table. The VPC customer connects via VPN to their VPC, so that data passing into and out of the VPC is not visible to other public cloud users.
-
-Public subnet: a subnet accessible from the internet
-Private subnet: a subnet only accessible from within the VPC
+#### Subnet Types
+- **Public Subnet:** Accessible from the internet, typically used for web servers or resources that need external access.
+- **Private Subnet:** Only accessible from within the VPC, used for databases or internal services.
