@@ -111,7 +111,7 @@ $ git reset DIR
 # Undo changes
 $ git restore DIR
 
-# Record the current state of the directory and the index before switching branches
+# Save current state of the directory and the index before switching branches
 $ git stash push DIR
 
 # Pop stashed changes (recover saved changes)
