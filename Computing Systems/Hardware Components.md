@@ -49,6 +49,16 @@ Temporary high-speed memory that stores data the CPU is actively using.
 - Typical capacities: 250GB to 4TB
 - Types: SATA, NVMe (much faster)
 
+### Optical Drives (CD/DVD/Blu-Ray)
+Devices that read and sometimes write to optical discs.
+
+- **Types**:
+  - **CD**: ~700MB capacity
+  - **DVD**: 4.7GB to 8.5GB capacity
+  - **Blu-Ray**: 25GB to 50GB capacity
+
+- **Uses**: Less common in modern systems as digital distribution becomes standard
+
 ## PSU (Power Supply Unit)
 Converts AC power from wall outlets to DC power for computer components.
 
@@ -72,16 +82,6 @@ Specialized processor designed to accelerate graphics rendering.
   - **CUDA/Stream processors**: Parallel processing cores
   - **Memory bandwidth**: Speed of data transfer
   - **Popular manufacturers**: NVIDIA, AMD, Intel
-
-## Optical Drives (CD/DVD/Blu-Ray)
-Devices that read and sometimes write to optical discs.
-
-- **Types**:
-  - **CD**: ~700MB capacity
-  - **DVD**: 4.7GB to 8.5GB capacity
-  - **Blu-Ray**: 25GB to 50GB capacity
-
-- **Uses**: Less common in modern systems as digital distribution becomes standard
 
 ## Cooling Systems
 - **Air cooling**: Heat sinks and fans
