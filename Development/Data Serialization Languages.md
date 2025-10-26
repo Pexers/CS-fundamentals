@@ -96,9 +96,9 @@ YAML documents start with three dashes (`---`), indicating the beginning of a ne
 name: John Doe
 age: 30
 languages:
-	- Python
-	- JavaScript
-	- Go
+  - Python
+  - JavaScript
+  - Go
 ```
 
 Compliant YAML parsers recognize each set of dashes as the start of a new document.
