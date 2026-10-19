@@ -36,6 +36,7 @@ A sum up of fundamental concepts in the fields of **Computer Science**.
 	- [**Monitoring**](/Infrastructure/Monitoring.md)
 - ### Networking
 	- [**Area Networks**](/Networking/Area%20Networks.md)
+	- [**Domain Name System**](/Networking/Domain%20Name%20System.md)
 	- [**OSI Model**](/Networking/OSI%20Model.md)
 	- [**template-proxy-ssl**](/Networking/template-proxy-ssl.conf)
 - ### Security
