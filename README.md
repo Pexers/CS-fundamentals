@@ -11,6 +11,8 @@ A sum up of fundamental concepts in the fields of **Computer Science**.
 	- [**Operating Systems**](/Computing%20Systems/Operating%20Systems.md)
 	- [**Virtualization**](/Computing%20Systems/Virtualization.md)
 - ### Database Systems
+	- [**Backup & Recovery**](/Database%20Systems/Backup%20&%20Recovery.md)
+	- [**Transactions**](/Database%20Systems/Transactions.md)
 - ### Development
 	- [**Algorithms**](/Development/Algorithms.md)
 	- [**Architectural & Design Patterns**](/Development/Architectural%20&%20Design%20Patterns.md)
