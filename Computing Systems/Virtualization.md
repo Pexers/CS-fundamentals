@@ -323,7 +323,7 @@ $ docker system prune --all --force # Removes everything basically
 $ docker builder prune --all --force  # Remove all cache
 $ docker volume prune --all --force  # Remove all volumes
 $ docker image prune --all --force  # Remove all images
-$ docker container prune --all --force  # Remove all containers
+$ docker container prune --force  # Remove all containers
 
 # Running containers indefinitely
 sleep infinity

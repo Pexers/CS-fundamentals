@@ -33,6 +33,14 @@ Temporary high-speed memory that stores data the CPU is actively using.
   - **Types**: DDR4, DDR5 (Double Data Rate)
   - **Channels**: Single, dual, quad-channel configurations for increased bandwidth
 
+## ROM (Read-Only Memory)
+Non-volatile memory that stores data permanently (or semi-permanently), even when power is turned off.
+
+- **Characteristics**:
+  - **Non-volatile**: Retains data without power
+  - **Typically not user-writable** (or only programmable a limited number of times)
+  - **Stores firmware and low-level code** used to start and configure hardware
+
 ## Storage Devices
 ### HDD (Hard Disk Drive)
 - **Mechanical storage** using magnetic platters and moving read/write heads

@@ -20,10 +20,10 @@ _In summary_:
 </p>
 
 - **Pod**: the smallest unit of execution in Kubernetes, consisting of one or more containers, with shared storage, network resources, and a specification for how to run the containers (Pod as in a pod of whales or pea pod). Complex systems with multiple microservices should be deployed using **a single Pod per microservice**, containing one or more containers. Is not a good practice to configure a Pod with more than one microservice, otherwise they won't be able to scale independently.
-- **Node**: are the physical servers or VMs that make up the Kubernetes Cluster. Nodes are interchangeable and typically not addressed individually by developers, other than when maintenance is required. Each Node can have multiple Pods.
+- **Node**: the physical servers or VMs that make up the Kubernetes Cluster (1 Node = 1 machine). Nodes are interchangeable and typically not addressed individually by developers, other than when maintenance is required. Each Node can have multiple Pods.
 - **Namespaces**: provides a mechanism for isolating groups of resources within a single cluster. Organizations that use a single cluster for development, testing, and production can also use namespaces to isolate environments. Additionally, namespaces enable the use of RBAC, so teams can define roles that group lists of permissions.
-- **Cluster**: a set of Nodes that run containerized applications. They are more lightweight and flexible than virtual machines. In this way, Kubernetes Clusters allow for applications to be more easily developed, moved and managed. While it seems quite logical to have each environment and/or application in its own Cluster, it is not required, and it's not the only way. Kubernetes makes this easy enough by making it possible to quickly roll out multiple Nodes with the same configuration.
-- **Control Plane**: makes global decisions about the Cluster (for instance, scheduling), as well as detecting and responding to Cluster events (for instance, starting up a new Pod when a deployment's replicas field is unsatisfied). The Control Plane not only exposes the layer that deploys the containers, but also manages their lifecycle.
+- **Cluster**: a set of worker machines (Nodes) managed by the Kubernetes Control Plane, which run containerized applications. Clusters make it easy to deploy, move, and manage applications, and to scale by quickly adding or removing Nodes with the same configuration.
+- **Control Plane**: makes global decisions about the Cluster (e.g.: scheduling), as well as detecting and responding to Cluster events (e.g.: starting up a new Pod when a deployment's replicas field is unsatisfied). The Control Plane not only exposes the layer that deploys the containers, but also manages their lifecycle.
 - **Node Components**: components that run on every Node, maintaining running Pods and providing the Kubernetes runtime environment.
   - _kubelet_: takes a set of PodSpecs that are provided through various mechanisms and ensures that the containers described in those PodSpecs are running and healthy.
   - _kube-proxy_: maintains network rules on Nodes. These network rules allow network communication to Pods from network sessions inside or outside of the Cluster.
@@ -165,6 +165,13 @@ Kubernetes lets us automate many management tasks, including provisioning and sc
 - **Vertical Pod Autoscaling (VPA)**: TODO:
 - **Cluster Autoscaling**: TODO: scales the overall cluster size. Adds extra machines that pods can run on.
 
+### Kubernetes tenants
+When discussing multi-tenancy in Kubernetes, there is no single definition for a "tenant". Rather, the definition of a tenant will vary depending on whether multi-team or multi-customer tenancy is being discussed.
+
+In multi-team usage, a tenant is typically a team, where each team typically deploys a small number of workloads that scales with the complexity of the service. However, the definition of "team" may itself be fuzzy, as teams may be organized into higher-level divisions or subdivided into smaller teams.
+
+By contrast, if each team deploys dedicated workloads for each new client, they are using a multi-customer model of tenancy. In this case, a "tenant" is simply a group of users who share a single workload. This may be as large as an entire company, or as small as a single team at that company.
+
 ### Kubectl CLI cheatsheet
 Kubernetes provides a command line tool for communicating with a Kubernetes Cluster's Control Plane, using the Kubernetes API, named _kubectl_ (Kubernetes Control).
 
@@ -225,6 +232,12 @@ $ kubectl config set-credentials kubeuser/foo.kubernetes.com --username=kubeuser
 
 # Delete user foo
 $ kubectl config unset users.foo
+
+# List available contexts
+$ kubectl config get-contexts
+
+# Switch to a specific context
+$ kubectl config use-context <context-name>
 ```
 _Manage Nodes and Cluster_
 ```sh

@@ -200,7 +200,7 @@ $ git push -d ALIAS BRANCH
 # Delete most recent local commit without losing changes
 $ git reset --soft HEAD~1
 # Reset staging area and working directory to match most recent commit and overwrite all changes in the working directory
-$ git reset --hard ALIAS/BRANCH
+$ git reset --hard origin
 
 # Add new submodule from another repo
 $ git submodule add URL
