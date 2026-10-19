@@ -2,21 +2,46 @@ name: "README.md Auto Update"
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [main]
   workflow_dispatch:
 
-env:
-  REPO_WORKSPACE: ${{ github.workspace }}
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
 
 jobs:
   update-readme:
-    if: github.event.head_commit.message != 'Update README.md'
     runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
     steps:
-    - name: Check out repository
-      uses: actions/checkout@v4
-    - name: Run script
-      uses: ./.github/actions/update-readme
-    - uses: stefanzweifel/git-auto-commit-action@v4
-      with:
-        commit_message: Update README.md
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.ref_name }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: '24'
+
+      - name: Update README table of contents
+        run: node .github/scripts/update-readme.js
+
+      - name: Commit and push README changes
+        shell: bash
+        run: |
+          git add -- README.md
+          if git diff --cached --quiet -- README.md; then
+            echo "README.md already up to date"
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Update README.md" -- README.md
+          git push
